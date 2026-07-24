@@ -260,7 +260,6 @@
                         <select id="status">
                             <option value="">Selecione...</option>
                             <option value="Enviado para cadastro">Enviado para cadastro</option>
-                            <option value="Reprovado GUEP">Reprovado GUEP</option>
                             <option value="Suspenso/Bloqueado">Suspenso/Bloqueado</option>
                         </select>
                         <div class="field-error" id="err-status">Selecione o status.</div>
@@ -280,7 +279,6 @@
                         <select id="statusETC">
                             <option value="">Selecione...</option>
                             <option value="Enviado para cadastro">Enviado para cadastro</option>
-                            <option value="Reprovado GUEP">Reprovado GUEP</option>
                             <option value="Suspenso/Bloqueado">Suspenso/Bloqueado</option>
                         </select>
                         <div class="field-error" id="err-statusETC">Selecione o status.</div>
@@ -333,23 +331,53 @@
                 <div class="form-group">
                     <label for="upd-motId">ID do Motorista (MOT-XXXXX)</label>
                     <input type="text" id="upd-motId" placeholder="MOT-00142" required maxlength="12">
-                    <div class="field-error" id="err-upd-motId">Preencha o ID do motorista.</div>
+                    <div class="field-error" id="err-upd-motId">Preencha o ID no formato MOT-XXXXX.</div>
                 </div>
+
+                <!-- Etapa selector -->
                 <div class="form-group">
-                    <label for="upd-status">Novo Status</label>
+                    <label>Etapa</label>
+                    <div class="frota-selector" id="etapaSelector" style="grid-template-columns: repeat(5, 1fr);">
+                        <div class="frota-card" data-etapa="envios" onclick="selectEtapa('envios', this)">
+                            <span class="frota-icon">📦</span>
+                            <span class="frota-label">Envios Extra</span>
+                        </div>
+                        <div class="frota-card" data-etapa="logistics" onclick="selectEtapa('logistics', this)">
+                            <span class="frota-icon">🚚</span>
+                            <span class="frota-label">Logistics</span>
+                        </div>
+                        <div class="frota-card" data-etapa="onboarding" onclick="selectEtapa('onboarding', this)">
+                            <span class="frota-icon">🎓</span>
+                            <span class="frota-label">Onboarding</span>
+                        </div>
+                        <div class="frota-card" data-etapa="liberado" onclick="selectEtapa('liberado', this)">
+                            <span class="frota-icon">✅</span>
+                            <span class="frota-label">Liberado</span>
+                        </div>
+                        <div class="frota-card" data-etapa="encerrado" onclick="selectEtapa('encerrado', this)">
+                            <span class="frota-icon">🚫</span>
+                            <span class="frota-label">Encerrado</span>
+                        </div>
+                    </div>
+                    <div class="field-error" id="err-upd-etapa">Selecione a etapa.</div>
+                </div>
+
+                <!-- Status por etapa -->
+                <div class="form-group" id="upd-status-group" style="display:none;">
+                    <label for="upd-status">Status</label>
                     <select id="upd-status" required>
                         <option value="">Selecione...</option>
-                        <option value="Em cadastro">Em cadastro</option>
-                        <option value="Cadastro com erro">Cadastro com erro</option>
-                        <option value="Suspenso/Bloqueado">Suspenso/Bloqueado</option>
-                        <option value="Sem interação">Sem interação</option>
-                        <option value="Em treinamento">Em treinamento</option>
-                        <option value="Recusa/Com treinamento">Recusa/Com treinamento</option>
-                        <option value="Recusa/Sem treinamento">Recusa/Sem treinamento</option>
-                        <option value="Cadastro concluído">Cadastro concluído</option>
                     </select>
-                    <div class="field-error" id="err-upd-status">Selecione o novo status.</div>
+                    <div class="field-error" id="err-upd-status">Selecione o status.</div>
                 </div>
+
+                <!-- Campo extra: Data disponibilidade (só Liberado) -->
+                <div class="form-group" id="upd-dataDisp-group" style="display:none;">
+                    <label for="upd-dataDisp">Data de Disponibilidade</label>
+                    <input type="date" id="upd-dataDisp">
+                    <div class="field-error" id="err-upd-dataDisp">Preencha a data.</div>
+                </div>
+
                 <div class="form-group">
                     <label for="upd-obs">Observação <span class="optional">(opcional)</span></label>
                     <textarea id="upd-obs" rows="2" placeholder="Ex: Motorista reativado após revisão."></textarea>
@@ -714,6 +742,38 @@
             s.style.display = 'block';
         }
 
+        // ── Etapa funnel ─────────────────────────────────────────────────────
+        const etapaStatus = {
+            envios:     ['Em andamento', 'Erro', 'Concluído'],
+            logistics:  ['Em andamento', 'Erro', 'Concluído'],
+            onboarding: ['Em treinamento', 'Declínio sem treinamento', 'Declínio com treinamento', 'Concluído'],
+            liberado:   ['Primeira rota'],
+            encerrado:  ['Suspenso/Bloqueado']
+        };
+        const etapaLabel = {
+            envios: 'Envios Extra', logistics: 'Logistics', onboarding: 'Onboarding', liberado: 'Liberado', encerrado: 'Encerrado'
+        };
+
+        let etapaSelecionada = '';
+        function selectEtapa(valor, card) {
+            document.querySelectorAll('#etapaSelector .frota-card').forEach(c => c.classList.remove('selected'));
+            card.classList.add('selected');
+            etapaSelecionada = valor;
+            document.getElementById('err-upd-etapa').style.display = 'none';
+
+            const statusSelect = document.getElementById('upd-status');
+            statusSelect.innerHTML = '<option value="">Selecione...</option>';
+            etapaStatus[valor].forEach(s => {
+                const o = document.createElement('option');
+                o.value = s; o.textContent = s;
+                statusSelect.appendChild(o);
+            });
+            document.getElementById('upd-status-group').style.display = 'block';
+
+            // Data disponibilidade só aparece em Liberado
+            document.getElementById('upd-dataDisp-group').style.display = valor === 'liberado' ? 'block' : 'none';
+        }
+
         // ── Update form ──────────────────────────────────────────────────────
         let dadosAtualizacao = null;
         let updJaSalvou = false;
@@ -726,21 +786,33 @@
             const motId      = document.getElementById('upd-motId').value.trim().toUpperCase();
             const status     = document.getElementById('upd-status').value;
             const obs        = document.getElementById('upd-obs').value.trim();
+            const dataDisp   = document.getElementById('upd-dataDisp').value;
 
-            // Validate
-            const errAss = document.getElementById('err-upd-assistente');
-            const errId  = document.getElementById('err-upd-motId');
-            const errSt  = document.getElementById('err-upd-status');
+            const errAss  = document.getElementById('err-upd-assistente');
+            const errId   = document.getElementById('err-upd-motId');
+            const errEtapa= document.getElementById('err-upd-etapa');
+            const errSt   = document.getElementById('err-upd-status');
 
             if (!assistente) { errAss.style.display = 'block'; ok = false; } else errAss.style.display = 'none';
             if (!motId || !/^MOT-\d{5}$/.test(motId)) { errId.style.display = 'block'; ok = false; } else errId.style.display = 'none';
+            if (!etapaSelecionada) { errEtapa.style.display = 'block'; ok = false; } else errEtapa.style.display = 'none';
             if (!status) { errSt.style.display = 'block'; ok = false; } else errSt.style.display = 'none';
+            if (etapaSelecionada === 'liberado' && !dataDisp) {
+                document.getElementById('err-upd-dataDisp').style.display = 'block'; ok = false;
+            } else { document.getElementById('err-upd-dataDisp').style.display = 'none'; }
 
             if (!ok) return;
 
-            dadosAtualizacao = { assistente, motId, status, obs };
+            const etapaNome = etapaLabel[etapaSelecionada];
+            const novoStatus = `${etapaNome}: ${status}`;
+            dadosAtualizacao = { assistente, motId, etapa: etapaNome, status: novoStatus, obs, dataDisp };
 
-            let msg = `ATUALIZAÇÃO DE STATUS\n• ID Motorista: ${motId}\n• Novo Status: ${status}\n• Assistente: ${assistente}`;
+            let msg = `ATUALIZAÇÃO DE STATUS\n• ID Motorista: ${motId}\n• Etapa: ${etapaNome}\n• Status: ${status}`;
+            if (etapaSelecionada === 'liberado' && dataDisp) {
+                const dataFmt = new Date(dataDisp + 'T12:00:00').toLocaleDateString('pt-BR');
+                msg += `\n• Data de Disponibilidade: ${dataFmt}`;
+            }
+            msg += `\n• Assistente: ${assistente}`;
             if (obs) msg += `\n• Obs: ${obs} 📲`;
 
             document.getElementById('updOutputText').textContent = msg;
@@ -768,10 +840,10 @@
             const d = dadosAtualizacao;
             const formUrl = 'https://docs.google.com/forms/d/e/1FAIpQLSdHtDWOcHqfpjpk7qoOLFtq61wMVDc5X7LVeEoPpJtqMQ1LXg/formResponse';
             const params = new URLSearchParams({
-                'entry.460673002': d.assistente,
-                'entry.138247769': d.motId,
+                'entry.460673002':  d.assistente,
+                'entry.138247769':  d.motId,
                 'entry.1214806804': d.status,
-                'entry.437080118': d.obs || ''
+                'entry.437080118':  d.obs || ''
             });
 
             fetch(formUrl, {
