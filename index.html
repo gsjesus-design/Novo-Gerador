@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gerador Oferta - Pescadores</title>
+    <title>Gerador Aquisições</title>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: linear-gradient(135deg, #2D3277 0%, #1a1f5e 100%); padding: 20px; min-height: 100vh; }
@@ -17,10 +17,10 @@
         .tab { flex: 1; padding: 14px; text-align: center; font-size: 14px; font-weight: 600; cursor: pointer; color: #666; border-bottom: 3px solid transparent; margin-bottom: -2px; transition: all 0.2s; }
         .tab:hover { color: #2D3277; background: #f0f1fa; }
         .tab.active { color: #2D3277; border-bottom-color: #FFE600; background: white; }
-        .tab-panel { display: none; }
+        .tab-panel { display: none; background: white; }
         .tab-panel.active { display: block; }
 
-        .form-container { padding: 30px; }
+        .form-container { padding: 30px; background: white; color: #333; }
         .form-group { margin-bottom: 20px; }
         label { display: block; font-weight: 600; margin-bottom: 8px; color: #333; font-size: 14px; }
         .optional { color: #999; font-weight: 400; font-size: 12px; }
@@ -41,11 +41,11 @@
 
         /* Frota type card selector */
         .frota-selector { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; margin-bottom: 0; }
-        .frota-card { border: 2px solid #e0e0e0; border-radius: 10px; padding: 14px 10px; text-align: center; cursor: pointer; transition: all 0.2s; background: white; }
-        .frota-card:hover { border-color: #2D3277; background: #f7f8ff; }
+        .frota-card { border: 2px solid #e0e0e0; border-radius: 10px; padding: 14px 10px; text-align: center; cursor: pointer; transition: all 0.2s; background: white; color: #333; }
+        .frota-card:hover { border-color: #2D3277; background: #f7f8ff; color: #2D3277; }
         .frota-card.selected { border-color: #2D3277; background: #2D3277; color: white; }
         .frota-card .frota-icon { font-size: 22px; display: block; margin-bottom: 6px; }
-        .frota-card .frota-label { font-size: 13px; font-weight: 600; }
+        .frota-card .frota-label { font-size: 13px; font-weight: 600; color: inherit; }
         .frota-card.selected .frota-label { color: #FFE600; }
 
         /* Divider for conditional sections */
@@ -97,7 +97,7 @@
 <body>
     <div class="container">
         <div class="header">
-            <h1>🎣 Gerador Oferta - Pescadores</h1>
+            <h1>🎯 Gerador Aquisições</h1>
             <p>Preencha os campos abaixo para gerar a mensagem de oferta</p>
         </div>
         <!-- Tab nav -->
@@ -202,11 +202,18 @@
                     <div class="field-error" id="err-cnpjAntt">CNPJ inválido.</div>
                 </div>
 
-                <!-- ID Master -->
-                <div class="form-group">
+                <!-- ID Master (Spot / ETC) -->
+                <div class="form-group" id="idMasterGroup">
                     <label for="idMaster">ID Master</label>
-                    <input type="text" id="idMaster" placeholder="Ex: 123456" required>
+                    <input type="text" id="idMaster" placeholder="Ex: 123456">
                     <div class="field-error" id="err-idMaster">Preencha o ID Master.</div>
+                </div>
+
+                <!-- Demanda (Frota Fixa) -->
+                <div class="form-group" id="demandaGroup" style="display:none;">
+                    <label for="demanda">Demanda</label>
+                    <input type="text" id="demanda" placeholder="Ex: FF_16707">
+                    <div class="field-error" id="err-demanda">Preencha a demanda.</div>
                 </div>
 
                 <!-- Cavalo + Cluster -->
@@ -396,6 +403,199 @@
                 <div class="output-text" id="updOutputText"></div>
                 <div id="updStatusMessage" class="status-message"></div>
             </div>
+
+            <!-- Divisor Mensagem Final -->
+            <hr style="border: none; border-top: 3px solid #2D3277; margin: 40px 0 30px;">
+            <h2 style="color: #2D3277; font-size: 18px; margin-bottom: 6px;">📢 Mensagem Final</h2>
+            <p style="color: #666; font-size: 13px; margin-bottom: 24px;">Gere a mensagem completa para envio no grupo. Nenhum dado é salvo.</p>
+
+            <form id="finalForm">
+                <!-- Assistente -->
+                <div class="form-group">
+                    <label for="fin-assistente">Nome do Assistente</label>
+                    <select id="fin-assistente" required>
+                        <option value="">Selecione...</option>
+                        <option value="Carlos">Carlos</option><option value="Claudio">Claudio</option><option value="Eloisa">Eloisa</option><option value="Fabricio">Fabricio</option><option value="Gabriel">Gabriel</option><option value="Gabrielle">Gabrielle</option><option value="Italo">Italo</option><option value="Joyce">Joyce</option><option value="Laisla">Laisla</option><option value="Lara">Lara</option><option value="Larissa">Larissa</option><option value="Lucas">Lucas</option><option value="Lucas Costa">Lucas Costa</option><option value="Maria Soares">Maria Soares</option><option value="Mariana">Mariana</option><option value="Matheus">Matheus</option><option value="Sabrina">Sabrina</option><option value="Sophia Mariana">Sophia Mariana</option><option value="Thaisline">Thaisline</option><option value="Thiago">Thiago</option><option value="Tuane">Tuane</option><option value="Vanderleia">Vanderleia</option><option value="Vinicius">Vinicius</option><option value="Vinny">Vinny</option><option value="Vitor">Vitor</option>
+                    </select>
+                    <div class="field-error" id="err-fin-assistente">Selecione o assistente.</div>
+                </div>
+
+                <!-- SVC/XD -->
+                <div class="form-group">
+                    <label for="fin-svcxd">SVC/XD</label>
+                    <div class="autocomplete-wrapper">
+                        <input type="text" id="fin-svcxd" placeholder="Digite para buscar..." required autocomplete="off">
+                        <div class="autocomplete-list" id="fin-svcxdList"></div>
+                    </div>
+                    <div class="field-error" id="err-fin-svcxd">Preencha o SVC/XD.</div>
+                </div>
+
+                <!-- Motorista -->
+                <div class="form-group">
+                    <label for="fin-motorista">Motorista</label>
+                    <input type="text" id="fin-motorista" placeholder="Nome completo do motorista" required>
+                    <div class="field-error" id="err-fin-motorista">Preencha o nome do motorista.</div>
+                </div>
+
+                <!-- CPF + Tel -->
+                <div class="grid">
+                    <div class="form-group">
+                        <label for="fin-cpf">CPF</label>
+                        <input type="text" id="fin-cpf" placeholder="000.000.000-00" maxlength="14">
+                    </div>
+                    <div class="form-group">
+                        <label for="fin-tel">Telefone</label>
+                        <input type="text" id="fin-tel" placeholder="5511999999999" maxlength="13">
+                        <div class="input-hint">DDI + DDD + número, sem espaços ou traços</div>
+                    </div>
+                </div>
+
+                <!-- Perfil + Placa -->
+                <div class="grid">
+                    <div class="form-group">
+                        <label for="fin-perfil">Perfil do Veículo</label>
+                        <select id="fin-perfil" required>
+                            <option value="">Selecione...</option>
+                            <option value="PASSEIO">PASSEIO</option><option value="UTILITÁRIO">UTILITÁRIO</option><option value="VAN">VAN</option><option value="HR">HR</option><option value="VUC">VUC</option><option value="MÉDIO">MÉDIO</option><option value="TOCO">TOCO</option><option value="TRUCK">TRUCK</option><option value="CARRETA">CARRETA</option>
+                        </select>
+                        <div class="field-error" id="err-fin-perfil">Selecione o perfil.</div>
+                    </div>
+                    <div class="form-group">
+                        <label for="fin-placa">Placa</label>
+                        <input type="text" id="fin-placa" placeholder="DGI-1E74" required>
+                        <div class="field-error" id="err-fin-placa">Preencha a placa.</div>
+                    </div>
+                </div>
+
+                <!-- E-mail -->
+                <div class="form-group">
+                    <label for="fin-email">E-mail <span class="optional">(opcional)</span></label>
+                    <input type="email" id="fin-email" placeholder="exemplo@gmail.com">
+                </div>
+
+                <!-- Titular ANTT -->
+                <div class="form-group">
+                    <label for="fin-titularAntt">Titular ANTT <span class="optional">(opcional)</span></label>
+                    <input type="text" id="fin-titularAntt" placeholder="Nome do titular ANTT">
+                </div>
+
+                <!-- ID Master / Demanda -->
+                <div class="form-group">
+                    <label for="fin-idMaster">ID Master / Demanda</label>
+                    <input type="text" id="fin-idMaster" placeholder="Ex: 123456 ou FF_16707" required>
+                    <div class="field-error" id="err-fin-idMaster">Preencha o ID Master ou Demanda.</div>
+                </div>
+
+                <!-- Cavalo + Cluster -->
+                <div class="grid">
+                    <div class="form-group">
+                        <label for="fin-cavalo">Cavalo <span class="optional">(opcional)</span></label>
+                        <input type="text" id="fin-cavalo" placeholder="NYH-5961">
+                    </div>
+                    <div class="form-group">
+                        <label for="fin-cluster">Cluster <span class="optional">(opcional)</span></label>
+                        <input type="text" id="fin-cluster" placeholder="4 ou 6.1">
+                    </div>
+                </div>
+
+                <!-- Tipo de Frota -->
+                <div class="form-group">
+                    <label>Tipo de Frota</label>
+                    <div class="frota-selector" id="fin-frotaSelector">
+                        <div class="frota-card" onclick="selectFinFrota('Frota Fixa', this)">
+                            <span class="frota-icon">🏢</span>
+                            <span class="frota-label">Frota Fixa</span>
+                        </div>
+                        <div class="frota-card" onclick="selectFinFrota('Spot', this)">
+                            <span class="frota-icon">⚡</span>
+                            <span class="frota-label">Spot</span>
+                        </div>
+                        <div class="frota-card" onclick="selectFinFrota('ETC', this)">
+                            <span class="frota-icon">🔗</span>
+                            <span class="frota-label">ETC</span>
+                        </div>
+                    </div>
+                    <div class="field-error" id="err-fin-frota">Selecione o tipo de frota.</div>
+                </div>
+
+                <!-- Milha (Frota Fixa / Spot) -->
+                <div class="form-group" id="fin-milhaGroup" style="display:none;">
+                    <label for="fin-milha">Milha</label>
+                    <select id="fin-milha">
+                        <option value="">Selecione...</option>
+                        <option value="First Mile">First Mile</option>
+                        <option value="Last Mile">Last Mile</option>
+                        <option value="Full">Full</option>
+                    </select>
+                </div>
+
+                <!-- Nome ETC -->
+                <div class="form-group" id="fin-etcGroup" style="display:none;">
+                    <label for="fin-nomeETC">Nome da ETC</label>
+                    <input type="text" id="fin-nomeETC" placeholder="Ex: 3A+ Kangu">
+                </div>
+
+                <!-- Etapa / Status Final -->
+                <div class="form-group">
+                    <label>Etapa / Status Final</label>
+                    <div class="frota-selector" id="fin-etapaSelector" style="grid-template-columns: repeat(5, 1fr);">
+                        <div class="frota-card" onclick="selectFinEtapa('envios', this)">
+                            <span class="frota-icon">📦</span>
+                            <span class="frota-label">Envios Extra</span>
+                        </div>
+                        <div class="frota-card" onclick="selectFinEtapa('logistics', this)">
+                            <span class="frota-icon">🚚</span>
+                            <span class="frota-label">Logistics</span>
+                        </div>
+                        <div class="frota-card" onclick="selectFinEtapa('onboarding', this)">
+                            <span class="frota-icon">🎓</span>
+                            <span class="frota-label">Onboarding</span>
+                        </div>
+                        <div class="frota-card" onclick="selectFinEtapa('liberado', this)">
+                            <span class="frota-icon">✅</span>
+                            <span class="frota-label">Liberado</span>
+                        </div>
+                        <div class="frota-card" onclick="selectFinEtapa('encerrado', this)">
+                            <span class="frota-icon">🚫</span>
+                            <span class="frota-label">Encerrado</span>
+                        </div>
+                    </div>
+                    <div class="field-error" id="err-fin-etapa">Selecione a etapa.</div>
+                </div>
+
+                <!-- Status por etapa -->
+                <div class="form-group" id="fin-statusGroup" style="display:none;">
+                    <label for="fin-status">Status</label>
+                    <select id="fin-status">
+                        <option value="">Selecione...</option>
+                    </select>
+                    <div class="field-error" id="err-fin-status">Selecione o status.</div>
+                </div>
+
+                <!-- Data disponibilidade (Liberado) -->
+                <div class="form-group" id="fin-dataDispGroup" style="display:none;">
+                    <label for="fin-dataDisp">Data de Disponibilidade</label>
+                    <input type="date" id="fin-dataDisp">
+                </div>
+
+                <!-- Obs -->
+                <div class="form-group">
+                    <label for="fin-obs">Observação <span class="optional">(opcional)</span></label>
+                    <textarea id="fin-obs" rows="2" placeholder="Ex: Motorista liberado para operação."></textarea>
+                </div>
+
+                <button type="submit" class="btn" style="background: linear-gradient(135deg, #1a6e3c 0%, #145c31 100%); color: #fff;">📢 Gerar Mensagem Final</button>
+            </form>
+
+            <div class="output-container" id="finOutputContainer">
+                <div class="output-header">
+                    <h3>📢 Mensagem Final Gerada:</h3>
+                    <div class="btn-group">
+                        <button class="copy-btn" id="finCopyBtn">📋 Copiar</button>
+                    </div>
+                </div>
+                <div class="output-text" id="finOutputText"></div>
+            </div>
         </div>
         </div><!-- /#tab-atualizar -->
 
@@ -456,19 +656,30 @@
             document.getElementById('frotaTipo').value = valor;
             document.getElementById('err-frotaTipo').style.display = 'none';
 
-            const secFS = document.getElementById('sectionFrotaSpot');
+            const secFS  = document.getElementById('sectionFrotaSpot');
             const secETC = document.getElementById('sectionETC');
+            const idMasterGroup = document.getElementById('idMasterGroup');
+            const demandaGroup  = document.getElementById('demandaGroup');
+
+            // Toggle ID Master vs Demanda
+            if (valor === 'Frota Fixa') {
+                idMasterGroup.style.display = 'none';
+                document.getElementById('idMaster').value = '';
+                demandaGroup.style.display = 'block';
+            } else {
+                idMasterGroup.style.display = 'block';
+                demandaGroup.style.display = 'none';
+                document.getElementById('demanda').value = '';
+            }
 
             if (valor === 'ETC') {
                 secFS.classList.remove('visible');
                 secETC.classList.add('visible');
-                // clear frota fixa/spot fields
                 document.getElementById('milha').value = '';
                 document.getElementById('status').value = '';
             } else {
                 secETC.classList.remove('visible');
                 secFS.classList.add('visible');
-                // clear ETC field
                 document.getElementById('nomeETC').value = '';
                 document.getElementById('statusETC').value = '';
             }
@@ -570,8 +781,14 @@
             if (!document.getElementById('titularAntt').value.trim()) { showError('titularAntt', true); ok = false; } else showError('titularAntt', false);
             // CNPJ
             if (document.getElementById('tipoAntt').value === 'PJ' && !validarCNPJ(document.getElementById('cnpjAntt').value)) { showError('cnpjAntt', true); ok = false; } else showError('cnpjAntt', false);
-            // ID Master
-            if (!document.getElementById('idMaster').value.trim()) { showError('idMaster', true); ok = false; } else showError('idMaster', false);
+            // ID Master ou Demanda dependendo da frota
+            if (frotaSelecionada === 'Frota Fixa') {
+                if (!document.getElementById('demanda').value.trim()) { showError('demanda', true); ok = false; } else showError('demanda', false);
+                showError('idMaster', false);
+            } else {
+                if (!document.getElementById('idMaster').value.trim()) { showError('idMaster', true); ok = false; } else showError('idMaster', false);
+                showError('demanda', false);
+            }
             // Tipo de frota
             if (!frotaSelecionada) { document.getElementById('err-frotaTipo').style.display = 'block'; ok = false; } else document.getElementById('err-frotaTipo').style.display = 'none';
 
@@ -609,7 +826,8 @@
             const tipoAntt     = document.getElementById('tipoAntt').value;
             const titularAntt  = document.getElementById('titularAntt').value.toUpperCase();
             const cnpjAntt     = tipoAntt === 'PJ' ? document.getElementById('cnpjAntt').value : '';
-            const idMaster     = document.getElementById('idMaster').value.trim();
+            const idMaster     = frotaSelecionada === 'Frota Fixa' ? '' : document.getElementById('idMaster').value.trim();
+            const demanda      = frotaSelecionada === 'Frota Fixa' ? document.getElementById('demanda').value.trim() : '';
             const cavalo       = document.getElementById('cavalo').value.trim() || '-';
             const cluster      = document.getElementById('cluster').value.trim() || '-';
             const linkInfobip  = document.getElementById('linkInfobip').value.trim();
@@ -628,7 +846,7 @@
 
             const motId = gerarMotId();
 
-            dadosContratacao = { motId, assistente, idMaster, nome: motorista, telefone: tel, placa, cavalo, cpf: cpfLimpo, cluster, perfilVeiculo: perfil, frota, nomeETC, status, milha, email, titularAntt, cnpjAntt, linkInfobip };
+            dadosContratacao = { motId, assistente, svcxd, idMaster, demanda, nome: motorista, telefone: tel, placa: placa.replace('-', ''), cavalo, cpf: cpfLimpo, cluster, perfilVeiculo: perfil, frota, nomeETC, status, milha, email, titularAntt, cnpjAntt, linkInfobip };
 
             // Build message
             let msg = `CONTRATAÇÃO: ${svcxd}`;
@@ -640,7 +858,11 @@
             msg += `\n• E-mail: ${email}`;
             msg += `\n• Titular ANTT: ${titularAntt}`;
             if (cnpjAntt) msg += `\n• CNPJ ANTT: ${cnpjAntt}`;
-            msg += `\n• ID Master: ${idMaster}`;
+            if (frota === 'Frota Fixa') {
+                msg += `\n• Demanda: ${demanda}`;
+            } else {
+                msg += `\n• ID Master: ${idMaster}`;
+            }
             if (cavalo !== '-') msg += `\n• Cavalo: ${cavalo}`;
             if (cluster !== '-') msg += `\n• Cluster: ${cluster}`;
             msg += `\n• Frota: ${frota}`;
@@ -701,7 +923,8 @@
             const formUrl = 'https://docs.google.com/forms/d/e/1FAIpQLSdMSS9qMir5cKO1EaRtfD9jiUJ-P10vFgIpsvuHjOYP5M-Ruw/formResponse';
             const params = new URLSearchParams({
                 'entry.118653231':  d.assistente,
-                'entry.629714921':  d.idMaster,
+                'entry.1890213488': d.svcxd,
+                'entry.629714921':  d.frota === 'Frota Fixa' ? d.demanda : d.idMaster,
                 'entry.1582796223': d.motId,
                 'entry.576486990':  d.nome,
                 'entry.1568441095': d.telefone,
@@ -747,7 +970,7 @@
             envios:     ['Em andamento', 'Erro', 'Concluído'],
             logistics:  ['Em andamento', 'Erro', 'Concluído'],
             onboarding: ['Em treinamento', 'Declínio sem treinamento', 'Declínio com treinamento', 'Concluído'],
-            liberado:   ['Primeira rota'],
+            liberado:   ['Data de Disponibilidade', 'Primeira rota'],
             encerrado:  ['Suspenso/Bloqueado']
         };
         const etapaLabel = {
@@ -868,6 +1091,144 @@
             s.textContent = mensagem;
             s.style.display = 'block';
         }
+
+        // ── Mensagem Final ───────────────────────────────────────────────────
+
+        // SVC/XD autocomplete for final form
+        const finSvcxdInput = document.getElementById('fin-svcxd');
+        const finSvcxdList  = document.getElementById('fin-svcxdList');
+        finSvcxdInput.addEventListener('input', function() {
+            const val = this.value.toLowerCase();
+            finSvcxdList.innerHTML = '';
+            if (!val) { finSvcxdList.style.display = 'none'; return; }
+            const filtered = svcxdOptions.filter(o => o.toLowerCase().includes(val));
+            if (!filtered.length) { finSvcxdList.style.display = 'none'; return; }
+            filtered.forEach(opt => {
+                const item = document.createElement('div');
+                item.className = 'autocomplete-item';
+                item.textContent = opt;
+                item.addEventListener('click', () => { finSvcxdInput.value = opt; finSvcxdList.style.display = 'none'; });
+                finSvcxdList.appendChild(item);
+            });
+            finSvcxdList.style.display = 'block';
+        });
+
+        // Masks for final form
+        document.getElementById('fin-cpf').addEventListener('input', function(e) {
+            let v = e.target.value.replace(/\D/g, '');
+            v = v.replace(/(\d{3})(\d)/, '$1.$2');
+            v = v.replace(/(\d{3})(\d)/, '$1.$2');
+            v = v.replace(/(\d{3})(\d{1,2})$/, '$1-$2');
+            e.target.value = v;
+        });
+        document.getElementById('fin-tel').addEventListener('input', function(e) {
+            e.target.value = e.target.value.replace(/\D/g, '').slice(0, 13);
+        });
+        document.getElementById('fin-motorista').addEventListener('input', function() { this.value = this.value.toUpperCase(); });
+        document.getElementById('fin-placa').addEventListener('input', function() { this.value = this.value.toUpperCase(); });
+        document.getElementById('fin-titularAntt').addEventListener('input', function() { this.value = this.value.toUpperCase(); });
+
+        // Frota selector for final form
+        let finFrotaSelecionada = '';
+        function selectFinFrota(valor, card) {
+            document.querySelectorAll('#fin-frotaSelector .frota-card').forEach(c => c.classList.remove('selected'));
+            card.classList.add('selected');
+            finFrotaSelecionada = valor;
+            document.getElementById('err-fin-frota').style.display = 'none';
+            document.getElementById('fin-milhaGroup').style.display = (valor === 'Frota Fixa' || valor === 'Spot') ? 'block' : 'none';
+            document.getElementById('fin-etcGroup').style.display = valor === 'ETC' ? 'block' : 'none';
+        }
+
+        // Etapa selector for final form
+        let finEtapaSelecionada = '';
+        function selectFinEtapa(valor, card) {
+            document.querySelectorAll('#fin-etapaSelector .frota-card').forEach(c => c.classList.remove('selected'));
+            card.classList.add('selected');
+            finEtapaSelecionada = valor;
+            document.getElementById('err-fin-etapa').style.display = 'none';
+
+            const statusSelect = document.getElementById('fin-status');
+            statusSelect.innerHTML = '<option value="">Selecione...</option>';
+            etapaStatus[valor].forEach(s => {
+                const o = document.createElement('option');
+                o.value = s; o.textContent = s;
+                statusSelect.appendChild(o);
+            });
+            document.getElementById('fin-statusGroup').style.display = 'block';
+            document.getElementById('fin-dataDispGroup').style.display = valor === 'liberado' ? 'block' : 'none';
+        }
+
+        // Final form submit
+        document.getElementById('finalForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            let ok = true;
+
+            const assistente  = document.getElementById('fin-assistente').value;
+            const svcxd       = document.getElementById('fin-svcxd').value.trim();
+            const motorista   = document.getElementById('fin-motorista').value.toUpperCase();
+            const cpf         = document.getElementById('fin-cpf').value;
+            const tel         = document.getElementById('fin-tel').value;
+            const perfil      = document.getElementById('fin-perfil').value;
+            const placa       = document.getElementById('fin-placa').value.toUpperCase();
+            const email       = document.getElementById('fin-email').value.trim();
+            const titularAntt = document.getElementById('fin-titularAntt').value.toUpperCase();
+            const idMaster    = document.getElementById('fin-idMaster').value.trim();
+            const cavalo      = document.getElementById('fin-cavalo').value.trim();
+            const cluster     = document.getElementById('fin-cluster').value.trim();
+            const milha       = document.getElementById('fin-milha').value;
+            const nomeETC     = document.getElementById('fin-nomeETC').value.trim();
+            const status      = document.getElementById('fin-status').value;
+            const dataDisp    = document.getElementById('fin-dataDisp').value;
+            const obs         = document.getElementById('fin-obs').value.trim();
+
+            // Validations
+            if (!assistente) { document.getElementById('err-fin-assistente').style.display = 'block'; ok = false; } else document.getElementById('err-fin-assistente').style.display = 'none';
+            if (!svcxd)      { document.getElementById('err-fin-svcxd').style.display = 'block'; ok = false; }      else document.getElementById('err-fin-svcxd').style.display = 'none';
+            if (!motorista)  { document.getElementById('err-fin-motorista').style.display = 'block'; ok = false; }  else document.getElementById('err-fin-motorista').style.display = 'none';
+            if (!perfil)     { document.getElementById('err-fin-perfil').style.display = 'block'; ok = false; }     else document.getElementById('err-fin-perfil').style.display = 'none';
+            if (!placa)      { document.getElementById('err-fin-placa').style.display = 'block'; ok = false; }      else document.getElementById('err-fin-placa').style.display = 'none';
+            if (!idMaster)   { document.getElementById('err-fin-idMaster').style.display = 'block'; ok = false; }  else document.getElementById('err-fin-idMaster').style.display = 'none';
+            if (!finFrotaSelecionada) { document.getElementById('err-fin-frota').style.display = 'block'; ok = false; } else document.getElementById('err-fin-frota').style.display = 'none';
+            if (!finEtapaSelecionada) { document.getElementById('err-fin-etapa').style.display = 'block'; ok = false; } else document.getElementById('err-fin-etapa').style.display = 'none';
+            if (finEtapaSelecionada && !status) { document.getElementById('err-fin-status').style.display = 'block'; ok = false; } else document.getElementById('err-fin-status').style.display = 'none';
+
+            if (!ok) return;
+
+            const etapaNome = etapaLabel[finEtapaSelecionada];
+
+            let msg = `CONTRATAÇÃO: ${svcxd}`;
+            msg += `\n• Motorista: ${motorista}`;
+            if (cpf) msg += `\n• CPF: ${cpf}`;
+            if (tel) msg += `\n• Tel: ${tel}`;
+            msg += `\n• Perfil do Veículo: ${perfil}`;
+            msg += `\n• Placa: ${placa}`;
+            if (email) msg += `\n• E-mail: ${email}`;
+            if (titularAntt) msg += `\n• Titular ANTT: ${titularAntt}`;
+            msg += `\n• ID Master/Demanda: ${idMaster}`;
+            if (cavalo) msg += `\n• Cavalo: ${cavalo}`;
+            if (cluster) msg += `\n• Cluster: ${cluster}`;
+            msg += `\n• Frota: ${finFrotaSelecionada}`;
+            if (finFrotaSelecionada === 'ETC' && nomeETC) msg += `\n• ETC: ${nomeETC}`;
+            if (milha) msg += `\n• Milha: ${milha}`;
+            msg += `\n• Etapa: ${etapaNome}`;
+            msg += `\n• Status: ${status}`;
+            if (finEtapaSelecionada === 'liberado' && dataDisp) {
+                const dataFmt = new Date(dataDisp + 'T12:00:00').toLocaleDateString('pt-BR');
+                msg += `\n• Data de Disponibilidade: ${dataFmt}`;
+            }
+            if (obs) msg += `\n${obs} 📲`;
+
+            document.getElementById('finOutputText').textContent = msg;
+            document.getElementById('finOutputContainer').style.display = 'block';
+            document.getElementById('finOutputContainer').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        });
+
+        document.getElementById('finCopyBtn').addEventListener('click', function() {
+            navigator.clipboard.writeText(document.getElementById('finOutputText').textContent).then(() => {
+                this.textContent = '✅ Copiado!'; this.classList.add('copied');
+                setTimeout(() => { this.textContent = '📋 Copiar'; this.classList.remove('copied'); }, 2000);
+            });
+        });
     </script>
 </body>
 </html>
