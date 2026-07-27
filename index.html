@@ -202,6 +202,27 @@
                     <div class="field-error" id="err-cnpjAntt">CNPJ inválido.</div>
                 </div>
 
+                <!-- Tipo de Frota (card selector) -->
+                <div class="form-group">
+                    <label>Tipo de Frota</label>
+                    <div class="frota-selector" id="frotaSelector">
+                        <div class="frota-card" data-value="Frota Fixa" onclick="selectFrota('Frota Fixa', this)">
+                            <span class="frota-icon">🏢</span>
+                            <span class="frota-label">Frota Fixa</span>
+                        </div>
+                        <div class="frota-card" data-value="Spot" onclick="selectFrota('Spot', this)">
+                            <span class="frota-icon">⚡</span>
+                            <span class="frota-label">Spot</span>
+                        </div>
+                        <div class="frota-card" data-value="ETC" onclick="selectFrota('ETC', this)">
+                            <span class="frota-icon">🔗</span>
+                            <span class="frota-label">ETC</span>
+                        </div>
+                    </div>
+                    <input type="hidden" id="frotaTipo" required>
+                    <div class="field-error" id="err-frotaTipo">Selecione o tipo de frota.</div>
+                </div>
+
                 <!-- ID Master (Spot / ETC) -->
                 <div class="form-group" id="idMasterGroup">
                     <label for="idMaster">ID Master</label>
@@ -226,27 +247,6 @@
                         <label for="cluster">Cluster <span class="optional">(opcional)</span></label>
                         <input type="text" id="cluster" placeholder="4 ou 6.1">
                     </div>
-                </div>
-
-                <!-- Tipo de Frota (card selector) -->
-                <div class="form-group">
-                    <label>Tipo de Frota</label>
-                    <div class="frota-selector" id="frotaSelector">
-                        <div class="frota-card" data-value="Frota Fixa" onclick="selectFrota('Frota Fixa', this)">
-                            <span class="frota-icon">🏢</span>
-                            <span class="frota-label">Frota Fixa</span>
-                        </div>
-                        <div class="frota-card" data-value="Spot" onclick="selectFrota('Spot', this)">
-                            <span class="frota-icon">⚡</span>
-                            <span class="frota-label">Spot</span>
-                        </div>
-                        <div class="frota-card" data-value="ETC" onclick="selectFrota('ETC', this)">
-                            <span class="frota-icon">🔗</span>
-                            <span class="frota-label">ETC</span>
-                        </div>
-                    </div>
-                    <input type="hidden" id="frotaTipo" required>
-                    <div class="field-error" id="err-frotaTipo">Selecione o tipo de frota.</div>
                 </div>
 
                 <!-- Campos: Frota Fixa ou Spot -->
@@ -383,6 +383,13 @@
                     <label for="upd-dataDisp">Data de Disponibilidade</label>
                     <input type="date" id="upd-dataDisp">
                     <div class="field-error" id="err-upd-dataDisp">Preencha a data.</div>
+                </div>
+
+                <!-- Campo extra: Data Primeira Rota (só Liberado + Primeira rota) -->
+                <div class="form-group" id="upd-dataPrimeiraRota-group" style="display:none;">
+                    <label for="upd-dataPrimeiraRota">Data da Primeira Rota</label>
+                    <input type="date" id="upd-dataPrimeiraRota">
+                    <div class="field-error" id="err-upd-dataPrimeiraRota">Preencha a data.</div>
                 </div>
 
                 <div class="form-group">
@@ -995,6 +1002,14 @@
 
             // Data disponibilidade só aparece em Liberado
             document.getElementById('upd-dataDisp-group').style.display = valor === 'liberado' ? 'block' : 'none';
+            // Primeira rota date só aparece quando status for selecionado (handled on status change)
+            document.getElementById('upd-dataPrimeiraRota-group').style.display = 'none';
+
+            // Listen for status change to show/hide Primeira Rota date
+            statusSelect.onchange = function() {
+                document.getElementById('upd-dataPrimeiraRota-group').style.display =
+                    (valor === 'liberado' && this.value === 'Primeira rota') ? 'block' : 'none';
+            };
         }
 
         // ── Update form ──────────────────────────────────────────────────────
@@ -1010,6 +1025,7 @@
             const status     = document.getElementById('upd-status').value;
             const obs        = document.getElementById('upd-obs').value.trim();
             const dataDisp   = document.getElementById('upd-dataDisp').value;
+            const dataPrimeiraRota = document.getElementById('upd-dataPrimeiraRota').value;
 
             const errAss  = document.getElementById('err-upd-assistente');
             const errId   = document.getElementById('err-upd-motId');
@@ -1023,17 +1039,24 @@
             if (etapaSelecionada === 'liberado' && !dataDisp) {
                 document.getElementById('err-upd-dataDisp').style.display = 'block'; ok = false;
             } else { document.getElementById('err-upd-dataDisp').style.display = 'none'; }
+            if (etapaSelecionada === 'liberado' && status === 'Primeira rota' && !dataPrimeiraRota) {
+                document.getElementById('err-upd-dataPrimeiraRota').style.display = 'block'; ok = false;
+            } else { document.getElementById('err-upd-dataPrimeiraRota').style.display = 'none'; }
 
             if (!ok) return;
 
             const etapaNome = etapaLabel[etapaSelecionada];
             const novoStatus = `${etapaNome}: ${status}`;
-            dadosAtualizacao = { assistente, motId, etapa: etapaNome, status: novoStatus, obs, dataDisp };
+            dadosAtualizacao = { assistente, motId, etapa: etapaNome, status: novoStatus, obs, dataDisp, dataPrimeiraRota };
 
             let msg = `ATUALIZAÇÃO DE STATUS\n• ID Motorista: ${motId}\n• Etapa: ${etapaNome}\n• Status: ${status}`;
             if (etapaSelecionada === 'liberado' && dataDisp) {
                 const dataFmt = new Date(dataDisp + 'T12:00:00').toLocaleDateString('pt-BR');
                 msg += `\n• Data de Disponibilidade: ${dataFmt}`;
+            }
+            if (etapaSelecionada === 'liberado' && status === 'Primeira rota' && dataPrimeiraRota) {
+                const dataFmt = new Date(dataPrimeiraRota + 'T12:00:00').toLocaleDateString('pt-BR');
+                msg += `\n• Data da Primeira Rota: ${dataFmt}`;
             }
             msg += `\n• Assistente: ${assistente}`;
             if (obs) msg += `\n• Obs: ${obs} 📲`;
@@ -1066,7 +1089,9 @@
                 'entry.460673002':  d.assistente,
                 'entry.138247769':  d.motId,
                 'entry.1214806804': d.status,
-                'entry.437080118':  d.obs || ''
+                'entry.437080118':  d.obs || '',
+                'entry.130490292':  d.dataDisp || '',
+                'entry.104548462':  d.dataPrimeiraRota || ''
             });
 
             fetch(formUrl, {
