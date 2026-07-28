@@ -44,6 +44,12 @@
         .frota-card { border: 2px solid #e0e0e0; border-radius: 10px; padding: 14px 10px; text-align: center; cursor: pointer; transition: all 0.2s; background: white; color: #333; }
         .frota-card:hover { border-color: #2D3277; background: #f7f8ff; color: #2D3277; }
         .frota-card.selected { border-color: #2D3277; background: #2D3277; color: white; }
+        .frota-card[data-etapa="encerrado"].selected { border-color: #dc3545; background: #dc3545; color: white; }
+        .frota-card[data-etapa="encerrado"].selected .frota-label { color: white; }
+        .encerrado-card { background: #dc3545 !important; border-color: #dc3545 !important; color: white !important; }
+        .encerrado-card .frota-label { color: white !important; }
+        .encerrado-card:hover { background: #c0392b !important; border-color: #c0392b !important; }
+        .encerrado-card.selected { background: #c0392b !important; border-color: #c0392b !important; }
         .frota-card .frota-icon { font-size: 22px; display: block; margin-bottom: 6px; }
         .frota-card .frota-label { font-size: 13px; font-weight: 600; color: inherit; }
         .frota-card.selected .frota-label { color: #FFE600; }
@@ -269,6 +275,8 @@
                             <option value="Enviado para cadastro">Enviado para cadastro</option>
                             <option value="Suspenso/Bloqueado">Suspenso/Bloqueado</option>
                             <option value="Placa Bloqueada">Placa Bloqueada</option>
+                            <option value="Falta de interação">Falta de interação</option>
+                            <option value="Recusa">Recusa</option>
                         </select>
                         <div class="field-error" id="err-status">Selecione o status.</div>
                     </div>
@@ -289,6 +297,8 @@
                             <option value="Enviado para cadastro">Enviado para cadastro</option>
                             <option value="Suspenso/Bloqueado">Suspenso/Bloqueado</option>
                             <option value="Placa Bloqueada">Placa Bloqueada</option>
+                            <option value="Falta de interação">Falta de interação</option>
+                            <option value="Recusa">Recusa</option>
                         </select>
                         <div class="field-error" id="err-statusETC">Selecione o status.</div>
                     </div>
@@ -363,7 +373,7 @@
                             <span class="frota-icon">✅</span>
                             <span class="frota-label">Liberado</span>
                         </div>
-                        <div class="frota-card" data-etapa="encerrado" onclick="selectEtapa('encerrado', this)">
+                        <div class="frota-card encerrado-card" data-etapa="encerrado" onclick="selectEtapa('encerrado', this)">
                             <span class="frota-icon">🚫</span>
                             <span class="frota-label">Encerrado</span>
                         </div>
@@ -978,8 +988,8 @@
             envios:     ['Em andamento', 'Erro', 'Concluído'],
             logistics:  ['Em andamento', 'Erro', 'Concluído'],
             onboarding: ['Em treinamento', 'Declínio sem treinamento', 'Declínio com treinamento', 'Concluído'],
-            liberado:   ['Data de Disponibilidade', 'Primeira rota'],
-            encerrado:  ['Suspenso/Bloqueado', 'Falta de interação', 'Placa Bloqueada']
+            liberado:   ['Data de Disponibilidade'],
+            encerrado:  ['Suspenso/Bloqueado', 'Falta de interação', 'Placa Bloqueada', 'Recusa']
         };
         const etapaLabel = {
             envios: 'Envios Extra', logistics: 'Logistics', onboarding: 'Onboarding', liberado: 'Liberado', encerrado: 'Encerrado'
