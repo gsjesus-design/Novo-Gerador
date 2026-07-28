@@ -176,11 +176,18 @@
                     </div>
                 </div>
 
-                <!-- E-mail -->
-                <div class="form-group">
-                    <label for="email">E-mail</label>
-                    <input type="email" id="email" placeholder="exemplo@gmail.com" required>
-                    <div class="field-error" id="err-email">E-mail inválido.</div>
+                <!-- E-mails -->
+                <div class="grid">
+                    <div class="form-group">
+                        <label for="emailAgregado">E-mail Agregado</label>
+                        <input type="email" id="emailAgregado" placeholder="exemplo@gmail.com" required>
+                        <div class="field-error" id="err-emailAgregado">E-mail inválido.</div>
+                    </div>
+                    <div class="form-group">
+                        <label for="emailMotorista">E-mail Motorista</label>
+                        <input type="email" id="emailMotorista" placeholder="exemplo@gmail.com" required>
+                        <div class="field-error" id="err-emailMotorista">E-mail inválido.</div>
+                    </div>
                 </div>
 
                 <!-- Tipo ANTT -->
@@ -276,7 +283,6 @@
                             <option value="Suspenso/Bloqueado">Suspenso/Bloqueado</option>
                             <option value="Placa Bloqueada">Placa Bloqueada</option>
                             <option value="Falta de interação">Falta de interação</option>
-                            <option value="Recusa">Recusa</option>
                         </select>
                         <div class="field-error" id="err-status">Selecione o status.</div>
                     </div>
@@ -298,7 +304,6 @@
                             <option value="Suspenso/Bloqueado">Suspenso/Bloqueado</option>
                             <option value="Placa Bloqueada">Placa Bloqueada</option>
                             <option value="Falta de interação">Falta de interação</option>
-                            <option value="Recusa">Recusa</option>
                         </select>
                         <div class="field-error" id="err-statusETC">Selecione o status.</div>
                     </div>
@@ -791,8 +796,10 @@
             // Placa
             if (!document.getElementById('placa').value.trim()) { showError('placa', true); ok = false; } else showError('placa', false);
             // E-mail
-            const email = document.getElementById('email').value;
-            if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { showError('email', true); ok = false; } else showError('email', false);
+            const emailAgregado = document.getElementById('emailAgregado').value;
+            if (!emailAgregado || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(emailAgregado)) { showError('emailAgregado', true); ok = false; } else showError('emailAgregado', false);
+            const emailMotorista = document.getElementById('emailMotorista').value;
+            if (!emailMotorista || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(emailMotorista)) { showError('emailMotorista', true); ok = false; } else showError('emailMotorista', false);
             // Tipo ANTT
             if (!document.getElementById('tipoAntt').value) { showError('tipoAntt', true); ok = false; } else showError('tipoAntt', false);
             // Titular ANTT
@@ -840,7 +847,8 @@
             const tel          = document.getElementById('tel').value.replace(/\D/g, '');
             const perfil       = document.getElementById('perfil').value;
             const placa        = document.getElementById('placa').value.toUpperCase();
-            const email        = document.getElementById('email').value;
+            const emailAgregado   = document.getElementById('emailAgregado').value;
+            const emailMotorista  = document.getElementById('emailMotorista').value.trim();
             const tipoAntt     = document.getElementById('tipoAntt').value;
             const titularAntt  = document.getElementById('titularAntt').value.toUpperCase();
             const cnpjAntt     = tipoAntt === 'PJ' ? document.getElementById('cnpjAntt').value : '';
@@ -864,7 +872,7 @@
 
             const motId = gerarMotId();
 
-            dadosContratacao = { motId, assistente, svcxd, idMaster, demanda, nome: motorista, telefone: tel, placa: placa.replace('-', ''), cavalo, cpf: cpfLimpo, cluster, perfilVeiculo: perfil, frota, nomeETC, status, milha, email, titularAntt, cnpjAntt, linkInfobip };
+            dadosContratacao = { motId, assistente, svcxd, idMaster, demanda, nome: motorista, telefone: tel, placa: placa.replace('-', ''), cavalo, cpf: cpfLimpo, cluster, perfilVeiculo: perfil, frota, nomeETC, status, milha, emailAgregado, emailMotorista, titularAntt, cnpjAntt, linkInfobip };
 
             // Build message
             let msg = `CONTRATAÇÃO: ${svcxd}`;
@@ -873,7 +881,8 @@
             msg += `\n• Tel: ${tel}`;
             msg += `\n• Perfil do Veiculo: ${perfil}`;
             msg += `\n• Placa: ${placa}`;
-            msg += `\n• E-mail: ${email}`;
+            msg += `\n• E-mail Agregado: ${emailAgregado}`;
+            if (emailMotorista) msg += `\n• E-mail Motorista: ${emailMotorista}`;
             msg += `\n• Titular ANTT: ${titularAntt}`;
             if (cnpjAntt) msg += `\n• CNPJ ANTT: ${cnpjAntt}`;
             if (frota === 'Frota Fixa') {
@@ -955,7 +964,8 @@
                 'entry.1128723438': d.frota,
                 'entry.1364628493': d.status,
                 'entry.2070097688': d.milha || '',
-                'entry.531041398':  d.email,
+                'entry.531041398':  d.emailAgregado,
+                'entry.2024196235': d.emailMotorista || '',
                 'entry.321513646':  d.titularAntt,
                 'entry.579050113':  d.cnpjAntt || '',
                 'entry.86080917':   d.linkInfobip || ''
