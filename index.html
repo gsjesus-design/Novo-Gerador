@@ -414,9 +414,6 @@
                     <label for="upd-erroTela">Tela de Erro</label>
                     <select id="upd-erroTela">
                         <option value="">Selecione o erro...</option>
-                        <option value="Erro 1 (temporário)">Erro 1 (temporário)</option>
-                        <option value="Erro 2 (temporário)">Erro 2 (temporário)</option>
-                        <option value="Erro 3 (temporário)">Erro 3 (temporário)</option>
                     </select>
                     <div class="field-error" id="err-upd-erroTela">Selecione o erro.</div>
                 </div>
@@ -1018,6 +1015,29 @@
             liberado:   ['Data de Disponibilidade'],
             encerrado:  ['Suspenso/Bloqueado', 'Falta de interação', 'Placa Bloqueada', 'Recusa']
         };
+        const errosEnviosExtra = [
+            '⚙️ Falha no Script',
+            '🚗 Placa desativada / Veículo pausado',
+            '🏦 Conta bancária / Dados bancários',
+            '🟠 Tela laranja / Problema na conta',
+            '⏱️ Limite de tentativas',
+            '📋 Convite pendente / Extra travado',
+            '📍 Experiência errada',
+            '🔴 Tarja / Tela vermelha',
+            '🔗 Conexão / Sem internet',
+            '🔌 Erro da tomada',
+            '🆕 Novo Erro'
+        ];
+        const errosLogistics = [
+            '🚫 Perfil não atende requisitos',
+            '🚛 Transportadora / CNPJ não associado',
+            '🆔 CNH / Loop / Tela branca',
+            '👥 Flotillero / Motorista inativo',
+            '🔴 Tarja / Tela vermelha',
+            '🔗 Conexão / Sem internet',
+            '🆕 Novo Erro'
+        ];
+
         const etapaLabel = {
             envios: 'Envios Extra', logistics: 'Logistics', onboarding: 'Onboarding', liberado: 'Liberado', encerrado: 'Encerrado'
         };
@@ -1051,6 +1071,18 @@
                 const isErro = (valor === 'envios' || valor === 'logistics') && this.value === 'Erro';
                 document.getElementById('upd-erroTela-group').style.display = isErro ? 'block' : 'none';
                 document.getElementById('upd-dataErro-group').style.display = isErro ? 'block' : 'none';
+
+                if (isErro) {
+                    const erroSelect = document.getElementById('upd-erroTela');
+                    erroSelect.innerHTML = '<option value="">Selecione o erro...</option>';
+                    const lista = valor === 'envios' ? errosEnviosExtra : errosLogistics;
+                    lista.forEach(e => {
+                        const o = document.createElement('option');
+                        o.value = e; o.textContent = e;
+                        erroSelect.appendChild(o);
+                    });
+                }
+
                 document.getElementById('upd-dataPrimeiraRota-group').style.display =
                     (valor === 'liberado' && this.value === 'Primeira rota') ? 'block' : 'none';
             };
