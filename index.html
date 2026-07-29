@@ -1080,7 +1080,7 @@
             const errSt   = document.getElementById('err-upd-status');
 
             if (!assistente) { errAss.style.display = 'block'; ok = false; } else errAss.style.display = 'none';
-            if (!motId || !/^MOT-\d{7}$/.test(motId)) { errId.style.display = 'block'; ok = false; } else errId.style.display = 'none';
+            if (!motId || !/^MOT-\d{5,7}$/.test(motId)) { errId.style.display = 'block'; ok = false; } else errId.style.display = 'none';
             if (!etapaSelecionada) { errEtapa.style.display = 'block'; ok = false; } else errEtapa.style.display = 'none';
             if (!status) { errSt.style.display = 'block'; ok = false; } else errSt.style.display = 'none';
             if (etapaSelecionada === 'liberado' && !dataDisp) {
