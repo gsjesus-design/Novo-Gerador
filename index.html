@@ -409,6 +409,23 @@
                     <div class="field-error" id="err-upd-dataPrimeiraRota">Preencha a data.</div>
                 </div>
 
+                <!-- Campos de Erro (só Envios Extra ou Logistics + Erro) -->
+                <div class="form-group" id="upd-erroTela-group" style="display:none;">
+                    <label for="upd-erroTela">Tela de Erro</label>
+                    <select id="upd-erroTela">
+                        <option value="">Selecione o erro...</option>
+                        <option value="Erro 1 (temporário)">Erro 1 (temporário)</option>
+                        <option value="Erro 2 (temporário)">Erro 2 (temporário)</option>
+                        <option value="Erro 3 (temporário)">Erro 3 (temporário)</option>
+                    </select>
+                    <div class="field-error" id="err-upd-erroTela">Selecione o erro.</div>
+                </div>
+                <div class="form-group" id="upd-dataErro-group" style="display:none;">
+                    <label for="upd-dataErro">Data do Erro</label>
+                    <input type="date" id="upd-dataErro">
+                    <div class="field-error" id="err-upd-dataErro">Preencha a data do erro.</div>
+                </div>
+
                 <div class="form-group">
                     <label for="upd-obs">Observação <span class="optional">(opcional)</span></label>
                     <textarea id="upd-obs" rows="2" placeholder="Ex: Motorista reativado após revisão."></textarea>
@@ -1025,9 +1042,15 @@
             document.getElementById('upd-dataDisp-group').style.display = valor === 'liberado' ? 'block' : 'none';
             // Primeira rota date só aparece quando status for selecionado (handled on status change)
             document.getElementById('upd-dataPrimeiraRota-group').style.display = 'none';
+            // Esconde campos de erro ao trocar etapa
+            document.getElementById('upd-erroTela-group').style.display = 'none';
+            document.getElementById('upd-dataErro-group').style.display = 'none';
 
-            // Listen for status change to show/hide Primeira Rota date
+            // Listen for status change to show/hide fields
             statusSelect.onchange = function() {
+                const isErro = (valor === 'envios' || valor === 'logistics') && this.value === 'Erro';
+                document.getElementById('upd-erroTela-group').style.display = isErro ? 'block' : 'none';
+                document.getElementById('upd-dataErro-group').style.display = isErro ? 'block' : 'none';
                 document.getElementById('upd-dataPrimeiraRota-group').style.display =
                     (valor === 'liberado' && this.value === 'Primeira rota') ? 'block' : 'none';
             };
@@ -1047,6 +1070,9 @@
             const obs        = document.getElementById('upd-obs').value.trim();
             const dataDisp   = document.getElementById('upd-dataDisp').value;
             const dataPrimeiraRota = document.getElementById('upd-dataPrimeiraRota').value;
+            const erroTela   = document.getElementById('upd-erroTela').value;
+            const dataErro   = document.getElementById('upd-dataErro').value;
+            const isErro     = (etapaSelecionada === 'envios' || etapaSelecionada === 'logistics') && status === 'Erro';
 
             const errAss  = document.getElementById('err-upd-assistente');
             const errId   = document.getElementById('err-upd-motId');
@@ -1054,7 +1080,7 @@
             const errSt   = document.getElementById('err-upd-status');
 
             if (!assistente) { errAss.style.display = 'block'; ok = false; } else errAss.style.display = 'none';
-            if (!motId || !/^MOT-\d{5}$/.test(motId)) { errId.style.display = 'block'; ok = false; } else errId.style.display = 'none';
+            if (!motId || !/^MOT-\d{7}$/.test(motId)) { errId.style.display = 'block'; ok = false; } else errId.style.display = 'none';
             if (!etapaSelecionada) { errEtapa.style.display = 'block'; ok = false; } else errEtapa.style.display = 'none';
             if (!status) { errSt.style.display = 'block'; ok = false; } else errSt.style.display = 'none';
             if (etapaSelecionada === 'liberado' && !dataDisp) {
@@ -1063,14 +1089,25 @@
             if (etapaSelecionada === 'liberado' && status === 'Primeira rota' && !dataPrimeiraRota) {
                 document.getElementById('err-upd-dataPrimeiraRota').style.display = 'block'; ok = false;
             } else { document.getElementById('err-upd-dataPrimeiraRota').style.display = 'none'; }
+            if (isErro && !erroTela) {
+                document.getElementById('err-upd-erroTela').style.display = 'block'; ok = false;
+            } else { document.getElementById('err-upd-erroTela').style.display = 'none'; }
+            if (isErro && !dataErro) {
+                document.getElementById('err-upd-dataErro').style.display = 'block'; ok = false;
+            } else { document.getElementById('err-upd-dataErro').style.display = 'none'; }
 
             if (!ok) return;
 
             const etapaNome = etapaLabel[etapaSelecionada];
             const novoStatus = `${etapaNome}: ${status}`;
-            dadosAtualizacao = { assistente, motId, etapa: etapaNome, status: novoStatus, obs, dataDisp, dataPrimeiraRota };
+            dadosAtualizacao = { assistente, motId, etapa: etapaNome, status: novoStatus, obs, dataDisp, dataPrimeiraRota, erroTela, dataErro, isErro };
 
             let msg = `ATUALIZAÇÃO DE STATUS\n• ID Motorista: ${motId}\n• Etapa: ${etapaNome}\n• Status: ${status}`;
+            if (isErro && erroTela) {
+                const dataFmt = new Date(dataErro + 'T12:00:00').toLocaleDateString('pt-BR');
+                msg += `\n• Tela de Erro: ${erroTela}`;
+                msg += `\n• Data do Erro: ${dataFmt}`;
+            }
             if (etapaSelecionada === 'liberado' && dataDisp) {
                 const dataFmt = new Date(dataDisp + 'T12:00:00').toLocaleDateString('pt-BR');
                 msg += `\n• Data de Disponibilidade: ${dataFmt}`;
@@ -1112,7 +1149,11 @@
                 'entry.1214806804': d.status,
                 'entry.437080118':  d.obs || '',
                 'entry.130490292':  d.dataDisp || '',
-                'entry.104548462':  d.dataPrimeiraRota || ''
+                'entry.104548462':  d.dataPrimeiraRota || '',
+                'entry.189791278':  d.etapa === 'Envios Extra' && d.isErro ? d.erroTela : '',
+                'entry.126345541':  d.etapa === 'Envios Extra' && d.isErro ? d.dataErro : '',
+                'entry.1689236375': d.etapa === 'Logistics' && d.isErro ? d.erroTela : '',
+                'entry.1896454138': d.etapa === 'Logistics' && d.isErro ? d.dataErro : ''
             });
 
             fetch(formUrl, {
