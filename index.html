@@ -1141,10 +1141,10 @@
             if (!ok) return;
 
             const etapaNome = etapaLabel[etapaSelecionada];
-            const novoStatus = `${etapaNome}: ${status}`;
+            const novoStatus = etapaSelecionada === 'divergencia' ? etapaNome : `${etapaNome}: ${status}`;
             dadosAtualizacao = { assistente, motId, etapa: etapaNome, status: novoStatus, obs, dataDisp, dataPrimeiraRota, erroTela, dataErro, isErro };
 
-            let msg = `ATUALIZAÇÃO DE STATUS\n• ID Motorista: ${motId}\n• Etapa: ${etapaNome}\n• Status: ${status}`;
+            let msg = `ATUALIZAÇÃO DE STATUS\n• ID Motorista: ${motId}\n• Status: ${novoStatus}`;
             if (isErro && erroTela) {
                 const dataFmt = new Date(dataErro + 'T12:00:00').toLocaleDateString('pt-BR');
                 msg += `\n• Tela de Erro: ${erroTela}`;
