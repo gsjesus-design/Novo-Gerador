@@ -43,6 +43,10 @@
         .frota-selector { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; margin-bottom: 0; }
         .frota-card { border: 2px solid #e0e0e0; border-radius: 10px; padding: 14px 10px; text-align: center; cursor: pointer; transition: all 0.2s; background: white; color: #333; }
         .frota-card:hover { border-color: #2D3277; background: #f7f8ff; color: #2D3277; }
+        .frota-card[data-etapa="divergencia"] { background: #fde8e8 !important; border-color: #dc3545 !important; color: #dc3545 !important; }
+        .frota-card[data-etapa="divergencia"] .frota-label { color: #dc3545 !important; }
+        .frota-card[data-etapa="divergencia"].selected { background: #dc3545 !important; border-color: #dc3545 !important; color: white !important; }
+        .frota-card[data-etapa="divergencia"].selected .frota-label { color: white !important; }
         .frota-card.selected { border-color: #2D3277; background: #2D3277; color: white; }
         .frota-card[data-etapa="encerrado"].selected { border-color: #dc3545; background: #dc3545; color: white; }
         .frota-card[data-etapa="encerrado"].selected .frota-label { color: white; }
@@ -122,7 +126,7 @@
                     <label for="assistente">Nome do Assistente (quem está gerando)</label>
                     <select id="assistente" required>
                         <option value="">Selecione...</option>
-                        <option value="Carlos">Carlos</option><option value="Claudio">Claudio</option><option value="Eloisa">Eloisa</option><option value="Fabricio">Fabricio</option><option value="Gabriel">Gabriel</option><option value="Gabrielle">Gabrielle</option><option value="Italo">Italo</option><option value="Joyce">Joyce</option><option value="Laisla">Laisla</option><option value="Lara">Lara</option><option value="Larissa">Larissa</option><option value="Lucas">Lucas</option><option value="Lucas Costa">Lucas Costa</option><option value="Maria Soares">Maria Soares</option><option value="Mariana">Mariana</option><option value="Matheus">Matheus</option><option value="Sabrina">Sabrina</option><option value="Sophia Mariana">Sophia Mariana</option><option value="Thaisline">Thaisline</option><option value="Thiago">Thiago</option><option value="Tuane">Tuane</option><option value="Vanderleia">Vanderleia</option><option value="Vinicius">Vinicius</option><option value="Vinny">Vinny</option><option value="Vitor">Vitor</option>
+                        <option value="Carlos">Carlos</option><option value="Claudio">Claudio</option><option value="Eloisa">Eloisa</option><option value="Fabricio">Fabricio</option><option value="Gabriel">Gabriel</option><option value="Gabrielle">Gabrielle</option><option value="Italo">Italo</option><option value="Joyce">Joyce</option><option value="Laisla">Laisla</option><option value="Lara">Lara</option><option value="Larissa">Larissa</option><option value="Lucas">Lucas</option><option value="Lucas Costa">Lucas Costa</option><option value="Maria Soares">Maria Soares</option><option value="Mariana">Mariana</option><option value="Matheus">Matheus</option><option value="Sabrina">Sabrina</option><option value="Sophia Mariana">Sophia Mariana</option><option value="Thaisline">Thaisline</option><option value="Thiago">Thiago</option><option value="Tuane">Tuane</option><option value="Vanderleia">Vanderleia</option><option value="Vinicius">Vinicius</option><option value="Vinny">Vinny</option><option value="Vitor">Vitor</option><option value="João Victor">João Victor</option><option value="Luiza">Luiza</option><option value="Larissa Stace">Larissa Stace</option><option value="Vitoria">Vitoria</option>
                     </select>
                     <div class="field-error" id="err-assistente">Selecione o assistente.</div>
                 </div>
@@ -348,7 +352,7 @@
                     <label for="upd-assistente">Nome do Assistente</label>
                     <select id="upd-assistente" required>
                         <option value="">Selecione...</option>
-                        <option value="Carlos">Carlos</option><option value="Claudio">Claudio</option><option value="Eloisa">Eloisa</option><option value="Fabricio">Fabricio</option><option value="Gabriel">Gabriel</option><option value="Gabrielle">Gabrielle</option><option value="Italo">Italo</option><option value="Joyce">Joyce</option><option value="Laisla">Laisla</option><option value="Lara">Lara</option><option value="Larissa">Larissa</option><option value="Lucas">Lucas</option><option value="Lucas Costa">Lucas Costa</option><option value="Maria Soares">Maria Soares</option><option value="Mariana">Mariana</option><option value="Matheus">Matheus</option><option value="Sabrina">Sabrina</option><option value="Sophia Mariana">Sophia Mariana</option><option value="Thaisline">Thaisline</option><option value="Thiago">Thiago</option><option value="Tuane">Tuane</option><option value="Vanderleia">Vanderleia</option><option value="Vinicius">Vinicius</option><option value="Vinny">Vinny</option><option value="Vitor">Vitor</option>
+                        <option value="Carlos">Carlos</option><option value="Claudio">Claudio</option><option value="Eloisa">Eloisa</option><option value="Fabricio">Fabricio</option><option value="Gabriel">Gabriel</option><option value="Gabrielle">Gabrielle</option><option value="Italo">Italo</option><option value="Joyce">Joyce</option><option value="Laisla">Laisla</option><option value="Lara">Lara</option><option value="Larissa">Larissa</option><option value="Lucas">Lucas</option><option value="Lucas Costa">Lucas Costa</option><option value="Maria Soares">Maria Soares</option><option value="Mariana">Mariana</option><option value="Matheus">Matheus</option><option value="Sabrina">Sabrina</option><option value="Sophia Mariana">Sophia Mariana</option><option value="Thaisline">Thaisline</option><option value="Thiago">Thiago</option><option value="Tuane">Tuane</option><option value="Vanderleia">Vanderleia</option><option value="Vinicius">Vinicius</option><option value="Vinny">Vinny</option><option value="Vitor">Vitor</option><option value="João Victor">João Victor</option><option value="Luiza">Luiza</option><option value="Larissa Stace">Larissa Stace</option><option value="Vitoria">Vitoria</option>
                     </select>
                     <div class="field-error" id="err-upd-assistente">Selecione o assistente.</div>
                 </div>
@@ -361,7 +365,11 @@
                 <!-- Etapa selector -->
                 <div class="form-group">
                     <label>Etapa</label>
-                    <div class="frota-selector" id="etapaSelector" style="grid-template-columns: repeat(5, 1fr);">
+                    <div class="frota-selector" id="etapaSelector" style="grid-template-columns: repeat(6, 1fr);">
+                        <div class="frota-card" data-etapa="divergencia" onclick="selectEtapa('divergencia', this)">
+                            <span class="frota-icon">🎣</span>
+                            <span class="frota-label">Divergência Pesca</span>
+                        </div>
                         <div class="frota-card" data-etapa="envios" onclick="selectEtapa('envios', this)">
                             <span class="frota-icon">📦</span>
                             <span class="frota-label">Envios Extra</span>
@@ -453,7 +461,7 @@
                     <label for="fin-assistente">Nome do Assistente</label>
                     <select id="fin-assistente" required>
                         <option value="">Selecione...</option>
-                        <option value="Carlos">Carlos</option><option value="Claudio">Claudio</option><option value="Eloisa">Eloisa</option><option value="Fabricio">Fabricio</option><option value="Gabriel">Gabriel</option><option value="Gabrielle">Gabrielle</option><option value="Italo">Italo</option><option value="Joyce">Joyce</option><option value="Laisla">Laisla</option><option value="Lara">Lara</option><option value="Larissa">Larissa</option><option value="Lucas">Lucas</option><option value="Lucas Costa">Lucas Costa</option><option value="Maria Soares">Maria Soares</option><option value="Mariana">Mariana</option><option value="Matheus">Matheus</option><option value="Sabrina">Sabrina</option><option value="Sophia Mariana">Sophia Mariana</option><option value="Thaisline">Thaisline</option><option value="Thiago">Thiago</option><option value="Tuane">Tuane</option><option value="Vanderleia">Vanderleia</option><option value="Vinicius">Vinicius</option><option value="Vinny">Vinny</option><option value="Vitor">Vitor</option>
+                        <option value="Carlos">Carlos</option><option value="Claudio">Claudio</option><option value="Eloisa">Eloisa</option><option value="Fabricio">Fabricio</option><option value="Gabriel">Gabriel</option><option value="Gabrielle">Gabrielle</option><option value="Italo">Italo</option><option value="Joyce">Joyce</option><option value="Laisla">Laisla</option><option value="Lara">Lara</option><option value="Larissa">Larissa</option><option value="Lucas">Lucas</option><option value="Lucas Costa">Lucas Costa</option><option value="Maria Soares">Maria Soares</option><option value="Mariana">Mariana</option><option value="Matheus">Matheus</option><option value="Sabrina">Sabrina</option><option value="Sophia Mariana">Sophia Mariana</option><option value="Thaisline">Thaisline</option><option value="Thiago">Thiago</option><option value="Tuane">Tuane</option><option value="Vanderleia">Vanderleia</option><option value="Vinicius">Vinicius</option><option value="Vinny">Vinny</option><option value="Vitor">Vitor</option><option value="João Victor">João Victor</option><option value="Luiza">Luiza</option><option value="Larissa Stace">Larissa Stace</option><option value="Vitoria">Vitoria</option>
                     </select>
                     <div class="field-error" id="err-fin-assistente">Selecione o assistente.</div>
                 </div>
@@ -1009,6 +1017,7 @@
 
         // ── Etapa funnel ─────────────────────────────────────────────────────
         const etapaStatus = {
+            divergencia: ['Divergência de Pesca'],
             envios:     ['Em andamento', 'Erro', 'Concluído'],
             logistics:  ['Em andamento', 'Erro', 'Concluído'],
             onboarding: ['Em treinamento', 'Declínio sem treinamento', 'Declínio com treinamento', 'Concluído'],
@@ -1016,30 +1025,30 @@
             encerrado:  ['Suspenso/Bloqueado', 'Falta de interação', 'Placa Bloqueada', 'Recusa']
         };
         const errosEnviosExtra = [
-            '⚙️ Falha no Script',
-            '🚗 Placa desativada / Veículo pausado',
-            '🏦 Conta bancária / Dados bancários',
-            '🟠 Tela laranja / Problema na conta',
-            '⏱️ Limite de tentativas',
-            '📋 Convite pendente / Extra travado',
-            '📍 Experiência errada',
-            '🔴 Tarja / Tela vermelha',
-            '🔗 Conexão / Sem internet',
-            '🔌 Erro da tomada',
-            '🆕 Novo Erro'
+            { label: '⚙️ Falha no Script', value: 'Falha no Script' },
+            { label: '🚗 Placa desativada / Veículo pausado', value: 'Placa desativada / Veículo pausado' },
+            { label: '🏦 Conta bancária / Dados bancários', value: 'Conta bancária / Dados bancários' },
+            { label: '🟠 Tela laranja / Problema na conta', value: 'Tela laranja / Problema na conta' },
+            { label: '⏱️ Limite de tentativas', value: 'Limite de tentativas' },
+            { label: '📋 Convite pendente / Extra travado', value: 'Convite pendente / Extra travado' },
+            { label: '📍 Experiência errada', value: 'Experiência errada' },
+            { label: '🔴 Tarja / Tela vermelha', value: 'Tarja / Tela vermelha' },
+            { label: '🔗 Conexão / Sem internet', value: 'Conexão / Sem internet' },
+            { label: '🔌 Erro da tomada', value: 'Erro da tomada' },
+            { label: '🆕 Novo Erro', value: 'Novo Erro' }
         ];
         const errosLogistics = [
-            '🚫 Perfil não atende requisitos',
-            '🚛 Transportadora / CNPJ não associado',
-            '🆔 CNH / Loop / Tela branca',
-            '👥 Flotillero / Motorista inativo',
-            '🔴 Tarja / Tela vermelha',
-            '🔗 Conexão / Sem internet',
-            '🆕 Novo Erro'
+            { label: '🚫 Perfil não atende requisitos', value: 'Perfil não atende requisitos' },
+            { label: '🚛 Transportadora / CNPJ não associado', value: 'Transportadora / CNPJ não associado' },
+            { label: '🆔 CNH / Loop / Tela branca', value: 'CNH / Loop / Tela branca' },
+            { label: '👥 Flotillero / Motorista inativo', value: 'Flotillero / Motorista inativo' },
+            { label: '🔴 Tarja / Tela vermelha', value: 'Tarja / Tela vermelha' },
+            { label: '🔗 Conexão / Sem internet', value: 'Conexão / Sem internet' },
+            { label: '🆕 Novo Erro', value: 'Novo Erro' }
         ];
 
         const etapaLabel = {
-            envios: 'Envios Extra', logistics: 'Logistics', onboarding: 'Onboarding', liberado: 'Liberado', encerrado: 'Encerrado'
+            divergencia: 'Divergência Pesca', envios: 'Envios Extra', logistics: 'Logistics', onboarding: 'Onboarding', liberado: 'Liberado', encerrado: 'Encerrado'
         };
 
         let etapaSelecionada = '';
@@ -1078,7 +1087,8 @@
                     const lista = valor === 'envios' ? errosEnviosExtra : errosLogistics;
                     lista.forEach(e => {
                         const o = document.createElement('option');
-                        o.value = e; o.textContent = e;
+                        o.value = e.value;
+                        o.textContent = e.label;
                         erroSelect.appendChild(o);
                     });
                 }
