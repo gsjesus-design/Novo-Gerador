@@ -126,7 +126,7 @@
                     <label for="assistente">Nome do Assistente (quem está gerando)</label>
                     <select id="assistente" required>
                         <option value="">Selecione...</option>
-                        <option value="Camila">Camila</option><option value="Carlos">Carlos</option><option value="Claudio">Claudio</option><option value="Eloisa">Eloisa</option><option value="Gabriel">Gabriel</option><option value="Gabrielle">Gabrielle</option><option value="Italo">Italo</option><option value="Joyce">Joyce</option><option value="Laisla">Laisla</option><option value="Lara">Lara</option><option value="Larissa">Larissa</option><option value="Lucas">Lucas</option><option value="Lucas Costa">Lucas Costa</option><option value="Maria Soares">Maria Soares</option><option value="Mariana">Mariana</option><option value="Matheus">Matheus</option><option value="Sabrina">Sabrina</option><option value="Sophia Mariana">Sophia Mariana</option><option value="Thaisline">Thaisline</option><option value="Thiago">Thiago</option><option value="Tuane">Tuane</option><option value="Vanderleia">Vanderleia</option><option value="Vinicius">Vinicius</option><option value="Vinny">Vinny</option><option value="Vitor">Vitor</option><option value="João Victor">João Victor</option><option value="Luiza">Luiza</option><option value="Larissa Stace">Larissa Stace</option><option value="Vitoria">Vitoria</option>
+                        <option value="Carlos">Carlos</option><option value="Claudio">Claudio</option><option value="Eloisa">Eloisa</option><option value="Gabriel">Gabriel</option><option value="Gabrielle">Gabrielle</option><option value="Italo">Italo</option><option value="Joyce">Joyce</option><option value="Laisla">Laisla</option><option value="Lara">Lara</option><option value="Larissa">Larissa</option><option value="Lucas">Lucas</option><option value="Lucas Costa">Lucas Costa</option><option value="Maria Soares">Maria Soares</option><option value="Mariana">Mariana</option><option value="Matheus">Matheus</option><option value="Sabrina">Sabrina</option><option value="Sophia Mariana">Sophia Mariana</option><option value="Thaisline">Thaisline</option><option value="Thiago">Thiago</option><option value="Tuane">Tuane</option><option value="Vanderleia">Vanderleia</option><option value="Vinicius">Vinicius</option><option value="Vinny">Vinny</option><option value="Vitor">Vitor</option><option value="João Victor">João Victor</option><option value="Luiza">Luiza</option><option value="Larissa Stace">Larissa Stace</option><option value="Vitoria">Vitoria</option>
                     </select>
                     <div class="field-error" id="err-assistente">Selecione o assistente.</div>
                 </div>
@@ -301,6 +301,16 @@
                         <div class="field-error" id="err-nomeETC">Preencha o nome da ETC.</div>
                     </div>
                     <div class="form-group">
+                        <label for="milhaETC">Milha</label>
+                        <select id="milhaETC">
+                            <option value="">Selecione...</option>
+                            <option value="First Mile">First Mile</option>
+                            <option value="Last Mile">Last Mile</option>
+                            <option value="Full">Full</option>
+                        </select>
+                        <div class="field-error" id="err-milhaETC">Selecione a milha.</div>
+                    </div>
+                    <div class="form-group">
                         <label for="statusETC">Status</label>
                         <select id="statusETC">
                             <option value="">Selecione...</option>
@@ -352,7 +362,7 @@
                     <label for="upd-assistente">Nome do Assistente</label>
                     <select id="upd-assistente" required>
                         <option value="">Selecione...</option>
-                        <option value="Camila">Camila</option><option value="Carlos">Carlos</option><option value="Claudio">Claudio</option><option value="Eloisa">Eloisa</option><option value="Gabriel">Gabriel</option><option value="Gabrielle">Gabrielle</option><option value="Italo">Italo</option><option value="Joyce">Joyce</option><option value="Laisla">Laisla</option><option value="Lara">Lara</option><option value="Larissa">Larissa</option><option value="Lucas">Lucas</option><option value="Lucas Costa">Lucas Costa</option><option value="Maria Soares">Maria Soares</option><option value="Mariana">Mariana</option><option value="Matheus">Matheus</option><option value="Sabrina">Sabrina</option><option value="Sophia Mariana">Sophia Mariana</option><option value="Thaisline">Thaisline</option><option value="Thiago">Thiago</option><option value="Tuane">Tuane</option><option value="Vanderleia">Vanderleia</option><option value="Vinicius">Vinicius</option><option value="Vinny">Vinny</option><option value="Vitor">Vitor</option><option value="João Victor">João Victor</option><option value="Luiza">Luiza</option><option value="Larissa Stace">Larissa Stace</option><option value="Vitoria">Vitoria</option>
+                        <option value="Carlos">Carlos</option><option value="Claudio">Claudio</option><option value="Eloisa">Eloisa</option><option value="Gabriel">Gabriel</option><option value="Gabrielle">Gabrielle</option><option value="Italo">Italo</option><option value="Joyce">Joyce</option><option value="Laisla">Laisla</option><option value="Lara">Lara</option><option value="Larissa">Larissa</option><option value="Lucas">Lucas</option><option value="Lucas Costa">Lucas Costa</option><option value="Maria Soares">Maria Soares</option><option value="Mariana">Mariana</option><option value="Matheus">Matheus</option><option value="Sabrina">Sabrina</option><option value="Sophia Mariana">Sophia Mariana</option><option value="Thaisline">Thaisline</option><option value="Thiago">Thiago</option><option value="Tuane">Tuane</option><option value="Vanderleia">Vanderleia</option><option value="Vinicius">Vinicius</option><option value="Vinny">Vinny</option><option value="Vitor">Vitor</option><option value="João Victor">João Victor</option><option value="Luiza">Luiza</option><option value="Larissa Stace">Larissa Stace</option><option value="Vitoria">Vitoria</option>
                     </select>
                     <div class="field-error" id="err-upd-assistente">Selecione o assistente.</div>
                 </div>
@@ -726,6 +736,7 @@
                 secETC.classList.remove('visible');
                 secFS.classList.add('visible');
                 document.getElementById('nomeETC').value = '';
+                document.getElementById('milhaETC').value = '';
                 document.getElementById('statusETC').value = '';
             }
         }
@@ -847,6 +858,7 @@
             // ETC conditional fields
             if (frotaSelecionada === 'ETC') {
                 if (!document.getElementById('nomeETC').value.trim()) { showError('nomeETC', true); ok = false; } else showError('nomeETC', false);
+                if (!document.getElementById('milhaETC').value) { showError('milhaETC', true); ok = false; } else showError('milhaETC', false);
                 if (!document.getElementById('statusETC').value) { showError('statusETC', true); ok = false; } else showError('statusETC', false);
             }
 
@@ -886,6 +898,7 @@
             let milha = '', status = '', nomeETC = '';
             if (frota === 'ETC') {
                 nomeETC = document.getElementById('nomeETC').value.trim();
+                milha   = document.getElementById('milhaETC').value;
                 status  = document.getElementById('statusETC').value;
             } else {
                 milha  = document.getElementById('milha').value;
