@@ -139,6 +139,7 @@
                         <div class="autocomplete-list" id="svcxdList"></div>
                     </div>
                     <div class="field-error" id="err-svcxd">Preencha o SVC/XD.</div>
+                    <div id="warn-svcxd" style="display:none; color:#e67e00; font-size:12px; margin-top:4px;">⚠️ SVC/XD não encontrado na lista. Verifique antes de salvar.</div>
                 </div>
 
                 <!-- Motorista -->
@@ -815,8 +816,14 @@
 
             // Assistente
             if (!document.getElementById('assistente').value) { showError('assistente', true); ok = false; } else showError('assistente', false);
-            // SVC/XD
-            if (!document.getElementById('svcxd').value.trim()) { showError('svcxd', true); ok = false; } else showError('svcxd', false);
+            // SVC/XD - verifica se está na lista (aviso, não bloqueia)
+            const svcxdVal = document.getElementById('svcxd').value.trim();
+            if (!svcxdVal) { showError('svcxd', true); ok = false; }
+            else {
+                showError('svcxd', false);
+                const svcxdWarn = document.getElementById('warn-svcxd');
+                if (svcxdWarn) svcxdWarn.style.display = !svcxdOptions.includes(svcxdVal) ? 'block' : 'none';
+            }
             // Motorista
             if (!document.getElementById('motorista').value.trim()) { showError('motorista', true); ok = false; } else showError('motorista', false);
             // CPF (warn only, don't block)
