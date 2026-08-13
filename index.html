@@ -1034,7 +1034,7 @@
             envios:     ['Em andamento', 'Erro', 'Concluído'],
             logistics:  ['Em andamento', 'Erro', 'Concluído'],
             onboarding: ['Em treinamento', 'Declínio sem treinamento', 'Declínio com treinamento'],
-            liberado:   ['Data de Disponibilidade'],
+            liberado:   ['Data de Disponibilidade', 'Declínio Operação'],
             encerrado:  ['Suspenso/Bloqueado', 'Falta de interação', 'Placa Bloqueada', 'Recusa', 'Cancelado']
         };
         const errosEnviosExtra = [
@@ -1080,10 +1080,8 @@
             });
             document.getElementById('upd-status-group').style.display = 'block';
 
-            // Data disponibilidade só aparece em Liberado
-            document.getElementById('upd-dataDisp-group').style.display = valor === 'liberado' ? 'block' : 'none';
-            // Primeira rota date só aparece quando status for selecionado (handled on status change)
-            document.getElementById('upd-dataPrimeiraRota-group').style.display = 'none';
+            // Data disponibilidade só aparece em Liberado com status Data de Disponibilidade
+            document.getElementById('upd-dataDisp-group').style.display = 'none';
             // Esconde campos de erro ao trocar etapa
             document.getElementById('upd-erroTela-group').style.display = 'none';
             document.getElementById('upd-dataErro-group').style.display = 'none';
@@ -1093,6 +1091,7 @@
                 const isErro = (valor === 'envios' || valor === 'logistics') && this.value === 'Erro';
                 document.getElementById('upd-erroTela-group').style.display = isErro ? 'block' : 'none';
                 document.getElementById('upd-dataErro-group').style.display = isErro ? 'block' : 'none';
+                document.getElementById('upd-dataDisp-group').style.display = (valor === 'liberado' && this.value === 'Data de Disponibilidade') ? 'block' : 'none';
 
                 if (isErro) {
                     const erroSelect = document.getElementById('upd-erroTela');
