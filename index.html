@@ -711,6 +711,7 @@
             frotaSelecionada = valor;
             document.getElementById('frotaTipo').value = valor;
             document.getElementById('err-frotaTipo').style.display = 'none';
+            habilitarBtnGerar();
 
             const secFS  = document.getElementById('sectionFrotaSpot');
             const secETC = document.getElementById('sectionETC');
@@ -952,6 +953,22 @@
             document.getElementById('sheetsBtn').textContent = '📊 Salvar no Sheets';
             document.getElementById('sheetsBtn').disabled = false;
             document.getElementById('outputContainer').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+
+            // Desabilita o botão gerar após geração
+            const btnGerar = document.querySelector('#contratoForm .btn');
+            btnGerar.disabled = true;
+            btnGerar.textContent = '🔒 Copie ou salve antes de gerar novamente';
+        });
+
+        function habilitarBtnGerar() {
+            const btn = document.querySelector('#contratoForm .btn');
+            if (btn) { btn.disabled = false; btn.textContent = '✨ Gerar Mensagem'; }
+        }
+
+        // Reabilita ao editar qualquer campo do formulário
+        document.getElementById('contratoForm').querySelectorAll('input, select, textarea').forEach(el => {
+            el.addEventListener('change', habilitarBtnGerar);
+            el.addEventListener('input', habilitarBtnGerar);
         });
 
         // ── Copy ─────────────────────────────────────────────────────────────
@@ -959,6 +976,7 @@
             navigator.clipboard.writeText(document.getElementById('outputText').textContent).then(() => {
                 this.textContent = '✅ Copiado!'; this.classList.add('copied');
                 setTimeout(() => { this.textContent = '📋 Copiar'; this.classList.remove('copied'); }, 2000);
+                habilitarBtnGerar();
             });
         });
 
@@ -1021,6 +1039,7 @@
                 jaSalvou = true;
                 mostrarStatus('✅ Dados salvos na planilha com sucesso!', 'success');
                 document.getElementById('sheetsBtn').textContent = '✅ Salvo!';
+                habilitarBtnGerar();
             }).catch(() => {
                 document.getElementById('sheetsBtn').disabled = false;
                 document.getElementById('sheetsBtn').textContent = '📊 Salvar no Sheets';
@@ -1144,7 +1163,7 @@
             if (!motId || !/^MOT-\d{5,7}$/.test(motId)) { errId.style.display = 'block'; ok = false; } else errId.style.display = 'none';
             if (!etapaSelecionada) { errEtapa.style.display = 'block'; ok = false; } else errEtapa.style.display = 'none';
             if (!status) { errSt.style.display = 'block'; ok = false; } else errSt.style.display = 'none';
-            if (etapaSelecionada === 'liberado' && !dataDisp) {
+            if (etapaSelecionada === 'liberado' && status === 'Data de Disponibilidade' && !dataDisp) {
                 document.getElementById('err-upd-dataDisp').style.display = 'block'; ok = false;
             } else { document.getElementById('err-upd-dataDisp').style.display = 'none'; }
             if (etapaSelecionada === 'liberado' && status === 'Primeira rota' && !dataPrimeiraRota) {
