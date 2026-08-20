@@ -376,18 +376,14 @@
                 <!-- Etapa selector -->
                 <div class="form-group">
                     <label>Etapa</label>
-                    <div class="frota-selector" id="etapaSelector" style="grid-template-columns: repeat(6, 1fr);">
+                    <div class="frota-selector" id="etapaSelector" style="grid-template-columns: repeat(5, 1fr);">
                         <div class="frota-card" data-etapa="divergencia" onclick="selectEtapa('divergencia', this)">
                             <span class="frota-icon">🎣</span>
                             <span class="frota-label">Divergência Pesca</span>
                         </div>
-                        <div class="frota-card" data-etapa="envios" onclick="selectEtapa('envios', this)">
-                            <span class="frota-icon">📦</span>
-                            <span class="frota-label">Envios Extra</span>
-                        </div>
-                        <div class="frota-card" data-etapa="logistics" onclick="selectEtapa('logistics', this)">
-                            <span class="frota-icon">🚚</span>
-                            <span class="frota-label">Logistics</span>
+                        <div class="frota-card" data-etapa="cadastro" onclick="selectEtapa('cadastro', this)">
+                            <span class="frota-icon">📋</span>
+                            <span class="frota-label">Cadastro</span>
                         </div>
                         <div class="frota-card" data-etapa="onboarding" onclick="selectEtapa('onboarding', this)">
                             <span class="frota-icon">🎓</span>
@@ -595,14 +591,10 @@
                 <!-- Etapa / Status Final -->
                 <div class="form-group">
                     <label>Etapa / Status Final</label>
-                    <div class="frota-selector" id="fin-etapaSelector" style="grid-template-columns: repeat(5, 1fr);">
-                        <div class="frota-card" onclick="selectFinEtapa('envios', this)">
-                            <span class="frota-icon">📦</span>
-                            <span class="frota-label">Envios Extra</span>
-                        </div>
-                        <div class="frota-card" onclick="selectFinEtapa('logistics', this)">
-                            <span class="frota-icon">🚚</span>
-                            <span class="frota-label">Logistics</span>
+                    <div class="frota-selector" id="fin-etapaSelector" style="grid-template-columns: repeat(4, 1fr);">
+                        <div class="frota-card" onclick="selectFinEtapa('cadastro', this)">
+                            <span class="frota-icon">📋</span>
+                            <span class="frota-label">Cadastro</span>
                         </div>
                         <div class="frota-card" onclick="selectFinEtapa('onboarding', this)">
                             <span class="frota-icon">🎓</span>
@@ -827,8 +819,24 @@
             }
             // Motorista
             if (!document.getElementById('motorista').value.trim()) { showError('motorista', true); ok = false; } else showError('motorista', false);
-            // CPF (warn only, don't block)
-            if (!validarCPF(document.getElementById('cpf').value)) { showWarn('cpf', true); } else showWarn('cpf', false);
+            // CPF (bloqueia se faltar dígito, avisa se dígito verificador for inválido)
+            const cpfDigitos = document.getElementById('cpf').value.replace(/\D/g, '');
+            const cpfErrEl = document.getElementById('err-cpf');
+            if (cpfDigitos.length !== 11) {
+                cpfErrEl.className = 'field-error';
+                cpfErrEl.textContent = '❌ CPF incompleto. Preencha os 11 dígitos.';
+                cpfErrEl.style.display = 'block';
+                document.getElementById('cpf').classList.add('error');
+                ok = false;
+            } else if (!validarCPF(document.getElementById('cpf').value)) {
+                cpfErrEl.className = 'field-warn';
+                cpfErrEl.textContent = '⚠️ CPF pode estar incorreto. Verifique antes de salvar.';
+                cpfErrEl.style.display = 'block';
+                document.getElementById('cpf').classList.remove('error');
+            } else {
+                cpfErrEl.style.display = 'none';
+                document.getElementById('cpf').classList.remove('error');
+            }
             // Tel
             const tel = document.getElementById('tel').value.replace(/\D/g, '');
             if (!tel || tel.length < 12 || tel.length > 13) { showError('tel', true); ok = false; } else showError('tel', false);
@@ -1057,13 +1065,12 @@
         // ── Etapa funnel ─────────────────────────────────────────────────────
         const etapaStatus = {
             divergencia: ['Devolvido para pesca'],
-            envios:     ['Em andamento', 'Erro', 'Concluído'],
-            logistics:  ['Em andamento', 'Erro', 'Concluído'],
+            cadastro:   ['Em andamento', 'Erro', 'Concluído'],
             onboarding: ['Em treinamento', 'Declínio sem treinamento', 'Declínio com treinamento'],
             liberado:   ['Data de Disponibilidade', 'Declínio Operação'],
             encerrado:  ['Suspenso/Bloqueado', 'Falta de interação', 'Placa Bloqueada', 'Recusa', 'Cancelado']
         };
-        const errosEnviosExtra = [
+        const errosCadastro = [
             { label: '⚙️ Falha no Script', value: 'Falha no Script' },
             { label: '🚗 Placa desativada / Veículo pausado', value: 'Placa desativada / Veículo pausado' },
             { label: '🏦 Conta bancária / Dados bancários', value: 'Conta bancária / Dados bancários' },
@@ -1071,23 +1078,18 @@
             { label: '⏱️ Limite de tentativas', value: 'Limite de tentativas' },
             { label: '📋 Convite pendente / Extra travado', value: 'Convite pendente / Extra travado' },
             { label: '📍 Experiência errada', value: 'Experiência errada' },
-            { label: '🔴 Tarja / Tela vermelha', value: 'Tarja / Tela vermelha' },
-            { label: '🔗 Conexão / Sem internet', value: 'Conexão / Sem internet' },
-            { label: '🔌 Erro da tomada', value: 'Erro da tomada' },
-            { label: '🆕 Novo Erro', value: 'Novo Erro' }
-        ];
-        const errosLogistics = [
             { label: '🚫 Perfil não atende requisitos', value: 'Perfil não atende requisitos' },
             { label: '🚛 Transportadora / CNPJ não associado', value: 'Transportadora / CNPJ não associado' },
             { label: '🆔 CNH / Loop / Tela branca', value: 'CNH / Loop / Tela branca' },
             { label: '👥 Flotillero / Motorista inativo', value: 'Flotillero / Motorista inativo' },
             { label: '🔴 Tarja / Tela vermelha', value: 'Tarja / Tela vermelha' },
             { label: '🔗 Conexão / Sem internet', value: 'Conexão / Sem internet' },
+            { label: '🔌 Erro da tomada', value: 'Erro da tomada' },
             { label: '🆕 Novo Erro', value: 'Novo Erro' }
         ];
 
         const etapaLabel = {
-            divergencia: 'Devolvido para pesca', envios: 'Envios Extra', logistics: 'Logistics', onboarding: 'Onboarding', liberado: 'Liberado', encerrado: 'Encerrado'
+            divergencia: 'Devolvido para pesca', cadastro: 'Cadastro', onboarding: 'Onboarding', liberado: 'Liberado', encerrado: 'Encerrado'
         };
 
         let etapaSelecionada = '';
@@ -1114,7 +1116,7 @@
 
             // Listen for status change to show/hide fields
             statusSelect.onchange = function() {
-                const isErro = (valor === 'envios' || valor === 'logistics') && this.value === 'Erro';
+                const isErro = valor === 'cadastro' && this.value === 'Erro';
                 document.getElementById('upd-erroTela-group').style.display = isErro ? 'block' : 'none';
                 document.getElementById('upd-dataErro-group').style.display = isErro ? 'block' : 'none';
                 document.getElementById('upd-dataDisp-group').style.display = (valor === 'liberado' && this.value === 'Data de Disponibilidade') ? 'block' : 'none';
@@ -1122,8 +1124,7 @@
                 if (isErro) {
                     const erroSelect = document.getElementById('upd-erroTela');
                     erroSelect.innerHTML = '<option value="">Selecione o erro...</option>';
-                    const lista = valor === 'envios' ? errosEnviosExtra : errosLogistics;
-                    lista.forEach(e => {
+                    errosCadastro.forEach(e => {
                         const o = document.createElement('option');
                         o.value = e.value;
                         o.textContent = e.label;
@@ -1152,7 +1153,7 @@
             const dataPrimeiraRota = document.getElementById('upd-dataPrimeiraRota').value;
             const erroTela   = document.getElementById('upd-erroTela').value;
             const dataErro   = document.getElementById('upd-dataErro').value;
-            const isErro     = (etapaSelecionada === 'envios' || etapaSelecionada === 'logistics') && status === 'Erro';
+            const isErro     = etapaSelecionada === 'cadastro' && status === 'Erro';
 
             const errAss  = document.getElementById('err-upd-assistente');
             const errId   = document.getElementById('err-upd-motId');
@@ -1230,10 +1231,8 @@
                 'entry.437080118':  d.obs || '',
                 'entry.130490292':  d.dataDisp || '',
                 'entry.104548462':  d.dataPrimeiraRota || '',
-                'entry.189791278':  d.etapa === 'Envios Extra' && d.isErro ? d.erroTela : '',
-                'entry.126345541':  d.etapa === 'Envios Extra' && d.isErro ? d.dataErro : '',
-                'entry.1689236375': d.etapa === 'Logistics' && d.isErro ? d.erroTela : '',
-                'entry.1896454138': d.etapa === 'Logistics' && d.isErro ? d.dataErro : ''
+                'entry.189791278':  d.etapa === 'Cadastro' && d.isErro ? d.erroTela : '',
+                'entry.126345541':  d.etapa === 'Cadastro' && d.isErro ? d.dataErro : ''
             });
 
             fetch(formUrl, {
