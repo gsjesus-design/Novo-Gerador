@@ -1180,7 +1180,9 @@
             if (!ok) return;
 
             const etapaNome = etapaLabel[etapaSelecionada];
-            const novoStatus = etapaSelecionada === 'divergencia' ? etapaNome : `${etapaNome}: ${status}`;
+            const novoStatus = etapaSelecionada === 'divergencia' ? etapaNome
+                : etapaSelecionada === 'cadastro' ? `${etapaNome} ${status}`
+                : `${etapaNome}: ${status}`;
             dadosAtualizacao = { assistente, motId, etapa: etapaNome, status: novoStatus, obs, dataDisp, dataPrimeiraRota, erroTela, dataErro, isErro };
 
             let msg = `ATUALIZAÇÃO DE STATUS\n• ID Motorista: ${motId}\n• Status: ${novoStatus}`;
