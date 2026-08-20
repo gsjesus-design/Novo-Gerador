@@ -1181,7 +1181,7 @@
 
             const etapaNome = etapaLabel[etapaSelecionada];
             const novoStatus = etapaSelecionada === 'divergencia' ? etapaNome
-                : etapaSelecionada === 'cadastro' ? `${etapaNome} ${status}`
+                : etapaSelecionada === 'cadastro' ? `${etapaNome} ${status === 'Erro' ? 'com Erro' : status}`
                 : `${etapaNome}: ${status}`;
             dadosAtualizacao = { assistente, motId, etapa: etapaNome, status: novoStatus, obs, dataDisp, dataPrimeiraRota, erroTela, dataErro, isErro };
 
