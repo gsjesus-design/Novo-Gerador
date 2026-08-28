@@ -1618,9 +1618,7 @@
                 status = document.getElementById('cor-status').value;
             }
             const tipoAntt = document.getElementById('cor-tipoAntt').value;
-            const params = new URLSearchParams({
-                action: 'salvar',
-                mot_id: motId,
+            const valoresEnviados = {
                 assistente: document.getElementById('cor-assistente').value,
                 svcxd: document.getElementById('cor-svcxd').value,
                 nome: document.getElementById('cor-motorista').value.toUpperCase(),
@@ -1639,39 +1637,67 @@
                 titularAntt: document.getElementById('cor-titularAntt').value.toUpperCase(),
                 cnpjAntt: tipoAntt === 'PJ' ? document.getElementById('cor-cnpjAntt').value : '',
                 linkInfobip: document.getElementById('cor-linkInfobip').value.trim(),
-                idMaster: idMaster,
-                corrigido_por: corrigidoPor,
-                motivo: motivo
-            });
+                idMaster: idMaster
+            };
+            const params = new URLSearchParams(Object.assign(
+                { mot_id: motId, corrigido_por: corrigidoPor, motivo: motivo },
+                valoresEnviados
+            ));
             const btn = document.getElementById('cor-salvarBtn');
             btn.disabled = true; btn.textContent = '⏳ Salvando...';
-            // Usa o mesmo padrão JSONP da busca (script dinâmico), não fetch/POST:
-            // um POST normal perde os dados no redirecionamento interno do Apps
-            // Script, e além disso não deixa ler se realmente funcionou.
-            const callbackName = 'corSalvar_' + Date.now();
-            window[callbackName] = function(resultado) {
+            // POST com os dados no corpo (não na URL) — CPF/telefone/e-mail não
+            // ficam expostos numa URL longa. "credentials: include" garante que
+            // o cookie de login do Google seja enviado mesmo sendo uma chamada
+            // pra outro domínio (sem isso, o Apps Script recusava com 401).
+            fetch(BRIDGE_URL_CORRECAO, {
+                method: 'POST',
+                mode: 'no-cors',
+                credentials: 'include',
+                headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                body: params.toString()
+            }).then(() => new Promise(resolve => setTimeout(resolve, 1500)))
+              .then(() => confirmarCorrecaoSalva(motId, valoresEnviados, btn))
+              .catch(() => {
+                  btn.disabled = false;
+                  btn.textContent = '💾 Salvar Correção';
+                  mostrarCorSalvarStatus('❌ Erro ao salvar. Tente novamente.', 'error');
+              });
+        }
+        // Como o POST acima é "cego" (não dá pra ler se funcionou de verdade),
+        // confirmamos buscando o motorista de novo — a mesma busca que já
+        // funciona — e comparando com o que foi enviado.
+        function confirmarCorrecaoSalva(motId, valoresEnviados, btn) {
+            const callbackName = 'corConfirma_' + Date.now();
+            window[callbackName] = function(data) {
                 delete window[callbackName];
                 const scriptTag = document.getElementById(callbackName);
                 if (scriptTag) scriptTag.remove();
                 btn.disabled = false;
                 btn.textContent = '💾 Salvar Correção';
-                if (!resultado.ok) {
-                    mostrarCorSalvarStatus('❌ Erro ao salvar: ' + (resultado.error || 'motivo desconhecido.'), 'error');
+                if (!data.found) {
+                    mostrarCorSalvarStatus('❌ Não foi possível confirmar o salvamento — motorista não encontrado na conferência.', 'error');
                     return;
                 }
-                if (resultado.alteracoes === 0) {
-                    mostrarCorSalvarStatus('⚠️ Nenhum campo foi alterado — nada para salvar.', 'error');
-                    return;
+                const camposEnviados = Object.keys(valoresEnviados);
+                let confirmados = 0;
+                camposEnviados.forEach(campo => {
+                    const enviado = String(valoresEnviados[campo] ?? '');
+                    const salvo = String(data[campo] ?? '');
+                    if (enviado === salvo) confirmados++;
+                });
+                if (confirmados === camposEnviados.length) {
+                    mostrarCorSalvarStatus('✅ Correção salva e confirmada! O histórico foi registrado na aba "Correções".', 'success');
+                } else {
+                    mostrarCorSalvarStatus('⚠️ Salvo, mas ' + (camposEnviados.length - confirmados) + ' campo(s) não bateram na conferência. Confira a planilha antes de considerar concluído.', 'error');
                 }
-                mostrarCorSalvarStatus('✅ Correção salva! ' + resultado.alteracoes + ' campo(s) atualizado(s). Histórico registrado na aba "Correções".', 'success');
             };
             const scriptTag = document.createElement('script');
             scriptTag.id = callbackName;
-            scriptTag.src = BRIDGE_URL_CORRECAO + '?' + params.toString() + '&callback=' + callbackName;
+            scriptTag.src = BRIDGE_URL_CORRECAO + '?action=buscar&mot_id=' + encodeURIComponent(motId) + '&callback=' + callbackName;
             scriptTag.onerror = function() {
                 btn.disabled = false;
                 btn.textContent = '💾 Salvar Correção';
-                mostrarCorSalvarStatus('❌ Erro ao conectar. Verifique o BRIDGE_URL_CORRECAO.', 'error');
+                mostrarCorSalvarStatus('⚠️ Correção enviada, mas não foi possível confirmar. Confira a planilha.', 'error');
             };
             document.body.appendChild(scriptTag);
         }
