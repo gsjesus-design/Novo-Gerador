@@ -1619,6 +1619,7 @@
             }
             const tipoAntt = document.getElementById('cor-tipoAntt').value;
             const params = new URLSearchParams({
+                action: 'salvar',
                 mot_id: motId,
                 assistente: document.getElementById('cor-assistente').value,
                 svcxd: document.getElementById('cor-svcxd').value,
@@ -1644,20 +1645,35 @@
             });
             const btn = document.getElementById('cor-salvarBtn');
             btn.disabled = true; btn.textContent = '⏳ Salvando...';
-            fetch(BRIDGE_URL_CORRECAO, {
-                method: 'POST',
-                mode: 'no-cors',
-                headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-                body: params.toString()
-            }).then(() => {
-                mostrarCorSalvarStatus('✅ Correção salva! O histórico foi registrado na aba "Correções".', 'success');
-                btn.textContent = '💾 Salvar Correção';
+            // Usa o mesmo padrão JSONP da busca (script dinâmico), não fetch/POST:
+            // um POST normal perde os dados no redirecionamento interno do Apps
+            // Script, e além disso não deixa ler se realmente funcionou.
+            const callbackName = 'corSalvar_' + Date.now();
+            window[callbackName] = function(resultado) {
+                delete window[callbackName];
+                const scriptTag = document.getElementById(callbackName);
+                if (scriptTag) scriptTag.remove();
                 btn.disabled = false;
-            }).catch(() => {
-                mostrarCorSalvarStatus('❌ Erro ao salvar. Tente novamente.', 'error');
                 btn.textContent = '💾 Salvar Correção';
+                if (!resultado.ok) {
+                    mostrarCorSalvarStatus('❌ Erro ao salvar: ' + (resultado.error || 'motivo desconhecido.'), 'error');
+                    return;
+                }
+                if (resultado.alteracoes === 0) {
+                    mostrarCorSalvarStatus('⚠️ Nenhum campo foi alterado — nada para salvar.', 'error');
+                    return;
+                }
+                mostrarCorSalvarStatus('✅ Correção salva! ' + resultado.alteracoes + ' campo(s) atualizado(s). Histórico registrado na aba "Correções".', 'success');
+            };
+            const scriptTag = document.createElement('script');
+            scriptTag.id = callbackName;
+            scriptTag.src = BRIDGE_URL_CORRECAO + '?' + params.toString() + '&callback=' + callbackName;
+            scriptTag.onerror = function() {
                 btn.disabled = false;
-            });
+                btn.textContent = '💾 Salvar Correção';
+                mostrarCorSalvarStatus('❌ Erro ao conectar. Verifique o BRIDGE_URL_CORRECAO.', 'error');
+            };
+            document.body.appendChild(scriptTag);
         }
     </script>
 </body>
