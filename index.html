@@ -11,7 +11,6 @@
         .header { background: linear-gradient(135deg, #2D3277 0%, #1a1f5e 100%); color: white; padding: 30px; text-align: center; }
         .header h1 { font-size: 24px; margin-bottom: 5px; color: #FFE600; }
         .header p { font-size: 14px; opacity: 0.9; }
-        /* Tabs */
         .tabs { display: flex; border-bottom: 2px solid #e0e0e0; background: #f8f9fa; }
         .tab { flex: 1; padding: 14px; text-align: center; font-size: 14px; font-weight: 600; cursor: pointer; color: #666; border-bottom: 3px solid transparent; margin-bottom: -2px; transition: all 0.2s; }
         .tab:hover { color: #2D3277; background: #f0f1fa; }
@@ -33,10 +32,8 @@
         .btn:active { transform: translateY(0); }
         .btn:disabled { opacity: 0.6; cursor: not-allowed; transform: none; }
         .btn-secondary { background: #f0f1fa; color: #2D3277; border: 2px solid #2D3277; }
-        /* Conditional sections */
         .section-conditional { display: none; }
         .section-conditional.visible { display: block; }
-        /* Frota type card selector */
         .frota-selector { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; margin-bottom: 0; }
         .frota-card { border: 2px solid #e0e0e0; border-radius: 10px; padding: 14px 10px; text-align: center; cursor: pointer; transition: all 0.2s; background: white; color: #333; }
         .frota-card:hover { border-color: #2D3277; background: #f7f8ff; color: #2D3277; }
@@ -54,7 +51,6 @@
         .frota-card .frota-icon { font-size: 22px; display: block; margin-bottom: 6px; }
         .frota-card .frota-label { font-size: 13px; font-weight: 600; color: inherit; }
         .frota-card.selected .frota-label { color: #FFE600; }
-        /* Divider for conditional sections */
         .section-divider { border: none; border-top: 2px dashed #e0e0e0; margin: 8px 0 20px; }
         .output-container { margin-top: 30px; padding: 20px; background: #f8f9fa; border-radius: 8px; display: none; }
         .output-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; }
@@ -89,7 +85,6 @@
         .modal-cancel { flex: 1; padding: 12px; background: #e0e0e0; color: #555; border: none; border-radius: 8px; font-size: 15px; font-weight: 600; cursor: pointer; }
         #cnpjGroup { display: none; }
         #cor-cnpjGroup { display: none; }
-        /* Phone hint */
         .input-hint { font-size: 11px; color: #999; margin-top: 4px; }
         @media (max-width: 768px) {
             .grid, .grid-3 { grid-template-columns: 1fr; }
@@ -106,26 +101,22 @@
             <h1>🎯 Gerador Aquisições</h1>
             <p>Preencha os campos abaixo para gerar a mensagem de oferta</p>
         </div>
-        <!-- Tab nav -->
         <div class="tabs">
             <div class="tab active" onclick="switchTab('cadastro', this)">➕ Novo Cadastro</div>
             <div class="tab" onclick="switchTab('atualizar', this)">🔄 Atualizar Status</div>
             <div class="tab" onclick="switchTab('corrigir', this)">✏️ Corrigir Cadastro <span class="beta-badge">Teste</span></div>
         </div>
-        <!-- Tab: Cadastro -->
         <div class="tab-panel active" id="tab-cadastro">
         <div class="form-container">
             <form id="contratoForm">
-                <!-- Assistente -->
                 <div class="form-group">
                     <label for="assistente">Nome do Assistente (quem está gerando)</label>
                     <select id="assistente" required>
                         <option value="">Selecione...</option>
-                        <option value="Camila">Camila</option><option value="Camila Ruiz">Camila Ruiz</option><option value="Carlos">Carlos</option><option value="Claudio">Claudio</option><option value="Eduarda">Eduarda</option><option value="Eloisa">Eloisa</option><option value="Gabriel">Gabriel</option><option value="Gabriella Lopes">Gabriella Lopes</option><option value="Gabrielle">Gabrielle</option><option value="Guilherme">Guilherme</option><option value="Italo">Italo</option><option value="João Paulo">João Paulo</option><option value="João Victor">João Victor</option><option value="Joyce">Joyce</option><option value="Ketillim">Ketillim</option><option value="Laisla">Laisla</option><option value="Lara">Lara</option><option value="Larissa">Larissa</option><option value="Larissa Stace">Larissa Stace</option><option value="Lucas">Lucas</option><option value="Lucas Costa">Lucas Costa</option><option value="Luiza">Luiza</option><option value="Maria Soares">Maria Soares</option><option value="Mariana">Mariana</option><option value="Matheus">Matheus</option><option value="Paloma Oliveira">Paloma Oliveira</option><option value="Renata">Renata</option><option value="Sabrina">Sabrina</option><option value="Sabryna Tayla">Sabryna Tayla</option><option value="Sophia Mariana">Sophia Mariana</option><option value="Thaisline">Thaisline</option><option value="Thiago">Thiago</option><option value="Thiago Angelino">Thiago Angelino</option><option value="Tuane">Tuane</option><option value="Vanderleia">Vanderleia</option><option value="Vinicius">Vinicius</option><option value="Vinny">Vinny</option><option value="Vitor">Vitor</option><option value="Vitoria">Vitoria</option>
+                        <option value="Almir">Almir</option><option value="Camila">Camila</option><option value="Camila Ruiz">Camila Ruiz</option><option value="Carlos">Carlos</option><option value="Claudio">Claudio</option><option value="Eduarda">Eduarda</option><option value="Eloisa">Eloisa</option><option value="Felipe">Felipe</option><option value="Gabriel">Gabriel</option><option value="Gabriella Lopes">Gabriella Lopes</option><option value="Gabrielle">Gabrielle</option><option value="Guilherme">Guilherme</option><option value="Italo">Italo</option><option value="João Paulo">João Paulo</option><option value="João Victor">João Victor</option><option value="Joyce">Joyce</option><option value="Ketillim">Ketillim</option><option value="Laisla">Laisla</option><option value="Lara">Lara</option><option value="Larissa">Larissa</option><option value="Larissa Stace">Larissa Stace</option><option value="Lucas">Lucas</option><option value="Lucas Costa">Lucas Costa</option><option value="Luiza">Luiza</option><option value="Maria Soares">Maria Soares</option><option value="Mariana">Mariana</option><option value="Matheus">Matheus</option><option value="Natã">Natã</option><option value="Paloma Oliveira">Paloma Oliveira</option><option value="Renata">Renata</option><option value="Sabrina">Sabrina</option><option value="Sabryna Tayla">Sabryna Tayla</option><option value="Sophia Mariana">Sophia Mariana</option><option value="Thaisline">Thaisline</option><option value="Thiago">Thiago</option><option value="Thiago Angelino">Thiago Angelino</option><option value="Tuane">Tuane</option><option value="Vanderleia">Vanderleia</option><option value="Vinicius">Vinicius</option><option value="Vinny">Vinny</option><option value="Vitor">Vitor</option><option value="Vitoria">Vitoria</option>
                     </select>
                     <div class="field-error" id="err-assistente">Selecione o assistente.</div>
                 </div>
-                <!-- SVC/XD -->
                 <div class="form-group">
                     <label for="svcxd">SVC/XD</label>
                     <div class="autocomplete-wrapper">
@@ -135,13 +126,11 @@
                     <div class="field-error" id="err-svcxd">Preencha o SVC/XD.</div>
                     <div id="warn-svcxd" style="display:none; color:#e67e00; font-size:12px; margin-top:4px;">⚠️ SVC/XD não encontrado na lista. Verifique antes de salvar.</div>
                 </div>
-                <!-- Motorista -->
                 <div class="form-group">
                     <label for="motorista">Motorista</label>
                     <input type="text" id="motorista" placeholder="Nome completo do motorista" required>
                     <div class="field-error" id="err-motorista">Preencha o nome do motorista.</div>
                 </div>
-                <!-- CPF + Tel -->
                 <div class="grid">
                     <div class="form-group">
                         <label for="cpf">CPF</label>
@@ -155,7 +144,6 @@
                         <div class="field-error" id="err-tel">Preencha o telefone no formato 5511999999999.</div>
                     </div>
                 </div>
-                <!-- Perfil + Placa -->
                 <div class="grid">
                     <div class="form-group">
                         <label for="perfil">Perfil do Veículo</label>
@@ -171,7 +159,6 @@
                         <div class="field-error" id="err-placa">Preencha a placa.</div>
                     </div>
                 </div>
-                <!-- E-mails -->
                 <div class="grid">
                     <div class="form-group">
                         <label for="emailAgregado">E-mail Agregado</label>
@@ -184,7 +171,6 @@
                         <div class="field-error" id="err-emailMotorista">E-mail inválido.</div>
                     </div>
                 </div>
-                <!-- Tipo ANTT -->
                 <div class="form-group">
                     <label for="tipoAntt">Tipo ANTT</label>
                     <select id="tipoAntt" required>
@@ -194,19 +180,16 @@
                     </select>
                     <div class="field-error" id="err-tipoAntt">Selecione o tipo de ANTT.</div>
                 </div>
-                <!-- Titular ANTT -->
                 <div class="form-group">
                     <label for="titularAntt">Titular ANTT</label>
                     <input type="text" id="titularAntt" placeholder="Nome do titular ANTT" required>
                     <div class="field-error" id="err-titularAntt">Preencha o titular ANTT.</div>
                 </div>
-                <!-- CNPJ ANTT (PJ only) -->
                 <div class="form-group" id="cnpjGroup">
                     <label for="cnpjAntt">CNPJ da ANTT</label>
                     <input type="text" id="cnpjAntt" placeholder="00.000.000/0000-00" maxlength="18">
                     <div class="field-error" id="err-cnpjAntt">CNPJ inválido.</div>
                 </div>
-                <!-- Tipo de Frota (card selector) -->
                 <div class="form-group">
                     <label>Tipo de Frota</label>
                     <div class="frota-selector" id="frotaSelector">
@@ -226,19 +209,16 @@
                     <input type="hidden" id="frotaTipo" required>
                     <div class="field-error" id="err-frotaTipo">Selecione o tipo de frota.</div>
                 </div>
-                <!-- ID Master (Spot / ETC) -->
                 <div class="form-group" id="idMasterGroup">
                     <label for="idMaster">ID Master</label>
                     <input type="text" id="idMaster" placeholder="Ex: 123456">
                     <div class="field-error" id="err-idMaster">Preencha o ID Master.</div>
                 </div>
-                <!-- Demanda (Frota Fixa) -->
                 <div class="form-group" id="demandaGroup" style="display:none;">
                     <label for="demanda">Demanda</label>
                     <input type="text" id="demanda" placeholder="Ex: FF_16707">
                     <div class="field-error" id="err-demanda">Preencha a demanda.</div>
                 </div>
-                <!-- Cavalo + Cluster -->
                 <div class="grid">
                     <div class="form-group">
                         <label for="cavalo">Cavalo <span class="optional">(opcional)</span></label>
@@ -249,7 +229,6 @@
                         <input type="text" id="cluster" placeholder="4 ou 6.1">
                     </div>
                 </div>
-                <!-- Campos: Frota Fixa ou Spot -->
                 <div class="section-conditional" id="sectionFrotaSpot">
                     <hr class="section-divider">
                     <div class="form-group">
@@ -274,7 +253,6 @@
                         <div class="field-error" id="err-status">Selecione o status.</div>
                     </div>
                 </div>
-                <!-- Campos: ETC -->
                 <div class="section-conditional" id="sectionETC">
                     <hr class="section-divider">
                     <div class="form-group">
@@ -304,7 +282,6 @@
                         <div class="field-error" id="err-statusETC">Selecione o status.</div>
                     </div>
                 </div>
-                <!-- Link Infobip + Obs -->
                 <div class="form-group" style="margin-top: 20px;">
                     <label for="linkInfobip">Link Infobip <span class="optional">(opcional)</span></label>
                     <input type="url" id="linkInfobip" placeholder="https://...">
@@ -329,9 +306,8 @@
             </div>
         </div>
     </div>
-        </div><!-- /.form-container -->
-        </div><!-- /#tab-cadastro -->
-        <!-- Tab: Atualizar Status -->
+        </div>
+        </div>
         <div class="tab-panel" id="tab-atualizar">
         <div class="form-container">
             <form id="atualizarForm">
@@ -339,7 +315,7 @@
                     <label for="upd-assistente">Nome do Assistente</label>
                     <select id="upd-assistente" required>
                         <option value="">Selecione...</option>
-                        <option value="Camila">Camila</option><option value="Camila Ruiz">Camila Ruiz</option><option value="Carlos">Carlos</option><option value="Claudio">Claudio</option><option value="Eduarda">Eduarda</option><option value="Eloisa">Eloisa</option><option value="Gabriel">Gabriel</option><option value="Gabriella Lopes">Gabriella Lopes</option><option value="Gabrielle">Gabrielle</option><option value="Guilherme">Guilherme</option><option value="Italo">Italo</option><option value="João Paulo">João Paulo</option><option value="João Victor">João Victor</option><option value="Joyce">Joyce</option><option value="Ketillim">Ketillim</option><option value="Laisla">Laisla</option><option value="Lara">Lara</option><option value="Larissa">Larissa</option><option value="Larissa Stace">Larissa Stace</option><option value="Lucas">Lucas</option><option value="Lucas Costa">Lucas Costa</option><option value="Luiza">Luiza</option><option value="Maria Soares">Maria Soares</option><option value="Mariana">Mariana</option><option value="Matheus">Matheus</option><option value="Paloma Oliveira">Paloma Oliveira</option><option value="Renata">Renata</option><option value="Sabrina">Sabrina</option><option value="Sabryna Tayla">Sabryna Tayla</option><option value="Sophia Mariana">Sophia Mariana</option><option value="Thaisline">Thaisline</option><option value="Thiago">Thiago</option><option value="Thiago Angelino">Thiago Angelino</option><option value="Tuane">Tuane</option><option value="Vanderleia">Vanderleia</option><option value="Vinicius">Vinicius</option><option value="Vinny">Vinny</option><option value="Vitor">Vitor</option><option value="Vitoria">Vitoria</option>
+                        <option value="Almir">Almir</option><option value="Camila">Camila</option><option value="Camila Ruiz">Camila Ruiz</option><option value="Carlos">Carlos</option><option value="Claudio">Claudio</option><option value="Eduarda">Eduarda</option><option value="Eloisa">Eloisa</option><option value="Felipe">Felipe</option><option value="Gabriel">Gabriel</option><option value="Gabriella Lopes">Gabriella Lopes</option><option value="Gabrielle">Gabrielle</option><option value="Guilherme">Guilherme</option><option value="Italo">Italo</option><option value="João Paulo">João Paulo</option><option value="João Victor">João Victor</option><option value="Joyce">Joyce</option><option value="Ketillim">Ketillim</option><option value="Laisla">Laisla</option><option value="Lara">Lara</option><option value="Larissa">Larissa</option><option value="Larissa Stace">Larissa Stace</option><option value="Lucas">Lucas</option><option value="Lucas Costa">Lucas Costa</option><option value="Luiza">Luiza</option><option value="Maria Soares">Maria Soares</option><option value="Mariana">Mariana</option><option value="Matheus">Matheus</option><option value="Natã">Natã</option><option value="Paloma Oliveira">Paloma Oliveira</option><option value="Renata">Renata</option><option value="Sabrina">Sabrina</option><option value="Sabryna Tayla">Sabryna Tayla</option><option value="Sophia Mariana">Sophia Mariana</option><option value="Thaisline">Thaisline</option><option value="Thiago">Thiago</option><option value="Thiago Angelino">Thiago Angelino</option><option value="Tuane">Tuane</option><option value="Vanderleia">Vanderleia</option><option value="Vinicius">Vinicius</option><option value="Vinny">Vinny</option><option value="Vitor">Vitor</option><option value="Vitoria">Vitoria</option>
                     </select>
                     <div class="field-error" id="err-upd-assistente">Selecione o assistente.</div>
                 </div>
@@ -348,7 +324,6 @@
                     <input type="text" id="upd-motId" placeholder="MOT-9737000" required maxlength="14">
                     <div class="field-error" id="err-upd-motId">Preencha o ID no formato MOT-XXXXXXX.</div>
                 </div>
-                <!-- Etapa selector -->
                 <div class="form-group">
                     <label>Etapa</label>
                     <div class="frota-selector" id="etapaSelector" style="grid-template-columns: repeat(5, 1fr);">
@@ -375,7 +350,6 @@
                     </div>
                     <div class="field-error" id="err-upd-etapa">Selecione a etapa.</div>
                 </div>
-                <!-- Status por etapa -->
                 <div class="form-group" id="upd-status-group" style="display:none;">
                     <label for="upd-status">Status</label>
                     <select id="upd-status" required>
@@ -383,19 +357,16 @@
                     </select>
                     <div class="field-error" id="err-upd-status">Selecione o status.</div>
                 </div>
-                <!-- Campo extra: Data disponibilidade (só Liberado) -->
                 <div class="form-group" id="upd-dataDisp-group" style="display:none;">
                     <label for="upd-dataDisp">Data de Disponibilidade</label>
                     <input type="date" id="upd-dataDisp">
                     <div class="field-error" id="err-upd-dataDisp">Preencha a data.</div>
                 </div>
-                <!-- Campo extra: Data Primeira Rota (só Liberado + Primeira rota) -->
                 <div class="form-group" id="upd-dataPrimeiraRota-group" style="display:none;">
                     <label for="upd-dataPrimeiraRota">Data da Primeira Rota</label>
                     <input type="date" id="upd-dataPrimeiraRota">
                     <div class="field-error" id="err-upd-dataPrimeiraRota">Preencha a data.</div>
                 </div>
-                <!-- Campos de Erro (só Envios Extra ou Logistics + Erro) -->
                 <div class="form-group" id="upd-erroTela-group" style="display:none;">
                     <label for="upd-erroTela">Tela de Erro</label>
                     <select id="upd-erroTela">
@@ -425,21 +396,18 @@
                 <div class="output-text" id="updOutputText"></div>
                 <div id="updStatusMessage" class="status-message"></div>
             </div>
-            <!-- Divisor Mensagem Final -->
             <hr style="border: none; border-top: 3px solid #2D3277; margin: 40px 0 30px;">
             <h2 style="color: #2D3277; font-size: 18px; margin-bottom: 6px;">📢 Mensagem Final</h2>
             <p style="color: #666; font-size: 13px; margin-bottom: 24px;">Gere a mensagem completa para envio no grupo. Nenhum dado é salvo.</p>
             <form id="finalForm">
-                <!-- Assistente -->
                 <div class="form-group">
                     <label for="fin-assistente">Nome do Assistente</label>
                     <select id="fin-assistente" required>
                         <option value="">Selecione...</option>
-                        <option value="Camila">Camila</option><option value="Camila Ruiz">Camila Ruiz</option><option value="Carlos">Carlos</option><option value="Claudio">Claudio</option><option value="Eduarda">Eduarda</option><option value="Eloisa">Eloisa</option><option value="Gabriel">Gabriel</option><option value="Gabriella Lopes">Gabriella Lopes</option><option value="Gabrielle">Gabrielle</option><option value="Guilherme">Guilherme</option><option value="Italo">Italo</option><option value="João Paulo">João Paulo</option><option value="João Victor">João Victor</option><option value="Joyce">Joyce</option><option value="Ketillim">Ketillim</option><option value="Laisla">Laisla</option><option value="Lara">Lara</option><option value="Larissa">Larissa</option><option value="Larissa Stace">Larissa Stace</option><option value="Lucas">Lucas</option><option value="Lucas Costa">Lucas Costa</option><option value="Luiza">Luiza</option><option value="Maria Soares">Maria Soares</option><option value="Mariana">Mariana</option><option value="Matheus">Matheus</option><option value="Paloma Oliveira">Paloma Oliveira</option><option value="Renata">Renata</option><option value="Sabrina">Sabrina</option><option value="Sabryna Tayla">Sabryna Tayla</option><option value="Sophia Mariana">Sophia Mariana</option><option value="Thaisline">Thaisline</option><option value="Thiago">Thiago</option><option value="Thiago Angelino">Thiago Angelino</option><option value="Tuane">Tuane</option><option value="Vanderleia">Vanderleia</option><option value="Vinicius">Vinicius</option><option value="Vinny">Vinny</option><option value="Vitor">Vitor</option><option value="Vitoria">Vitoria</option>
+                        <option value="Almir">Almir</option><option value="Camila">Camila</option><option value="Camila Ruiz">Camila Ruiz</option><option value="Carlos">Carlos</option><option value="Claudio">Claudio</option><option value="Eduarda">Eduarda</option><option value="Eloisa">Eloisa</option><option value="Felipe">Felipe</option><option value="Gabriel">Gabriel</option><option value="Gabriella Lopes">Gabriella Lopes</option><option value="Gabrielle">Gabrielle</option><option value="Guilherme">Guilherme</option><option value="Italo">Italo</option><option value="João Paulo">João Paulo</option><option value="João Victor">João Victor</option><option value="Joyce">Joyce</option><option value="Ketillim">Ketillim</option><option value="Laisla">Laisla</option><option value="Lara">Lara</option><option value="Larissa">Larissa</option><option value="Larissa Stace">Larissa Stace</option><option value="Lucas">Lucas</option><option value="Lucas Costa">Lucas Costa</option><option value="Luiza">Luiza</option><option value="Maria Soares">Maria Soares</option><option value="Mariana">Mariana</option><option value="Matheus">Matheus</option><option value="Natã">Natã</option><option value="Paloma Oliveira">Paloma Oliveira</option><option value="Renata">Renata</option><option value="Sabrina">Sabrina</option><option value="Sabryna Tayla">Sabryna Tayla</option><option value="Sophia Mariana">Sophia Mariana</option><option value="Thaisline">Thaisline</option><option value="Thiago">Thiago</option><option value="Thiago Angelino">Thiago Angelino</option><option value="Tuane">Tuane</option><option value="Vanderleia">Vanderleia</option><option value="Vinicius">Vinicius</option><option value="Vinny">Vinny</option><option value="Vitor">Vitor</option><option value="Vitoria">Vitoria</option>
                     </select>
                     <div class="field-error" id="err-fin-assistente">Selecione o assistente.</div>
                 </div>
-                <!-- SVC/XD -->
                 <div class="form-group">
                     <label for="fin-svcxd">SVC/XD</label>
                     <div class="autocomplete-wrapper">
@@ -448,13 +416,11 @@
                     </div>
                     <div class="field-error" id="err-fin-svcxd">Preencha o SVC/XD.</div>
                 </div>
-                <!-- Motorista -->
                 <div class="form-group">
                     <label for="fin-motorista">Motorista</label>
                     <input type="text" id="fin-motorista" placeholder="Nome completo do motorista" required>
                     <div class="field-error" id="err-fin-motorista">Preencha o nome do motorista.</div>
                 </div>
-                <!-- CPF + Tel -->
                 <div class="grid">
                     <div class="form-group">
                         <label for="fin-cpf">CPF</label>
@@ -466,7 +432,6 @@
                         <div class="input-hint">DDI + DDD + número, sem espaços ou traços</div>
                     </div>
                 </div>
-                <!-- Perfil + Placa -->
                 <div class="grid">
                     <div class="form-group">
                         <label for="fin-perfil">Perfil do Veículo</label>
@@ -482,23 +447,19 @@
                         <div class="field-error" id="err-fin-placa">Preencha a placa.</div>
                     </div>
                 </div>
-                <!-- E-mail -->
                 <div class="form-group">
                     <label for="fin-email">E-mail <span class="optional">(opcional)</span></label>
                     <input type="email" id="fin-email" placeholder="exemplo@gmail.com">
                 </div>
-                <!-- Titular ANTT -->
                 <div class="form-group">
                     <label for="fin-titularAntt">Titular ANTT <span class="optional">(opcional)</span></label>
                     <input type="text" id="fin-titularAntt" placeholder="Nome do titular ANTT">
                 </div>
-                <!-- ID Master / Demanda -->
                 <div class="form-group">
                     <label for="fin-idMaster">ID Master / Demanda</label>
                     <input type="text" id="fin-idMaster" placeholder="Ex: 123456 ou FF_16707" required>
                     <div class="field-error" id="err-fin-idMaster">Preencha o ID Master ou Demanda.</div>
                 </div>
-                <!-- Cavalo + Cluster -->
                 <div class="grid">
                     <div class="form-group">
                         <label for="fin-cavalo">Cavalo <span class="optional">(opcional)</span></label>
@@ -509,7 +470,6 @@
                         <input type="text" id="fin-cluster" placeholder="4 ou 6.1">
                     </div>
                 </div>
-                <!-- Tipo de Frota -->
                 <div class="form-group">
                     <label>Tipo de Frota</label>
                     <div class="frota-selector" id="fin-frotaSelector">
@@ -528,7 +488,6 @@
                     </div>
                     <div class="field-error" id="err-fin-frota">Selecione o tipo de frota.</div>
                 </div>
-                <!-- Milha (Frota Fixa / Spot) -->
                 <div class="form-group" id="fin-milhaGroup" style="display:none;">
                     <label for="fin-milha">Milha</label>
                     <select id="fin-milha">
@@ -538,12 +497,10 @@
                         <option value="Full">Full</option>
                     </select>
                 </div>
-                <!-- Nome ETC -->
                 <div class="form-group" id="fin-etcGroup" style="display:none;">
                     <label for="fin-nomeETC">Nome da ETC</label>
                     <input type="text" id="fin-nomeETC" placeholder="Ex: 3A+ Kangu">
                 </div>
-                <!-- Etapa / Status Final -->
                 <div class="form-group">
                     <label>Etapa / Status Final</label>
                     <div class="frota-selector" id="fin-etapaSelector" style="grid-template-columns: repeat(4, 1fr);">
@@ -566,7 +523,6 @@
                     </div>
                     <div class="field-error" id="err-fin-etapa">Selecione a etapa.</div>
                 </div>
-                <!-- Status por etapa -->
                 <div class="form-group" id="fin-statusGroup" style="display:none;">
                     <label for="fin-status">Status</label>
                     <select id="fin-status">
@@ -574,12 +530,10 @@
                     </select>
                     <div class="field-error" id="err-fin-status">Selecione o status.</div>
                 </div>
-                <!-- Data disponibilidade (Liberado) -->
                 <div class="form-group" id="fin-dataDispGroup" style="display:none;">
                     <label for="fin-dataDisp">Data de Disponibilidade</label>
                     <input type="date" id="fin-dataDisp">
                 </div>
-                <!-- Obs -->
                 <div class="form-group">
                     <label for="fin-obs">Observação <span class="optional">(opcional)</span></label>
                     <textarea id="fin-obs" rows="2" placeholder="Ex: Motorista liberado para operação."></textarea>
@@ -596,13 +550,11 @@
                 <div class="output-text" id="finOutputText"></div>
             </div>
         </div>
-        </div><!-- /#tab-atualizar -->
-        <!-- Tab: Corrigir Cadastro -->
+        </div>
         <div class="tab-panel" id="tab-corrigir">
         <div class="form-container">
             <div class="alert alert-warning">🧪 <strong>Funcionalidade em fase de teste.</strong> Use com atenção e avise se algo não sair como esperado.</div>
             <p style="color: #666; font-size: 13px; margin-bottom: 20px;">Use isso quando um cadastro foi preenchido com algum dado errado. Busque pelo ID do motorista, confira os dados, corrija o que precisar e salve — só os campos alterados são registrados (com histórico) e sobrescritos.</p>
-            <!-- Busca -->
             <div class="form-group">
                 <label for="cor-motId">ID do Motorista (MOT-XXXXXXX)</label>
                 <div style="display:flex; gap:10px;">
@@ -611,14 +563,13 @@
                 </div>
                 <div id="cor-buscaStatus" class="status-message"></div>
             </div>
-            <!-- Formulário de correção (só aparece depois da busca) -->
             <form id="corrigirForm" style="display:none;" onsubmit="return false;">
                 <input type="hidden" id="cor-motId-confirmado">
                 <div class="form-group">
                     <label for="cor-assistente">Assistente responsável pelo cadastro original</label>
                     <select id="cor-assistente" required>
                         <option value="">Selecione...</option>
-                        <option value="Camila">Camila</option><option value="Camila Ruiz">Camila Ruiz</option><option value="Carlos">Carlos</option><option value="Claudio">Claudio</option><option value="Eduarda">Eduarda</option><option value="Eloisa">Eloisa</option><option value="Gabriel">Gabriel</option><option value="Gabriella Lopes">Gabriella Lopes</option><option value="Gabrielle">Gabrielle</option><option value="Guilherme">Guilherme</option><option value="Italo">Italo</option><option value="João Paulo">João Paulo</option><option value="João Victor">João Victor</option><option value="Joyce">Joyce</option><option value="Ketillim">Ketillim</option><option value="Laisla">Laisla</option><option value="Lara">Lara</option><option value="Larissa">Larissa</option><option value="Larissa Stace">Larissa Stace</option><option value="Lucas">Lucas</option><option value="Lucas Costa">Lucas Costa</option><option value="Luiza">Luiza</option><option value="Maria Soares">Maria Soares</option><option value="Mariana">Mariana</option><option value="Matheus">Matheus</option><option value="Paloma Oliveira">Paloma Oliveira</option><option value="Renata">Renata</option><option value="Sabrina">Sabrina</option><option value="Sabryna Tayla">Sabryna Tayla</option><option value="Sophia Mariana">Sophia Mariana</option><option value="Thaisline">Thaisline</option><option value="Thiago">Thiago</option><option value="Thiago Angelino">Thiago Angelino</option><option value="Tuane">Tuane</option><option value="Vanderleia">Vanderleia</option><option value="Vinicius">Vinicius</option><option value="Vinny">Vinny</option><option value="Vitor">Vitor</option><option value="Vitoria">Vitoria</option>
+                        <option value="Almir">Almir</option><option value="Camila">Camila</option><option value="Camila Ruiz">Camila Ruiz</option><option value="Carlos">Carlos</option><option value="Claudio">Claudio</option><option value="Eduarda">Eduarda</option><option value="Eloisa">Eloisa</option><option value="Felipe">Felipe</option><option value="Gabriel">Gabriel</option><option value="Gabriella Lopes">Gabriella Lopes</option><option value="Gabrielle">Gabrielle</option><option value="Guilherme">Guilherme</option><option value="Italo">Italo</option><option value="João Paulo">João Paulo</option><option value="João Victor">João Victor</option><option value="Joyce">Joyce</option><option value="Ketillim">Ketillim</option><option value="Laisla">Laisla</option><option value="Lara">Lara</option><option value="Larissa">Larissa</option><option value="Larissa Stace">Larissa Stace</option><option value="Lucas">Lucas</option><option value="Lucas Costa">Lucas Costa</option><option value="Luiza">Luiza</option><option value="Maria Soares">Maria Soares</option><option value="Mariana">Mariana</option><option value="Matheus">Matheus</option><option value="Natã">Natã</option><option value="Paloma Oliveira">Paloma Oliveira</option><option value="Renata">Renata</option><option value="Sabrina">Sabrina</option><option value="Sabryna Tayla">Sabryna Tayla</option><option value="Sophia Mariana">Sophia Mariana</option><option value="Thaisline">Thaisline</option><option value="Thiago">Thiago</option><option value="Thiago Angelino">Thiago Angelino</option><option value="Tuane">Tuane</option><option value="Vanderleia">Vanderleia</option><option value="Vinicius">Vinicius</option><option value="Vinny">Vinny</option><option value="Vitor">Vitor</option><option value="Vitoria">Vitoria</option>
                     </select>
                 </div>
                 <div class="form-group">
@@ -774,7 +725,7 @@
                     <label for="cor-corrigidoPor">Quem está corrigindo agora</label>
                     <select id="cor-corrigidoPor" required>
                         <option value="">Selecione...</option>
-                        <option value="Camila">Camila</option><option value="Camila Ruiz">Camila Ruiz</option><option value="Carlos">Carlos</option><option value="Claudio">Claudio</option><option value="Eduarda">Eduarda</option><option value="Eloisa">Eloisa</option><option value="Gabriel">Gabriel</option><option value="Gabriella Lopes">Gabriella Lopes</option><option value="Gabrielle">Gabrielle</option><option value="Guilherme">Guilherme</option><option value="Italo">Italo</option><option value="João Paulo">João Paulo</option><option value="João Victor">João Victor</option><option value="Joyce">Joyce</option><option value="Ketillim">Ketillim</option><option value="Laisla">Laisla</option><option value="Lara">Lara</option><option value="Larissa">Larissa</option><option value="Larissa Stace">Larissa Stace</option><option value="Lucas">Lucas</option><option value="Lucas Costa">Lucas Costa</option><option value="Luiza">Luiza</option><option value="Maria Soares">Maria Soares</option><option value="Mariana">Mariana</option><option value="Matheus">Matheus</option><option value="Paloma Oliveira">Paloma Oliveira</option><option value="Renata">Renata</option><option value="Sabrina">Sabrina</option><option value="Sabryna Tayla">Sabryna Tayla</option><option value="Sophia Mariana">Sophia Mariana</option><option value="Thaisline">Thaisline</option><option value="Thiago">Thiago</option><option value="Thiago Angelino">Thiago Angelino</option><option value="Tuane">Tuane</option><option value="Vanderleia">Vanderleia</option><option value="Vinicius">Vinicius</option><option value="Vinny">Vinny</option><option value="Vitor">Vitor</option><option value="Vitoria">Vitoria</option>
+                        <option value="Almir">Almir</option><option value="Camila">Camila</option><option value="Camila Ruiz">Camila Ruiz</option><option value="Carlos">Carlos</option><option value="Claudio">Claudio</option><option value="Eduarda">Eduarda</option><option value="Eloisa">Eloisa</option><option value="Felipe">Felipe</option><option value="Gabriel">Gabriel</option><option value="Gabriella Lopes">Gabriella Lopes</option><option value="Gabrielle">Gabrielle</option><option value="Guilherme">Guilherme</option><option value="Italo">Italo</option><option value="João Paulo">João Paulo</option><option value="João Victor">João Victor</option><option value="Joyce">Joyce</option><option value="Ketillim">Ketillim</option><option value="Laisla">Laisla</option><option value="Lara">Lara</option><option value="Larissa">Larissa</option><option value="Larissa Stace">Larissa Stace</option><option value="Lucas">Lucas</option><option value="Lucas Costa">Lucas Costa</option><option value="Luiza">Luiza</option><option value="Maria Soares">Maria Soares</option><option value="Mariana">Mariana</option><option value="Matheus">Matheus</option><option value="Natã">Natã</option><option value="Paloma Oliveira">Paloma Oliveira</option><option value="Renata">Renata</option><option value="Sabrina">Sabrina</option><option value="Sabryna Tayla">Sabryna Tayla</option><option value="Sophia Mariana">Sophia Mariana</option><option value="Thaisline">Thaisline</option><option value="Thiago">Thiago</option><option value="Thiago Angelino">Thiago Angelino</option><option value="Tuane">Tuane</option><option value="Vanderleia">Vanderleia</option><option value="Vinicius">Vinicius</option><option value="Vinny">Vinny</option><option value="Vitor">Vitor</option><option value="Vitoria">Vitoria</option>
                     </select>
                     <div class="field-error" id="err-cor-corrigidoPor">Selecione quem está corrigindo.</div>
                 </div>
@@ -787,7 +738,7 @@
             </form>
             <div id="cor-salvarStatus" class="status-message"></div>
         </div>
-        </div><!-- /#tab-corrigir -->
+        </div>
     <div class="modal-overlay" id="modalOverlay">
         <div class="modal">
             <h3>✅ Confirmar envio para o Sheets</h3>
@@ -799,20 +750,16 @@
         </div>
     </div>
     <script>
-        // ── Bridge config (correção de cadastro — Apps Script vinculado ao Sheets) ──
         const BRIDGE_URL_CORRECAO = 'https://script.google.com/a/macros/mercadolivre.com/s/AKfycbwYhvkPDDpPOS1slXEhFy9wM-7ZAFzUQ9VvHMh_FF0NcWfc-26qP0Nfe_J5ReUSySHh/exec';
-        // ── Tab switching ────────────────────────────────────────────────────
         function switchTab(name, el) {
             document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
             document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
             el.classList.add('active');
             document.getElementById('tab-' + name).classList.add('active');
         }
-        // ── MOT ID generator ─────────────────────────────────────────────────
         function gerarMotId() {
             return `MOT-${Date.now().toString().slice(-7)}`;
         }
-        // ── SVC/XD autocomplete ──────────────────────────────────────────────
         const svcxdOptions = ["BRXBA1 - Simões Filho","BRXCE1 - Itaitinga","BRXES1 - ES","BRXGO1 - Goiânia","BRXMG1 - MG","BRXMG2 - Uberlândia","BRXMG3 - Pouso Alegre","BRXPE1 - Jaboatão dos Guararapes","BRXPR2 - Londrina","BRXPR3 - Cascavel","BRXPR4 - Maringá","BRXRJ1 - RJ","BRXRS1 - RS","BRXSC2 - SC","BRXSP1 - ARE","BRXSP10 - GRU II","BRXSP11 - PRU","BRXSP14 - MAR","BRXSP18 - Santo André","BRXSP2 - CPS","BRXSP4 - SBC","BRXSP5 - RAO","BRXSP6 - GRU I","BRXSP7 - BAU","SSP1 - ZS","XPR1 - CWB","ZN - Zona Norte","BRRJ02 - São João de Meriti","BRPR01 - Araucária","BRBA01 - Lauro de Freitas","BRBA02 - Salvador","BRCE01 - Itaitinga","BRDF01 - Brasília","BRMG01 - Extrema","BRMG02 - Betim","BRMG03 - Extrema","BRPE01 - Cabo de Santo Agostinho","BRRC01 - Perus","BRRC02 - Sumaré","BRRC03 - EMBU","BRRJ01 - Rio de Janeiro","BRRS01 - Sapucaia do Sul","BRSC01 - SC","BRSC02 - SC","BRSP02 - Cajamar","BRSP03 - Cajamar","BRSP04 - Cajamar","BRSP05 - Franco da Rocha","BRSP06 - Araçariguama","BRSP08 - Cajamar","BRSP09 - Cajamar","BRSP10 - Franco da Rocha","BRSP11 - PRU","BRSP14 - Cajamar","BRSP15 - Cajamar","BRXSP9 - Cajamar","Full SES1 - Vitória","Full SSP12 - SJRP","Full XPR1 - CWB","SSP11 - PRU","SSP12 - SJRP","SSP22 - São Carlos","SMG2 - Juiz de Fora","SMG8 - Vespasiano","SPR8 - Campina Grande do Sul","SRJ2 - Queimados","SAL1 - Maceió","SAM1 - Manaus","SAP1 - Macapá","SBA1 - Salvador","SBA2 - Feira de Santana","SBA3 - Vitória da Conquista","SBA4 - Feira de Santana","SBA6 - Salvador","SBA7 - Vitória da Conquista","SCE1 - Fortaleza","SCE2 - Fortaleza","SDF1 - Brasília","SDF2 - Brasília 2","SES1 - Vitória","SES2 - Cachoeiro do Itapemirim","SES3 - Linhares","SGO1 - Goiânia","SGO2 - Rio Verde","SGO3 - Hidrolândia","SJP1 - João Pessoa","SMG1 - Contagem","SMG10 - Divinópolis","SMG11 - Patos de Minas","SMG12 - Uberaba","SMG13 - Teófilo Otoni","SMG14 - Nova Lima","SMG15 - Contagem","SMG18 - Contagem","SMG3 - Pouso Alegre","SMG4 - Ipatinga","SMG5 - Poços de Caldas","SMG6 - Uberlândia","SMG7 - Montes Claros","SMG9 - Varginha","SMN1 - São Luís","SMR1 - Cuiabá","SMR2 - Sinop","SMS1 - Campo Grande","SMS2 - Dourados","SPA1 - Belém","SPE1 - Recife","SPI1 - Teresina","SPR1 - Curitiba","SPR2 - Londrina","SPR3 - Cascavel","SPR4 - Pato Branco","SPR5 - Guarapuava","SPR6 - Maringá","SPR7 - Ponta Grossa","SPR11 - Araucária","SRD1 - Porto Velho","SRD2 - Porto Velho","SRJ1 - Cordovil","SRJ10 - RJ Barra","SRJ12 - Itaperuna","SRJ13 - Meriti","SRJ14 - Rio de Janeiro","SRJ3 - Volta Redonda","SRJ4 - Campos dos Goytacazes","SRJ5 - Petrópolis","SRJ6 - Mendanha","SRJ7 - Macaé","SRJ8 - Niterói","SRJ9 - Cabo Frio","SRN1 - Natal","SRS1 - Porto Alegre","SRS10 - Lajeado","SRS2 - Pelotas","SRS3 - Santa Maria","SRS4 - Caxias do Sul","SRS5 - Passo Fundo","SRS6 - Alegrete","SRS7 - Ijuí","SRS8 - Sapucaia do Sul","SRS9 - Santa Rita","SSC1 - Joinville","SSC2 - Florianópolis","SSC3 - Gaspar","SSC4 - Chapecó","SSC5 - Criciúma","SSC7 - Lages","SSC8 - Itajaí","SSC9 - Governador Celso Ramos","SSE1 - Aracaju","SSP10 - Araçatuba","SSP13 - MAR","SSP14 - BAU","SSP15 - Santos","SSP16 - Caraguatatuba","SSP17 - SBC","SSP18 - Jundiaí","SSP19 - Guarulhos","SSP20 - Sorocaba","SSP21 - Mooca","SSP23 - Mogi das Cruzes","SSP24 - Avaré","SSP25 - Atibaia","SSP26 - Franca","SSP27 - Itapetininga","SSP28 - Jales","SSP29 - Mogi Mirim","SSP3 - CPS","SSP30 - GRU","SSP31 - Barretos","SSP32 - Franco da Rocha","SSP33 - Guarulhos","SSP34 - Cotia","SSP35 - Cubatão","SSP36 - Piracicaba","SSP38 - Itupeva","SSP39 - Lorena","SSP4 - Ribeirão Preto","SSP40 - ZN","SSP44 - São Paulo","SSP45 - Itaquera","SSP46 - Santos 2","SSP48 - Jaguaré","SSP49 - Zona Norte","SSP5 - ARE","SSP6 - ZL","SSP7 - ZO","SSP8 - SJC","SSP51 - Porto Feliz","SSP9 - Limeira","STO1 - Palmas","SSP37 - CPS","SBA9 - Simões Filho","SPR10 - Campina Grande do Sul","SPA2 - Benevides","SFN1 - Guarulhos","SPR9 - Cascavel","SSP50 - Santo André","SSP52 - São Bernardo do Campo","SSP55 - Ribeirão Preto","SSP49 - ZONA NORTE II","SRJ1 - Rio de Janeiro","SSP46 - São Vicente II","SMR2 - Sinop"];
         const svcxdInput = document.getElementById('svcxd');
         const svcxdList = document.getElementById('svcxdList');
@@ -832,7 +779,6 @@
             svcxdList.style.display = 'block';
         });
         document.addEventListener('click', e => { if (!e.target.closest('.autocomplete-wrapper')) svcxdList.style.display = 'none'; });
-        // ── Frota card selector ──────────────────────────────────────────────
         let frotaSelecionada = '';
         function selectFrota(valor, card) {
             document.querySelectorAll('#frotaSelector .frota-card').forEach(c => c.classList.remove('selected'));
@@ -845,7 +791,6 @@
             const secETC = document.getElementById('sectionETC');
             const idMasterGroup = document.getElementById('idMasterGroup');
             const demandaGroup  = document.getElementById('demandaGroup');
-            // Toggle ID Master vs Demanda
             if (valor === 'Frota Fixa') {
                 idMasterGroup.style.display = 'none';
                 document.getElementById('idMaster').value = '';
@@ -868,7 +813,6 @@
                 document.getElementById('statusETC').value = '';
             }
         }
-        // ── Frota card selector (Corrigir Cadastro) ─────────────────────────
         let corFrotaSelecionada = '';
         function selectCorFrota(valor, card) {
             document.querySelectorAll('#cor-frotaSelector .frota-card').forEach(c => c.classList.remove('selected'));
@@ -893,7 +837,6 @@
                 secFS.classList.add('visible');
             }
         }
-        // ── ANTT PJ toggle ───────────────────────────────────────────────────
         document.getElementById('tipoAntt').addEventListener('change', function() {
             const show = this.value === 'PJ';
             document.getElementById('cnpjGroup').style.display = show ? 'block' : 'none';
@@ -905,7 +848,6 @@
             document.getElementById('cor-cnpjGroup').style.display = show ? 'block' : 'none';
             if (!show) document.getElementById('cor-cnpjAntt').value = '';
         });
-        // ── Masks ────────────────────────────────────────────────────────────
         document.getElementById('cpf').addEventListener('input', function(e) {
             let v = e.target.value.replace(/\D/g, '');
             if (v.length <= 11) {
@@ -916,7 +858,6 @@
             }
         });
         document.getElementById('tel').addEventListener('input', function(e) {
-            // Only digits, max 13 (55 + DDD2 + 9 digits)
             e.target.value = e.target.value.replace(/\D/g, '').slice(0, 13);
         });
         document.getElementById('cnpjAntt').addEventListener('input', function() {
@@ -930,7 +871,6 @@
         document.getElementById('placa').addEventListener('input', function() { this.value = this.value.toUpperCase(); });
         document.getElementById('motorista').addEventListener('input', function() { this.value = this.value.toUpperCase(); });
         document.getElementById('titularAntt').addEventListener('input', function() { this.value = this.value.toUpperCase(); });
-        // Masks (Corrigir Cadastro)
         document.getElementById('cor-cpf').addEventListener('input', function(e) {
             let v = e.target.value.replace(/\D/g, '');
             if (v.length <= 11) {
@@ -954,7 +894,6 @@
         document.getElementById('cor-placa').addEventListener('input', function() { this.value = this.value.toUpperCase(); });
         document.getElementById('cor-motorista').addEventListener('input', function() { this.value = this.value.toUpperCase(); });
         document.getElementById('cor-titularAntt').addEventListener('input', function() { this.value = this.value.toUpperCase(); });
-        // ── Validators ───────────────────────────────────────────────────────
         function validarCPF(cpf) {
             cpf = cpf.replace(/\D/g, '');
             if (cpf.length !== 11 || /^(\d)\1+$/.test(cpf)) return false;
@@ -986,9 +925,7 @@
         }
         function validarFormulario() {
             let ok = true;
-            // Assistente
             if (!document.getElementById('assistente').value) { showError('assistente', true); ok = false; } else showError('assistente', false);
-            // SVC/XD - verifica se está na lista (aviso, não bloqueia)
             const svcxdVal = document.getElementById('svcxd').value.trim();
             if (!svcxdVal) { showError('svcxd', true); ok = false; }
             else {
@@ -996,9 +933,7 @@
                 const svcxdWarn = document.getElementById('warn-svcxd');
                 if (svcxdWarn) svcxdWarn.style.display = !svcxdOptions.includes(svcxdVal) ? 'block' : 'none';
             }
-            // Motorista
             if (!document.getElementById('motorista').value.trim()) { showError('motorista', true); ok = false; } else showError('motorista', false);
-            // CPF (bloqueia se faltar dígito, avisa se dígito verificador for inválido)
             const cpfDigitos = document.getElementById('cpf').value.replace(/\D/g, '');
             const cpfErrEl = document.getElementById('err-cpf');
             if (cpfDigitos.length !== 11) {
@@ -1016,25 +951,17 @@
                 cpfErrEl.style.display = 'none';
                 document.getElementById('cpf').classList.remove('error');
             }
-            // Tel
             const tel = document.getElementById('tel').value.replace(/\D/g, '');
             if (!tel || tel.length < 12 || tel.length > 13) { showError('tel', true); ok = false; } else showError('tel', false);
-            // Perfil
             if (!document.getElementById('perfil').value) { showError('perfil', true); ok = false; } else showError('perfil', false);
-            // Placa
             if (!document.getElementById('placa').value.trim()) { showError('placa', true); ok = false; } else showError('placa', false);
-            // E-mail
             const emailAgregado = document.getElementById('emailAgregado').value;
             if (!emailAgregado || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(emailAgregado)) { showError('emailAgregado', true); ok = false; } else showError('emailAgregado', false);
             const emailMotorista = document.getElementById('emailMotorista').value;
             if (!emailMotorista || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(emailMotorista)) { showError('emailMotorista', true); ok = false; } else showError('emailMotorista', false);
-            // Tipo ANTT
             if (!document.getElementById('tipoAntt').value) { showError('tipoAntt', true); ok = false; } else showError('tipoAntt', false);
-            // Titular ANTT
             if (!document.getElementById('titularAntt').value.trim()) { showError('titularAntt', true); ok = false; } else showError('titularAntt', false);
-            // CNPJ
             if (document.getElementById('tipoAntt').value === 'PJ' && !validarCNPJ(document.getElementById('cnpjAntt').value)) { showError('cnpjAntt', true); ok = false; } else showError('cnpjAntt', false);
-            // ID Master ou Demanda dependendo da frota
             if (frotaSelecionada === 'Frota Fixa') {
                 if (!document.getElementById('demanda').value.trim()) { showError('demanda', true); ok = false; } else showError('demanda', false);
                 showError('idMaster', false);
@@ -1042,14 +969,11 @@
                 if (!document.getElementById('idMaster').value.trim()) { showError('idMaster', true); ok = false; } else showError('idMaster', false);
                 showError('demanda', false);
             }
-            // Tipo de frota
             if (!frotaSelecionada) { document.getElementById('err-frotaTipo').style.display = 'block'; ok = false; } else document.getElementById('err-frotaTipo').style.display = 'none';
-            // Frota Fixa / Spot conditional fields
             if (frotaSelecionada === 'Frota Fixa' || frotaSelecionada === 'Spot') {
                 if (!document.getElementById('milha').value) { showError('milha', true); ok = false; } else showError('milha', false);
                 if (!document.getElementById('status').value) { showError('status', true); ok = false; } else showError('status', false);
             }
-            // ETC conditional fields
             if (frotaSelecionada === 'ETC') {
                 if (!document.getElementById('nomeETC').value.trim()) { showError('nomeETC', true); ok = false; } else showError('nomeETC', false);
                 if (!document.getElementById('milhaETC').value) { showError('milhaETC', true); ok = false; } else showError('milhaETC', false);
@@ -1057,7 +981,6 @@
             }
             return ok;
         }
-        // ── Submit ───────────────────────────────────────────────────────────
         let dadosContratacao = null;
         let jaSalvou = false;
         document.getElementById('contratoForm').addEventListener('submit', function(e) {
@@ -1082,7 +1005,6 @@
             const cluster      = document.getElementById('cluster').value.trim() || '-';
             const linkInfobip  = document.getElementById('linkInfobip').value.trim();
             const obs          = document.getElementById('obs').value.trim();
-            // Frota-dependent values
             let frota = frotaSelecionada;
             let milha = '', status = '', nomeETC = '';
             if (frota === 'ETC') {
@@ -1095,7 +1017,6 @@
             }
             const motId = gerarMotId();
             dadosContratacao = { motId, assistente, svcxd, idMaster, demanda, nome: motorista, telefone: tel, placa: placa.replace('-', ''), cavalo, cpf: cpfLimpo, cluster, perfilVeiculo: perfil, frota, nomeETC, status, milha, emailAgregado, emailMotorista, titularAntt, cnpjAntt, linkInfobip };
-            // Build message
             let msg = `CONTRATAÇÃO: ${svcxd}`;
             msg += `\n• Motorista: ${motorista}`;
             msg += `\n• CPF: ${cpf}`;
@@ -1130,7 +1051,6 @@
             document.getElementById('sheetsBtn').textContent = '📊 Salvar no Sheets';
             document.getElementById('sheetsBtn').disabled = false;
             document.getElementById('outputContainer').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-            // Desabilita o botão gerar após geração
             const btnGerar = document.querySelector('#contratoForm .btn');
             btnGerar.disabled = true;
             btnGerar.textContent = '🔒 Copie ou salve antes de gerar novamente';
@@ -1139,12 +1059,10 @@
             const btn = document.querySelector('#contratoForm .btn');
             if (btn) { btn.disabled = false; btn.textContent = '✨ Gerar Mensagem'; }
         }
-        // Reabilita ao editar qualquer campo do formulário
         document.getElementById('contratoForm').querySelectorAll('input, select, textarea').forEach(el => {
             el.addEventListener('change', habilitarBtnGerar);
             el.addEventListener('input', habilitarBtnGerar);
         });
-        // ── Copy ─────────────────────────────────────────────────────────────
         document.getElementById('copyBtn').addEventListener('click', function() {
             navigator.clipboard.writeText(document.getElementById('outputText').textContent).then(() => {
                 this.textContent = '✅ Copiado!'; this.classList.add('copied');
@@ -1152,7 +1070,6 @@
                 habilitarBtnGerar();
             });
         });
-        // ── Sheets modal ─────────────────────────────────────────────────────
         document.getElementById('sheetsBtn').addEventListener('click', function() {
             if (!dadosContratacao) { mostrarStatus('Erro: Gere a mensagem primeiro!', 'error'); return; }
             if (jaSalvou) { mostrarStatus('⚠️ Estes dados já foram salvos!', 'error'); return; }
@@ -1221,7 +1138,6 @@
             s.textContent = mensagem;
             s.style.display = 'block';
         }
-        // ── Etapa funnel ─────────────────────────────────────────────────────
         const etapaStatus = {
             divergencia: ['Devolvido para pesca'],
             cadastro:   ['Em andamento', 'Erro', 'Concluído'],
@@ -1263,12 +1179,9 @@
                 statusSelect.appendChild(o);
             });
             document.getElementById('upd-status-group').style.display = 'block';
-            // Data disponibilidade só aparece em Liberado com status Data de Disponibilidade
             document.getElementById('upd-dataDisp-group').style.display = 'none';
-            // Esconde campos de erro ao trocar etapa
             document.getElementById('upd-erroTela-group').style.display = 'none';
             document.getElementById('upd-dataErro-group').style.display = 'none';
-            // Listen for status change to show/hide fields
             statusSelect.onchange = function() {
                 const isErro = valor === 'cadastro' && this.value === 'Erro';
                 document.getElementById('upd-erroTela-group').style.display = isErro ? 'block' : 'none';
@@ -1288,7 +1201,6 @@
                     (valor === 'liberado' && this.value === 'Primeira rota') ? 'block' : 'none';
             };
         }
-        // ── Update form ──────────────────────────────────────────────────────
         let dadosAtualizacao = null;
         let updJaSalvou = false;
         document.getElementById('atualizarForm').addEventListener('submit', function(e) {
@@ -1397,8 +1309,6 @@
             s.textContent = mensagem;
             s.style.display = 'block';
         }
-        // ── Mensagem Final ───────────────────────────────────────────────────
-        // SVC/XD autocomplete for final form
         const finSvcxdInput = document.getElementById('fin-svcxd');
         const finSvcxdList  = document.getElementById('fin-svcxdList');
         finSvcxdInput.addEventListener('input', function() {
@@ -1416,7 +1326,6 @@
             });
             finSvcxdList.style.display = 'block';
         });
-        // Masks for final form
         document.getElementById('fin-cpf').addEventListener('input', function(e) {
             let v = e.target.value.replace(/\D/g, '');
             v = v.replace(/(\d{3})(\d)/, '$1.$2');
@@ -1430,7 +1339,6 @@
         document.getElementById('fin-motorista').addEventListener('input', function() { this.value = this.value.toUpperCase(); });
         document.getElementById('fin-placa').addEventListener('input', function() { this.value = this.value.toUpperCase(); });
         document.getElementById('fin-titularAntt').addEventListener('input', function() { this.value = this.value.toUpperCase(); });
-        // Frota selector for final form
         let finFrotaSelecionada = '';
         function selectFinFrota(valor, card) {
             document.querySelectorAll('#fin-frotaSelector .frota-card').forEach(c => c.classList.remove('selected'));
@@ -1440,7 +1348,6 @@
             document.getElementById('fin-milhaGroup').style.display = (valor === 'Frota Fixa' || valor === 'Spot') ? 'block' : 'none';
             document.getElementById('fin-etcGroup').style.display = valor === 'ETC' ? 'block' : 'none';
         }
-        // Etapa selector for final form
         let finEtapaSelecionada = '';
         function selectFinEtapa(valor, card) {
             document.querySelectorAll('#fin-etapaSelector .frota-card').forEach(c => c.classList.remove('selected'));
@@ -1457,7 +1364,6 @@
             document.getElementById('fin-statusGroup').style.display = 'block';
             document.getElementById('fin-dataDispGroup').style.display = valor === 'liberado' ? 'block' : 'none';
         }
-        // Final form submit
         document.getElementById('finalForm').addEventListener('submit', function(e) {
             e.preventDefault();
             let ok = true;
@@ -1478,7 +1384,6 @@
             const status      = document.getElementById('fin-status').value;
             const dataDisp    = document.getElementById('fin-dataDisp').value;
             const obs         = document.getElementById('fin-obs').value.trim();
-            // Validations
             if (!assistente) { document.getElementById('err-fin-assistente').style.display = 'block'; ok = false; } else document.getElementById('err-fin-assistente').style.display = 'none';
             if (!svcxd)      { document.getElementById('err-fin-svcxd').style.display = 'block'; ok = false; }      else document.getElementById('err-fin-svcxd').style.display = 'none';
             if (!motorista)  { document.getElementById('err-fin-motorista').style.display = 'block'; ok = false; }  else document.getElementById('err-fin-motorista').style.display = 'none';
@@ -1521,7 +1426,6 @@
                 setTimeout(() => { this.textContent = '📋 Copiar'; this.classList.remove('copied'); }, 2000);
             });
         });
-        // ── Corrigir Cadastro: busca por ID (JSONP) ─────────────────────────
         let corDadosOriginais = null;
         function buscarMotorista() {
             const motId = document.getElementById('cor-motId').value.trim().toUpperCase();
@@ -1597,7 +1501,6 @@
             s.textContent = mensagem;
             s.style.display = 'block';
         }
-        // ── Corrigir Cadastro: salvar ────────────────────────────────────────
         function salvarCorrecao() {
             let ok = true;
             const corrigidoPor = document.getElementById('cor-corrigidoPor').value;
@@ -1645,10 +1548,6 @@
             ));
             const btn = document.getElementById('cor-salvarBtn');
             btn.disabled = true; btn.textContent = '⏳ Salvando...';
-            // POST com os dados no corpo (não na URL) — CPF/telefone/e-mail não
-            // ficam expostos numa URL longa. "credentials: include" garante que
-            // o cookie de login do Google seja enviado mesmo sendo uma chamada
-            // pra outro domínio (sem isso, o Apps Script recusava com 401).
             fetch(BRIDGE_URL_CORRECAO, {
                 method: 'POST',
                 mode: 'no-cors',
@@ -1663,9 +1562,6 @@
                   mostrarCorSalvarStatus('❌ Erro ao salvar. Tente novamente.', 'error');
               });
         }
-        // Como o POST acima é "cego" (não dá pra ler se funcionou de verdade),
-        // confirmamos buscando o motorista de novo — a mesma busca que já
-        // funciona — e comparando com o que foi enviado.
         function confirmarCorrecaoSalva(motId, valoresEnviados, btn) {
             const callbackName = 'corConfirma_' + Date.now();
             window[callbackName] = function(data) {
