@@ -84,7 +84,6 @@
         .modal-confirm { flex: 1; padding: 12px; background: linear-gradient(135deg, #2D3277 0%, #1a1f5e 100%); color: #FFE600; border: none; border-radius: 8px; font-size: 15px; font-weight: 600; cursor: pointer; }
         .modal-cancel { flex: 1; padding: 12px; background: #e0e0e0; color: #555; border: none; border-radius: 8px; font-size: 15px; font-weight: 600; cursor: pointer; }
         #cnpjGroup { display: none; }
-        #cor-cnpjGroup { display: none; }
         .input-hint { font-size: 11px; color: #999; margin-top: 4px; }
         @media (max-width: 768px) {
             .grid, .grid-3 { grid-template-columns: 1fr; }
@@ -104,7 +103,6 @@
         <div class="tabs">
             <div class="tab active" onclick="switchTab('cadastro', this)">➕ Novo Cadastro</div>
             <div class="tab" onclick="switchTab('atualizar', this)">🔄 Atualizar Status</div>
-            <div class="tab" onclick="switchTab('corrigir', this)">✏️ Corrigir Cadastro <span class="beta-badge">Teste</span></div>
         </div>
         <div class="tab-panel active" id="tab-cadastro">
         <div class="form-container">
@@ -551,194 +549,6 @@
             </div>
         </div>
         </div>
-        <div class="tab-panel" id="tab-corrigir">
-        <div class="form-container">
-            <div class="alert alert-warning">🧪 <strong>Funcionalidade em fase de teste.</strong> Use com atenção e avise se algo não sair como esperado.</div>
-            <p style="color: #666; font-size: 13px; margin-bottom: 20px;">Use isso quando um cadastro foi preenchido com algum dado errado. Busque pelo ID do motorista, confira os dados, corrija o que precisar e salve — só os campos alterados são registrados (com histórico) e sobrescritos.</p>
-            <div class="form-group">
-                <label for="cor-motId">ID do Motorista (MOT-XXXXXXX)</label>
-                <div style="display:flex; gap:10px;">
-                    <input type="text" id="cor-motId" placeholder="MOT-9737000" maxlength="14" style="flex:1;">
-                    <button type="button" class="btn btn-secondary" style="width:auto; padding:12px 20px;" id="cor-buscarBtn" onclick="buscarMotorista()">🔍 Buscar</button>
-                </div>
-                <div id="cor-buscaStatus" class="status-message"></div>
-            </div>
-            <form id="corrigirForm" style="display:none;" onsubmit="return false;">
-                <input type="hidden" id="cor-motId-confirmado">
-                <div class="form-group">
-                    <label for="cor-assistente">Assistente responsável pelo cadastro original</label>
-                    <select id="cor-assistente" required>
-                        <option value="">Selecione...</option>
-                        <option value="Almir">Almir</option><option value="Camila">Camila</option><option value="Camila Ruiz">Camila Ruiz</option><option value="Carlos">Carlos</option><option value="Claudio">Claudio</option><option value="Eduarda">Eduarda</option><option value="Eloisa">Eloisa</option><option value="Felipe">Felipe</option><option value="Gabriel">Gabriel</option><option value="Gabriella Lopes">Gabriella Lopes</option><option value="Gabrielle">Gabrielle</option><option value="Guilherme">Guilherme</option><option value="Italo">Italo</option><option value="João Paulo">João Paulo</option><option value="João Victor">João Victor</option><option value="Joyce">Joyce</option><option value="Julia">Julia</option><option value="Ketillim">Ketillim</option><option value="Laisla">Laisla</option><option value="Lara">Lara</option><option value="Larissa">Larissa</option><option value="Larissa Stace">Larissa Stace</option><option value="Lucas">Lucas</option><option value="Lucas Costa">Lucas Costa</option><option value="Luiza">Luiza</option><option value="Maria Soares">Maria Soares</option><option value="Mariana">Mariana</option><option value="Matheus">Matheus</option><option value="Natã">Natã</option><option value="Paloma Oliveira">Paloma Oliveira</option><option value="Renata">Renata</option><option value="Sabrina">Sabrina</option><option value="Sabryna Tayla">Sabryna Tayla</option><option value="Sophia Mariana">Sophia Mariana</option><option value="Thaisline">Thaisline</option><option value="Thiago">Thiago</option><option value="Thiago Angelino">Thiago Angelino</option><option value="Tuane">Tuane</option><option value="Vanderleia">Vanderleia</option><option value="Vinicius">Vinicius</option><option value="Vinny">Vinny</option><option value="Vitor">Vitor</option><option value="Vitoria">Vitoria</option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label for="cor-svcxd">SVC/XD</label>
-                    <div class="autocomplete-wrapper">
-                        <input type="text" id="cor-svcxd" placeholder="Digite para buscar..." autocomplete="off">
-                        <div class="autocomplete-list" id="cor-svcxdList"></div>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label for="cor-motorista">Motorista</label>
-                    <input type="text" id="cor-motorista" placeholder="Nome completo do motorista">
-                </div>
-                <div class="grid">
-                    <div class="form-group">
-                        <label for="cor-cpf">CPF</label>
-                        <input type="text" id="cor-cpf" placeholder="000.000.000-00" maxlength="14">
-                    </div>
-                    <div class="form-group">
-                        <label for="cor-tel">Telefone</label>
-                        <input type="text" id="cor-tel" placeholder="5511999999999" maxlength="13">
-                        <div class="input-hint">DDI + DDD + número, sem espaços ou traços</div>
-                    </div>
-                </div>
-                <div class="grid">
-                    <div class="form-group">
-                        <label for="cor-perfil">Perfil do Veículo</label>
-                        <select id="cor-perfil">
-                            <option value="">Selecione...</option>
-                            <option value="PASSEIO">PASSEIO</option><option value="UTILITÁRIO">UTILITÁRIO</option><option value="VAN">VAN</option><option value="HR">HR</option><option value="VUC">VUC</option><option value="MÉDIO">MÉDIO</option><option value="TOCO">TOCO</option><option value="TRUCK">TRUCK</option><option value="CARRETA">CARRETA</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label for="cor-placa">Placa</label>
-                        <input type="text" id="cor-placa" placeholder="DGI-1E74">
-                    </div>
-                </div>
-                <div class="grid">
-                    <div class="form-group">
-                        <label for="cor-emailAgregado">E-mail Agregado</label>
-                        <input type="email" id="cor-emailAgregado" placeholder="exemplo@gmail.com">
-                    </div>
-                    <div class="form-group">
-                        <label for="cor-emailMotorista">E-mail Motorista</label>
-                        <input type="email" id="cor-emailMotorista" placeholder="exemplo@gmail.com">
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label for="cor-tipoAntt">Tipo ANTT</label>
-                    <select id="cor-tipoAntt">
-                        <option value="">Selecione...</option>
-                        <option value="PF">Pessoa Física</option>
-                        <option value="PJ">Pessoa Jurídica</option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label for="cor-titularAntt">Titular ANTT</label>
-                    <input type="text" id="cor-titularAntt" placeholder="Nome do titular ANTT">
-                </div>
-                <div class="form-group" id="cor-cnpjGroup">
-                    <label for="cor-cnpjAntt">CNPJ da ANTT</label>
-                    <input type="text" id="cor-cnpjAntt" placeholder="00.000.000/0000-00" maxlength="18">
-                </div>
-                <div class="form-group">
-                    <label>Tipo de Frota</label>
-                    <div class="frota-selector" id="cor-frotaSelector">
-                        <div class="frota-card" data-value="Frota Fixa" onclick="selectCorFrota('Frota Fixa', this)">
-                            <span class="frota-icon">🏢</span>
-                            <span class="frota-label">Frota Fixa</span>
-                        </div>
-                        <div class="frota-card" data-value="Spot" onclick="selectCorFrota('Spot', this)">
-                            <span class="frota-icon">⚡</span>
-                            <span class="frota-label">Spot</span>
-                        </div>
-                        <div class="frota-card" data-value="ETC" onclick="selectCorFrota('ETC', this)">
-                            <span class="frota-icon">🔗</span>
-                            <span class="frota-label">ETC</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="form-group" id="cor-idMasterGroup">
-                    <label for="cor-idMaster">ID Master</label>
-                    <input type="text" id="cor-idMaster" placeholder="Ex: 123456">
-                </div>
-                <div class="form-group" id="cor-demandaGroup" style="display:none;">
-                    <label for="cor-demanda">Demanda</label>
-                    <input type="text" id="cor-demanda" placeholder="Ex: FF_16707">
-                </div>
-                <div class="grid">
-                    <div class="form-group">
-                        <label for="cor-cavalo">Cavalo <span class="optional">(opcional)</span></label>
-                        <input type="text" id="cor-cavalo" placeholder="NYH-5961">
-                    </div>
-                    <div class="form-group">
-                        <label for="cor-cluster">Cluster <span class="optional">(opcional)</span></label>
-                        <input type="text" id="cor-cluster" placeholder="4 ou 6.1">
-                    </div>
-                </div>
-                <div class="section-conditional" id="cor-sectionFrotaSpot">
-                    <hr class="section-divider">
-                    <div class="form-group">
-                        <label for="cor-milha">Milha</label>
-                        <select id="cor-milha">
-                            <option value="">Selecione...</option>
-                            <option value="First Mile">First Mile</option>
-                            <option value="Last Mile">Last Mile</option>
-                            <option value="Full">Full</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label for="cor-status">Status</label>
-                        <select id="cor-status">
-                            <option value="">Selecione...</option>
-                            <option value="Enviado para cadastro">Enviado para cadastro</option>
-                            <option value="Suspenso/Bloqueado">Suspenso/Bloqueado</option>
-                            <option value="Placa Bloqueada">Placa Bloqueada</option>
-                            <option value="Falta de interação">Falta de interação</option>
-                        </select>
-                    </div>
-                </div>
-                <div class="section-conditional" id="cor-sectionETC">
-                    <hr class="section-divider">
-                    <div class="form-group">
-                        <label for="cor-nomeETC">Nome da ETC</label>
-                        <input type="text" id="cor-nomeETC" placeholder="Ex: 3A+ Kangu">
-                    </div>
-                    <div class="form-group">
-                        <label for="cor-milhaETC">Milha</label>
-                        <select id="cor-milhaETC">
-                            <option value="">Selecione...</option>
-                            <option value="First Mile">First Mile</option>
-                            <option value="Last Mile">Last Mile</option>
-                            <option value="Full">Full</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label for="cor-statusETC">Status</label>
-                        <select id="cor-statusETC">
-                            <option value="">Selecione...</option>
-                            <option value="Enviado para cadastro">Enviado para cadastro</option>
-                            <option value="Suspenso/Bloqueado">Suspenso/Bloqueado</option>
-                            <option value="Placa Bloqueada">Placa Bloqueada</option>
-                            <option value="Falta de interação">Falta de interação</option>
-                        </select>
-                    </div>
-                </div>
-                <div class="form-group" style="margin-top: 20px;">
-                    <label for="cor-linkInfobip">Link Infobip <span class="optional">(opcional)</span></label>
-                    <input type="url" id="cor-linkInfobip" placeholder="https://...">
-                </div>
-                <hr class="section-divider">
-                <div class="form-group">
-                    <label for="cor-corrigidoPor">Quem está corrigindo agora</label>
-                    <select id="cor-corrigidoPor" required>
-                        <option value="">Selecione...</option>
-                        <option value="Almir">Almir</option><option value="Camila">Camila</option><option value="Camila Ruiz">Camila Ruiz</option><option value="Carlos">Carlos</option><option value="Claudio">Claudio</option><option value="Eduarda">Eduarda</option><option value="Eloisa">Eloisa</option><option value="Felipe">Felipe</option><option value="Gabriel">Gabriel</option><option value="Gabriella Lopes">Gabriella Lopes</option><option value="Gabrielle">Gabrielle</option><option value="Guilherme">Guilherme</option><option value="Italo">Italo</option><option value="João Paulo">João Paulo</option><option value="João Victor">João Victor</option><option value="Joyce">Joyce</option><option value="Julia">Julia</option><option value="Ketillim">Ketillim</option><option value="Laisla">Laisla</option><option value="Lara">Lara</option><option value="Larissa">Larissa</option><option value="Larissa Stace">Larissa Stace</option><option value="Lucas">Lucas</option><option value="Lucas Costa">Lucas Costa</option><option value="Luiza">Luiza</option><option value="Maria Soares">Maria Soares</option><option value="Mariana">Mariana</option><option value="Matheus">Matheus</option><option value="Natã">Natã</option><option value="Paloma Oliveira">Paloma Oliveira</option><option value="Renata">Renata</option><option value="Sabrina">Sabrina</option><option value="Sabryna Tayla">Sabryna Tayla</option><option value="Sophia Mariana">Sophia Mariana</option><option value="Thaisline">Thaisline</option><option value="Thiago">Thiago</option><option value="Thiago Angelino">Thiago Angelino</option><option value="Tuane">Tuane</option><option value="Vanderleia">Vanderleia</option><option value="Vinicius">Vinicius</option><option value="Vinny">Vinny</option><option value="Vitor">Vitor</option><option value="Vitoria">Vitoria</option>
-                    </select>
-                    <div class="field-error" id="err-cor-corrigidoPor">Selecione quem está corrigindo.</div>
-                </div>
-                <div class="form-group">
-                    <label for="cor-motivo">Motivo da correção</label>
-                    <textarea id="cor-motivo" rows="2" placeholder="Ex: CPF digitado errado no cadastro original." required></textarea>
-                    <div class="field-error" id="err-cor-motivo">Explique o motivo da correção.</div>
-                </div>
-                <button type="button" class="btn" id="cor-salvarBtn" onclick="salvarCorrecao()">💾 Salvar Correção</button>
-            </form>
-            <div id="cor-salvarStatus" class="status-message"></div>
-        </div>
-        </div>
     <div class="modal-overlay" id="modalOverlay">
         <div class="modal">
             <h3>✅ Confirmar envio para o Sheets</h3>
@@ -750,7 +560,6 @@
         </div>
     </div>
     <script>
-        const BRIDGE_URL_CORRECAO = 'https://script.google.com/a/macros/mercadolivre.com/s/AKfycbwYhvkPDDpPOS1slXEhFy9wM-7ZAFzUQ9VvHMh_FF0NcWfc-26qP0Nfe_J5ReUSySHh/exec';
         function switchTab(name, el) {
             document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
             document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
@@ -813,40 +622,11 @@
                 document.getElementById('statusETC').value = '';
             }
         }
-        let corFrotaSelecionada = '';
-        function selectCorFrota(valor, card) {
-            document.querySelectorAll('#cor-frotaSelector .frota-card').forEach(c => c.classList.remove('selected'));
-            card.classList.add('selected');
-            corFrotaSelecionada = valor;
-            const secFS  = document.getElementById('cor-sectionFrotaSpot');
-            const secETC = document.getElementById('cor-sectionETC');
-            const idMasterGroup = document.getElementById('cor-idMasterGroup');
-            const demandaGroup  = document.getElementById('cor-demandaGroup');
-            if (valor === 'Frota Fixa') {
-                idMasterGroup.style.display = 'none';
-                demandaGroup.style.display = 'block';
-            } else {
-                idMasterGroup.style.display = 'block';
-                demandaGroup.style.display = 'none';
-            }
-            if (valor === 'ETC') {
-                secFS.classList.remove('visible');
-                secETC.classList.add('visible');
-            } else {
-                secETC.classList.remove('visible');
-                secFS.classList.add('visible');
-            }
-        }
         document.getElementById('tipoAntt').addEventListener('change', function() {
             const show = this.value === 'PJ';
             document.getElementById('cnpjGroup').style.display = show ? 'block' : 'none';
             document.getElementById('cnpjAntt').required = show;
             if (!show) document.getElementById('cnpjAntt').value = '';
-        });
-        document.getElementById('cor-tipoAntt').addEventListener('change', function() {
-            const show = this.value === 'PJ';
-            document.getElementById('cor-cnpjGroup').style.display = show ? 'block' : 'none';
-            if (!show) document.getElementById('cor-cnpjAntt').value = '';
         });
         document.getElementById('cpf').addEventListener('input', function(e) {
             let v = e.target.value.replace(/\D/g, '');
@@ -871,29 +651,6 @@
         document.getElementById('placa').addEventListener('input', function() { this.value = this.value.toUpperCase(); });
         document.getElementById('motorista').addEventListener('input', function() { this.value = this.value.toUpperCase(); });
         document.getElementById('titularAntt').addEventListener('input', function() { this.value = this.value.toUpperCase(); });
-        document.getElementById('cor-cpf').addEventListener('input', function(e) {
-            let v = e.target.value.replace(/\D/g, '');
-            if (v.length <= 11) {
-                v = v.replace(/(\d{3})(\d)/, '$1.$2');
-                v = v.replace(/(\d{3})(\d)/, '$1.$2');
-                v = v.replace(/(\d{3})(\d{1,2})$/, '$1-$2');
-                e.target.value = v;
-            }
-        });
-        document.getElementById('cor-tel').addEventListener('input', function(e) {
-            e.target.value = e.target.value.replace(/\D/g, '').slice(0, 13);
-        });
-        document.getElementById('cor-cnpjAntt').addEventListener('input', function() {
-            let v = this.value.replace(/\D/g, '').slice(0, 14);
-            v = v.replace(/(\d{2})(\d)/, '$1.$2');
-            v = v.replace(/(\d{3})(\d)/, '$1.$2');
-            v = v.replace(/(\d{3})(\d)/, '$1/$2');
-            v = v.replace(/(\d{4})(\d{1,2})$/, '$1-$2');
-            this.value = v;
-        });
-        document.getElementById('cor-placa').addEventListener('input', function() { this.value = this.value.toUpperCase(); });
-        document.getElementById('cor-motorista').addEventListener('input', function() { this.value = this.value.toUpperCase(); });
-        document.getElementById('cor-titularAntt').addEventListener('input', function() { this.value = this.value.toUpperCase(); });
         function validarCPF(cpf) {
             cpf = cpf.replace(/\D/g, '');
             if (cpf.length !== 11 || /^(\d)\1+$/.test(cpf)) return false;
@@ -952,7 +709,7 @@
                 document.getElementById('cpf').classList.remove('error');
             }
             const tel = document.getElementById('tel').value.replace(/\D/g, '');
-            if (!tel || tel.length < 12 || tel.length > 13) { showError('tel', true); ok = false; } else showError('tel', false);
+            if (!tel || tel.length !== 13) { showError('tel', true); ok = false; } else showError('tel', false);
             if (!document.getElementById('perfil').value) { showError('perfil', true); ok = false; } else showError('perfil', false);
             if (!document.getElementById('placa').value.trim()) { showError('placa', true); ok = false; } else showError('placa', false);
             const emailAgregado = document.getElementById('emailAgregado').value;
@@ -1426,177 +1183,6 @@
                 setTimeout(() => { this.textContent = '📋 Copiar'; this.classList.remove('copied'); }, 2000);
             });
         });
-        let corDadosOriginais = null;
-        function buscarMotorista() {
-            const motId = document.getElementById('cor-motId').value.trim().toUpperCase();
-            if (!motId) { mostrarCorBuscaStatus('Preencha o ID do motorista.', 'error'); return; }
-            mostrarCorBuscaStatus('🔎 Buscando...', 'success');
-            document.getElementById('corrigirForm').style.display = 'none';
-            const callbackName = 'corBusca_' + Date.now();
-            window[callbackName] = function(data) {
-                delete window[callbackName];
-                const script = document.getElementById(callbackName);
-                if (script) script.remove();
-                if (!data.found) {
-                    mostrarCorBuscaStatus('❌ ID não encontrado. Confira o valor e tente de novo.', 'error');
-                    return;
-                }
-                corDadosOriginais = data;
-                preencherFormularioCorrecao(data);
-                mostrarCorBuscaStatus('✅ Motorista encontrado. Confira e corrija os campos abaixo.', 'success');
-            };
-            const script = document.createElement('script');
-            script.id = callbackName;
-            script.src = BRIDGE_URL_CORRECAO + '?action=buscar&mot_id=' + encodeURIComponent(motId) + '&callback=' + callbackName;
-            script.onerror = function() { mostrarCorBuscaStatus('❌ Erro ao conectar. Verifique o BRIDGE_URL_CORRECAO.', 'error'); };
-            document.body.appendChild(script);
-        }
-        function preencherFormularioCorrecao(d) {
-            document.getElementById('cor-motId-confirmado').value = d.motId;
-            document.getElementById('cor-assistente').value = d.assistente || '';
-            document.getElementById('cor-svcxd').value = d.svcxd || '';
-            document.getElementById('cor-motorista').value = d.nome || '';
-            document.getElementById('cor-cpf').value = d.cpf || '';
-            document.getElementById('cor-tel').value = d.telefone || '';
-            document.getElementById('cor-perfil').value = d.perfilVeiculo || '';
-            document.getElementById('cor-placa').value = d.placa || '';
-            document.getElementById('cor-emailAgregado').value = d.emailAgregado || '';
-            document.getElementById('cor-emailMotorista').value = d.emailMotorista || '';
-            document.getElementById('cor-titularAntt').value = d.titularAntt || '';
-            const temCnpj = !!(d.cnpjAntt && String(d.cnpjAntt).trim());
-            document.getElementById('cor-tipoAntt').value = temCnpj ? 'PJ' : 'PF';
-            document.getElementById('cor-tipoAntt').dispatchEvent(new Event('change'));
-            document.getElementById('cor-cnpjAntt').value = d.cnpjAntt || '';
-            document.getElementById('cor-cavalo').value = (d.cavalo && d.cavalo !== '-') ? d.cavalo : '';
-            document.getElementById('cor-cluster').value = (d.cluster && d.cluster !== '-') ? d.cluster : '';
-            document.getElementById('cor-linkInfobip').value = d.linkInfobip || '';
-            const frotaCard = document.querySelector('#cor-frotaSelector .frota-card[data-value="' + d.frota + '"]');
-            if (frotaCard) selectCorFrota(d.frota, frotaCard);
-            if (d.frota === 'Frota Fixa') {
-                document.getElementById('cor-demanda').value = d.idMaster || '';
-                document.getElementById('cor-idMaster').value = '';
-            } else {
-                document.getElementById('cor-idMaster').value = d.idMaster || '';
-                document.getElementById('cor-demanda').value = '';
-            }
-            if (d.frota === 'ETC') {
-                document.getElementById('cor-nomeETC').value = d.nomeETC || '';
-                document.getElementById('cor-milhaETC').value = d.milha || '';
-                document.getElementById('cor-statusETC').value = d.status || '';
-            } else {
-                document.getElementById('cor-milha').value = d.milha || '';
-                document.getElementById('cor-status').value = d.status || '';
-            }
-            document.getElementById('corrigirForm').style.display = 'block';
-        }
-        function mostrarCorBuscaStatus(mensagem, tipo) {
-            const s = document.getElementById('cor-buscaStatus');
-            s.className = `status-message alert alert-${tipo}`;
-            s.textContent = mensagem;
-            s.style.display = 'block';
-        }
-        function mostrarCorSalvarStatus(mensagem, tipo) {
-            const s = document.getElementById('cor-salvarStatus');
-            s.className = `status-message alert alert-${tipo}`;
-            s.textContent = mensagem;
-            s.style.display = 'block';
-        }
-        function salvarCorrecao() {
-            let ok = true;
-            const corrigidoPor = document.getElementById('cor-corrigidoPor').value;
-            const motivo = document.getElementById('cor-motivo').value.trim();
-            if (!corrigidoPor) { document.getElementById('err-cor-corrigidoPor').style.display = 'block'; ok = false; } else document.getElementById('err-cor-corrigidoPor').style.display = 'none';
-            if (!motivo) { document.getElementById('err-cor-motivo').style.display = 'block'; ok = false; } else document.getElementById('err-cor-motivo').style.display = 'none';
-            if (!ok) return;
-            const motId = document.getElementById('cor-motId-confirmado').value;
-            const frota = corFrotaSelecionada || (corDadosOriginais ? corDadosOriginais.frota : '');
-            const idMaster = frota === 'Frota Fixa' ? document.getElementById('cor-demanda').value.trim() : document.getElementById('cor-idMaster').value.trim();
-            let milha = '', status = '', nomeETC = '';
-            if (frota === 'ETC') {
-                nomeETC = document.getElementById('cor-nomeETC').value.trim();
-                milha   = document.getElementById('cor-milhaETC').value;
-                status  = document.getElementById('cor-statusETC').value;
-            } else {
-                milha  = document.getElementById('cor-milha').value;
-                status = document.getElementById('cor-status').value;
-            }
-            const tipoAntt = document.getElementById('cor-tipoAntt').value;
-            const valoresEnviados = {
-                assistente: document.getElementById('cor-assistente').value,
-                svcxd: document.getElementById('cor-svcxd').value,
-                nome: document.getElementById('cor-motorista').value.toUpperCase(),
-                telefone: document.getElementById('cor-tel').value.replace(/\D/g, ''),
-                placa: document.getElementById('cor-placa').value.toUpperCase(),
-                cavalo: document.getElementById('cor-cavalo').value.trim() || '-',
-                cpf: document.getElementById('cor-cpf').value.replace(/\D/g, ''),
-                cluster: document.getElementById('cor-cluster').value.trim() || '-',
-                nomeETC: nomeETC,
-                perfilVeiculo: document.getElementById('cor-perfil').value,
-                frota: frota,
-                status: status,
-                milha: milha,
-                emailAgregado: document.getElementById('cor-emailAgregado').value,
-                emailMotorista: document.getElementById('cor-emailMotorista').value,
-                titularAntt: document.getElementById('cor-titularAntt').value.toUpperCase(),
-                cnpjAntt: tipoAntt === 'PJ' ? document.getElementById('cor-cnpjAntt').value : '',
-                linkInfobip: document.getElementById('cor-linkInfobip').value.trim(),
-                idMaster: idMaster
-            };
-            const params = new URLSearchParams(Object.assign(
-                { mot_id: motId, corrigido_por: corrigidoPor, motivo: motivo },
-                valoresEnviados
-            ));
-            const btn = document.getElementById('cor-salvarBtn');
-            btn.disabled = true; btn.textContent = '⏳ Salvando...';
-            fetch(BRIDGE_URL_CORRECAO, {
-                method: 'POST',
-                mode: 'no-cors',
-                credentials: 'include',
-                headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-                body: params.toString()
-            }).then(() => new Promise(resolve => setTimeout(resolve, 1500)))
-              .then(() => confirmarCorrecaoSalva(motId, valoresEnviados, btn))
-              .catch(() => {
-                  btn.disabled = false;
-                  btn.textContent = '💾 Salvar Correção';
-                  mostrarCorSalvarStatus('❌ Erro ao salvar. Tente novamente.', 'error');
-              });
-        }
-        function confirmarCorrecaoSalva(motId, valoresEnviados, btn) {
-            const callbackName = 'corConfirma_' + Date.now();
-            window[callbackName] = function(data) {
-                delete window[callbackName];
-                const scriptTag = document.getElementById(callbackName);
-                if (scriptTag) scriptTag.remove();
-                btn.disabled = false;
-                btn.textContent = '💾 Salvar Correção';
-                if (!data.found) {
-                    mostrarCorSalvarStatus('❌ Não foi possível confirmar o salvamento — motorista não encontrado na conferência.', 'error');
-                    return;
-                }
-                const camposEnviados = Object.keys(valoresEnviados);
-                let confirmados = 0;
-                camposEnviados.forEach(campo => {
-                    const enviado = String(valoresEnviados[campo] ?? '');
-                    const salvo = String(data[campo] ?? '');
-                    if (enviado === salvo) confirmados++;
-                });
-                if (confirmados === camposEnviados.length) {
-                    mostrarCorSalvarStatus('✅ Correção salva e confirmada! O histórico foi registrado na aba "Correções".', 'success');
-                } else {
-                    mostrarCorSalvarStatus('⚠️ Salvo, mas ' + (camposEnviados.length - confirmados) + ' campo(s) não bateram na conferência. Confira a planilha antes de considerar concluído.', 'error');
-                }
-            };
-            const scriptTag = document.createElement('script');
-            scriptTag.id = callbackName;
-            scriptTag.src = BRIDGE_URL_CORRECAO + '?action=buscar&mot_id=' + encodeURIComponent(motId) + '&callback=' + callbackName;
-            scriptTag.onerror = function() {
-                btn.disabled = false;
-                btn.textContent = '💾 Salvar Correção';
-                mostrarCorSalvarStatus('⚠️ Correção enviada, mas não foi possível confirmar. Confira a planilha.', 'error');
-            };
-            document.body.appendChild(scriptTag);
-        }
     </script>
 </body>
 </html>
