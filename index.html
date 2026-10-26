@@ -217,11 +217,6 @@
                     <div class="idmaster-info" id="idMasterInfo"></div>
                     <div class="field-warn" id="warn-idMaster">⚠️ ID Master não encontrado na lista. Verifique antes de salvar.</div>
                 </div>
-                <div class="form-group" id="demandaGroup" style="display:none;">
-                    <label for="demanda">Demanda</label>
-                    <input type="text" id="demanda" placeholder="Ex: FF_16707">
-                    <div class="field-error" id="err-demanda">Preencha a demanda.</div>
-                </div>
                 <div class="grid">
                     <div class="form-group">
                         <label for="cavalo">Cavalo <span class="optional">(opcional)</span></label>
@@ -376,6 +371,7 @@
                         <option value="">Selecione o erro...</option>
                     </select>
                     <div class="field-error" id="err-upd-erroTela">Selecione o erro.</div>
+                    <div class="alert alert-warning" id="upd-novoErro-aviso" style="display:none; margin: 8px 0 0;">⚠️ <strong>Novo Erro:</strong> especifique qual foi o erro no campo <strong>Observação</strong>.</div>
                 </div>
                 <div class="form-group" id="upd-dataErro-group" style="display:none;">
                     <label for="upd-dataErro">Data do Erro</label>
@@ -641,18 +637,6 @@
             habilitarBtnGerar();
             const secFS  = document.getElementById('sectionFrotaSpot');
             const secETC = document.getElementById('sectionETC');
-            const idMasterGroup = document.getElementById('idMasterGroup');
-            const demandaGroup  = document.getElementById('demandaGroup');
-            if (valor === 'Frota Fixa') {
-                idMasterGroup.style.display = 'none';
-                document.getElementById('idMaster').value = '';
-                atualizarIdMasterInfo(false);
-                demandaGroup.style.display = 'block';
-            } else {
-                idMasterGroup.style.display = 'block';
-                demandaGroup.style.display = 'none';
-                document.getElementById('demanda').value = '';
-            }
             if (valor === 'ETC') {
                 secFS.classList.remove('visible');
                 secETC.classList.add('visible');
@@ -763,13 +747,7 @@
             if (!document.getElementById('tipoAntt').value) { showError('tipoAntt', true); ok = false; } else showError('tipoAntt', false);
             if (!document.getElementById('titularAntt').value.trim()) { showError('titularAntt', true); ok = false; } else showError('titularAntt', false);
             if (document.getElementById('tipoAntt').value === 'PJ' && !validarCNPJ(document.getElementById('cnpjAntt').value)) { showError('cnpjAntt', true); ok = false; } else showError('cnpjAntt', false);
-            if (frotaSelecionada === 'Frota Fixa') {
-                if (!document.getElementById('demanda').value.trim()) { showError('demanda', true); ok = false; } else showError('demanda', false);
-                showError('idMaster', false);
-            } else {
-                if (!document.getElementById('idMaster').value.trim()) { showError('idMaster', true); ok = false; } else showError('idMaster', false);
-                showError('demanda', false);
-            }
+            if (!document.getElementById('idMaster').value.trim()) { showError('idMaster', true); ok = false; } else showError('idMaster', false);
             if (!frotaSelecionada) { document.getElementById('err-frotaTipo').style.display = 'block'; ok = false; } else document.getElementById('err-frotaTipo').style.display = 'none';
             if (frotaSelecionada === 'Frota Fixa' || frotaSelecionada === 'Spot') {
                 if (!document.getElementById('milha').value) { showError('milha', true); ok = false; } else showError('milha', false);
@@ -800,8 +778,7 @@
             const tipoAntt     = document.getElementById('tipoAntt').value;
             const titularAntt  = document.getElementById('titularAntt').value.toUpperCase();
             const cnpjAntt     = tipoAntt === 'PJ' ? document.getElementById('cnpjAntt').value : '';
-            const idMaster     = frotaSelecionada === 'Frota Fixa' ? '' : document.getElementById('idMaster').value.trim();
-            const demanda      = frotaSelecionada === 'Frota Fixa' ? document.getElementById('demanda').value.trim() : '';
+            const idMaster     = document.getElementById('idMaster').value.trim();
             const cavalo       = document.getElementById('cavalo').value.trim() || '-';
             const cluster      = document.getElementById('cluster').value.trim() || '-';
             const linkInfobip  = document.getElementById('linkInfobip').value.trim();
@@ -817,7 +794,7 @@
                 status = document.getElementById('status').value;
             }
             const motId = gerarMotId();
-            dadosContratacao = { motId, assistente, svcxd, idMaster, demanda, nome: motorista, telefone: tel, placa: placa.replace('-', ''), cavalo, cpf: cpfLimpo, cluster, perfilVeiculo: perfil, frota, nomeETC, status, milha, emailAgregado, emailMotorista, titularAntt, cnpjAntt, linkInfobip };
+            dadosContratacao = { motId, assistente, svcxd, idMaster, nome: motorista, telefone: tel, placa: placa.replace('-', ''), cavalo, cpf: cpfLimpo, cluster, perfilVeiculo: perfil, frota, nomeETC, status, milha, emailAgregado, emailMotorista, titularAntt, cnpjAntt, linkInfobip };
             let msg = `CONTRATAÇÃO: ${svcxd}`;
             msg += `\n• Motorista: ${motorista}`;
             msg += `\n• CPF: ${cpf}`;
@@ -828,11 +805,7 @@
             if (emailMotorista) msg += `\n• E-mail Motorista: ${emailMotorista}`;
             msg += `\n• Titular ANTT: ${titularAntt}`;
             if (cnpjAntt) msg += `\n• CNPJ ANTT: ${cnpjAntt}`;
-            if (frota === 'Frota Fixa') {
-                msg += `\n• Demanda: ${demanda}`;
-            } else {
-                msg += `\n• ID Master: ${idMaster}`;
-            }
+            msg += `\n• ID Master: ${idMaster}`;
             if (cavalo !== '-') msg += `\n• Cavalo: ${cavalo}`;
             if (cluster !== '-') msg += `\n• Cluster: ${cluster}`;
             msg += `\n• Frota: ${frota}`;
@@ -898,7 +871,7 @@
             const params = new URLSearchParams({
                 'entry.118653231':  d.assistente,
                 'entry.1890213488': d.svcxd,
-                'entry.629714921':  d.frota === 'Frota Fixa' ? d.demanda : d.idMaster,
+                'entry.629714921':  d.idMaster,
                 'entry.1582796223': d.motId,
                 'entry.576486990':  d.nome,
                 'entry.1568441095': d.telefone,
@@ -963,6 +936,10 @@
             { label: '🔌 Erro da tomada', value: 'Erro da tomada' },
             { label: '📨 Convite não enviado', value: 'Convite não enviado' },
             { label: '🏦 Pendência de conta bancária', value: 'Pendência de conta bancária' },
+            { label: '📱 App não ativa', value: 'App não ativa' },
+            { label: '🔍 CNH Ilegível', value: 'CNH Ilegível' },
+            { label: '🎛️ Sem Preferências', value: 'Sem Preferências' },
+            { label: '⏸️ Pausado - Em processo de cadastro', value: 'Pausado - Em processo de cadastro' },
             { label: '🆕 Novo Erro', value: 'Novo Erro' }
         ];
         const etapaLabel = {
@@ -993,6 +970,7 @@
                 if (isErro) {
                     const erroSelect = document.getElementById('upd-erroTela');
                     erroSelect.innerHTML = '<option value="">Selecione o erro...</option>';
+                    document.getElementById('upd-novoErro-aviso').style.display = 'none';
                     errosCadastro.forEach(e => {
                         const o = document.createElement('option');
                         o.value = e.value;
@@ -1004,6 +982,9 @@
                     (valor === 'liberado' && this.value === 'Primeira rota') ? 'block' : 'none';
             };
         }
+        document.getElementById('upd-erroTela').addEventListener('change', function() {
+            document.getElementById('upd-novoErro-aviso').style.display = this.value === 'Novo Erro' ? 'block' : 'none';
+        });
         let dadosAtualizacao = null;
         let updJaSalvou = false;
         document.getElementById('atualizarForm').addEventListener('submit', function(e) {
